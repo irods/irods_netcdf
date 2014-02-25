@@ -1,0 +1,89 @@
+######################################################################
+# General settings below.
+# These should not need to be changed in most cases.
+
+SODIR = ..
+
+SVR_OBJDIR = .objs_svr
+CLI_OBJDIR = .objs_cli
+
+DEPDIR = .deps
+
+CLIENT_TARGET = ${SODIR}/lib${TARGET}_client.so
+SERVER_TARGET = ${SODIR}/lib${TARGET}_server.so
+
+DEPFILE = .depends
+
+SVR_OBJS = $(patsubst %.cpp, ${SVR_OBJDIR}/%.o, ${SRCS})
+CLI_OBJS = $(patsubst %.cpp, ${CLI_OBJDIR}/%.o, ${SRCS})
+
+DEPS = $(patsubst %.cpp, ${DEPDIR}/%.d, ${SRCS})
+
+GCC = g++ -Wno-write-strings -DNETCDF_API 
+
+INC = -I../include/ -I/usr/include/irods ${EXTRAINCS}
+
+BOOST_DIR=/usr/lib/irods/
+BOOST_LIBS = \
+    $(BOOST_DIR)/libboost_filesystem.a \
+    $(BOOST_DIR)/libboost_system.a \
+    $(BOOST_DIR)/libboost_regex.a \
+    $(BOOST_DIR)/libboost_thread.a
+
+EXTRALIBS += \
+          $(BOOST_LIBS) \
+          ../libirods_netcdf.a \
+          /usr/lib/irods/libirods_client.a \
+          -L/usr/lib/irods -lnetcdf 
+#          /usr/lib/irods/libhdf5_hl.a \
+#          /usr/lib/irods/libh5tools.a \
+#          /usr/lib/irods/libhdf5.a \
+
+
+.PHONY: clean
+
+default: all
+
+all: ${CLIENT_TARGET} ${SERVER_TARGET}
+
+clean:
+	@-rm -f ${CLIENT_TARGET} > /dev/null 2>&1
+	@-rm -f ${SERVER_TARGET} > /dev/null 2>&1
+	@-rm -f ${SVR_OBJS} > /dev/null 2>&1
+	@-rm -f ${CLI_OBJS} > /dev/null 2>&1
+	@-rm -f ${DEPS} > /dev/null 2>&1
+	@-rm -f ${DEPFILE} > /dev/null 2>&1
+
+
+${CLIENT_TARGET}: ${CLI_OBJS} ${DEPFILE}
+	@-mkdir -p ${SODIR} > /dev/null 2>&1
+	${GCC} ${INC} -fPIC -shared -o ${CLIENT_TARGET} ${CLI_OBJS} ${EXTRALIBS} 
+
+${CLI_OBJDIR}/%.o: %.cpp
+	@-mkdir -p ${CLI_OBJDIR} > /dev/null 2>&1
+	${GCC} ${INC} -fPIC -c -g -o $@ $<
+
+
+
+${SERVER_TARGET}: ${SVR_OBJS} ${DEPFILE}
+	@-mkdir -p ${SODIR} > /dev/null 2>&1
+	${GCC} ${INC} -fPIC -shared -o ${SERVER_TARGET} ${SVR_OBJS} ${EXTRALIBS} 
+
+${SVR_OBJDIR}/%.o: %.cpp
+	@-mkdir -p ${SVR_OBJDIR} > /dev/null 2>&1
+	${GCC} ${INC} -DRODS_SERVER -fPIC -c -g -o $@ $<
+
+
+
+${DEPFILE}: ${DEPS}
+	@-rm -f ${DEPFILE} > /dev/null 2>&1
+	@for dep in ${DEPS}; do \
+	cat $$dep >> ${DEPFILE}; \
+	done
+
+${DEPS}: ${SRCS} ${HEADERS}
+	@-mkdir -p ${DEPDIR} > /dev/null 2>&1
+	${GCC} ${INC} -MM $< -MT $(patsubst %.cpp, ${OBJDIR}/%.o, $<) -MF $@
+
+include ${DEPFILE}
+

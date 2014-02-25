@@ -1,0 +1,465 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ARCH_FILE_SIZE	include/ncArchTimeSeries.hpp	49;"	d
+DEPDIR	lib/Makefile	/^DEPDIR = .deps$/;"	m
+DEPFILE	lib/Makefile	/^DEPFILE = .depends$/;"	m
+DEPS	lib/Makefile	/^DEPS = $(patsubst %.cpp, ${DEPDIR}\/%.d, ${SRCS})$/;"	m
+EXTRAINCS	lib/Makefile	/^EXTRAINCS = $/;"	m
+EXTRAINCS	rsNcArchTimeSeries/Makefile	/^EXTRAINCS = $/;"	m
+EXTRAINCS	rsNcClose/Makefile	/^EXTRAINCS = $/;"	m
+EXTRAINCS	rsNcCreate/Makefile	/^EXTRAINCS = $/;"	m
+EXTRAINCS	rsNcGetAggElement/Makefile	/^EXTRAINCS = $/;"	m
+EXTRAINCS	rsNcGetAggInfo/Makefile	/^EXTRAINCS = $/;"	m
+EXTRAINCS	rsNcGetVarsByType/Makefile	/^EXTRAINCS = $/;"	m
+EXTRAINCS	rsNcInq/Makefile	/^EXTRAINCS = $/;"	m
+EXTRAINCS	rsNcInqGrps/Makefile	/^EXTRAINCS = $/;"	m
+EXTRAINCS	rsNcInqId/Makefile	/^EXTRAINCS = $/;"	m
+EXTRAINCS	rsNcInqWithId/Makefile	/^EXTRAINCS = $/;"	m
+EXTRAINCS	rsNcOpen/Makefile	/^EXTRAINCS = $/;"	m
+EXTRAINCS	rsNcOpenGroup/Makefile	/^EXTRAINCS = $/;"	m
+EXTRAINCS	rsNcRegGlobalAttr/Makefile	/^EXTRAINCS = $/;"	m
+EXTRALIBS	lib/Makefile	/^EXTRALIBS = \/usr\/lib\/libirods.a $/;"	m
+EXTRALIBS	rsNcArchTimeSeries/Makefile	/^EXTRALIBS = $/;"	m
+EXTRALIBS	rsNcClose/Makefile	/^EXTRALIBS = $/;"	m
+EXTRALIBS	rsNcCreate/Makefile	/^EXTRALIBS = $/;"	m
+EXTRALIBS	rsNcGetAggElement/Makefile	/^EXTRALIBS = $/;"	m
+EXTRALIBS	rsNcGetAggInfo/Makefile	/^EXTRALIBS = $/;"	m
+EXTRALIBS	rsNcGetVarsByType/Makefile	/^EXTRALIBS = $/;"	m
+EXTRALIBS	rsNcInq/Makefile	/^EXTRALIBS = $/;"	m
+EXTRALIBS	rsNcInqGrps/Makefile	/^EXTRALIBS = $/;"	m
+EXTRALIBS	rsNcInqId/Makefile	/^EXTRALIBS = $/;"	m
+EXTRALIBS	rsNcInqWithId/Makefile	/^EXTRALIBS = $/;"	m
+EXTRALIBS	rsNcOpen/Makefile	/^EXTRALIBS = $/;"	m
+EXTRALIBS	rsNcOpenGroup/Makefile	/^EXTRALIBS = $/;"	m
+EXTRALIBS	rsNcRegGlobalAttr/Makefile	/^EXTRALIBS = $/;"	m
+FULLTARGET	lib/Makefile	/^FULLTARGET = ${SODIR}\/${TARGET}$/;"	m
+GCC	Makefile	/^GCC = g++ $/;"	m
+GCC	lib/Makefile	/^GCC = g++ -Wno-write-strings -DRODS_SERVER -DNETCDF_API$/;"	m
+HEADERS	lib/Makefile	/^HEADERS =$/;"	m
+HEADERS	rsNcArchTimeSeries/Makefile	/^HEADERS =$/;"	m
+HEADERS	rsNcClose/Makefile	/^HEADERS =$/;"	m
+HEADERS	rsNcCreate/Makefile	/^HEADERS =$/;"	m
+HEADERS	rsNcGetAggElement/Makefile	/^HEADERS =$/;"	m
+HEADERS	rsNcGetAggInfo/Makefile	/^HEADERS =$/;"	m
+HEADERS	rsNcGetVarsByType/Makefile	/^HEADERS =$/;"	m
+HEADERS	rsNcInq/Makefile	/^HEADERS =$/;"	m
+HEADERS	rsNcInqGrps/Makefile	/^HEADERS =$/;"	m
+HEADERS	rsNcInqId/Makefile	/^HEADERS =$/;"	m
+HEADERS	rsNcInqWithId/Makefile	/^HEADERS =$/;"	m
+HEADERS	rsNcOpen/Makefile	/^HEADERS =$/;"	m
+HEADERS	rsNcOpenGroup/Makefile	/^HEADERS =$/;"	m
+HEADERS	rsNcRegGlobalAttr/Makefile	/^HEADERS =$/;"	m
+INC	lib/Makefile	/^INC = -I..\/include\/ -I\/usr\/include\/irods ${EXTRAINCS}$/;"	m
+MAX_ATTR_NAME_PER_LINE	include/ncattrUtil.hpp	15;"	d
+MAX_NUM_VAR	include/ncInq.hpp	97;"	d
+NCARCHUTIL_HPP	include/ncarchUtil.hpp	6;"	d
+NCATTRUTIL_HPP	include/ncattrUtil.hpp	6;"	d
+NCUTIL_HPP	include/ncUtil.hpp	6;"	d
+NC_64BIT_OFFSET	include/ncGetVarsByType.hpp	42;"	d
+NC_AGG_INFO_FILE_NAME	include/ncGetAggInfo.hpp	25;"	d
+NC_ALL_FLAG	include/ncInq.hpp	33;"	d
+NC_ALL_TYPE	include/ncInq.hpp	30;"	d
+NC_ARCH_TIME_SERIES_AN	include/ncArchTimeSeries.hpp	36;"	d
+NC_ARCH_TIME_SERIES_HPP	include/ncArchTimeSeries.hpp	7;"	d
+NC_ATT_TYPE	include/ncInq.hpp	29;"	d
+NC_BYTE	include/ncGetVarsByType.hpp	22;"	d
+NC_CHAR	include/ncGetVarsByType.hpp	23;"	d
+NC_CLASSIC_MODEL	include/ncGetVarsByType.hpp	41;"	d
+NC_CLOSE_AN	include/ncArchTimeSeries.hpp	26;"	d
+NC_CLOSE_AN	include/ncClose.hpp	25;"	d
+NC_CLOSE_HPP	include/ncClose.hpp	7;"	d
+NC_CREATE_AN	include/ncArchTimeSeries.hpp	25;"	d
+NC_CREATE_AN	include/ncCreate.hpp	28;"	d
+NC_CREATE_HPP	include/ncCreate.hpp	7;"	d
+NC_DIM_T	include/ncInqId.hpp	23;"	d
+NC_DIM_TYPE	include/ncInq.hpp	28;"	d
+NC_DOUBLE	include/ncGetVarsByType.hpp	27;"	d
+NC_FLOAT	include/ncGetVarsByType.hpp	26;"	d
+NC_FORMAT_64BIT	include/ncGetVarsByType.hpp	38;"	d
+NC_FORMAT_CLASSIC	include/ncGetVarsByType.hpp	37;"	d
+NC_FORMAT_NETCDF4	include/ncGetVarsByType.hpp	39;"	d
+NC_FORMAT_NETCDF4_CLASSIC	include/ncGetVarsByType.hpp	40;"	d
+NC_GET_AGG_ELEMENT_AN	include/ncArchTimeSeries.hpp	34;"	d
+NC_GET_AGG_ELEMENT_AN	include/ncGetAggElement.hpp	33;"	d
+NC_GET_AGG_ELEMENT_HPP	include/ncGetAggElement.hpp	7;"	d
+NC_GET_AGG_INFO_AN	include/ncArchTimeSeries.hpp	35;"	d
+NC_GET_AGG_INFO_AN	include/ncGetAggInfo.hpp	38;"	d
+NC_GET_AGG_INFO_HPP	include/ncGetAggInfo.hpp	7;"	d
+NC_GET_VARS_BY_TYPE_AN	include/ncArchTimeSeries.hpp	29;"	d
+NC_GET_VARS_BY_TYPE_AN	include/ncGetVarsByType.hpp	73;"	d
+NC_GET_VARS_BY_TYPE_HPP	include/ncGetVarsByType.hpp	7;"	d
+NC_INQ_AN	include/ncArchTimeSeries.hpp	30;"	d
+NC_INQ_AN	include/ncInq.hpp	23;"	d
+NC_INQ_GRPS_AN	include/ncArchTimeSeries.hpp	32;"	d
+NC_INQ_GRPS_AN	include/ncInqGrps.hpp	19;"	d
+NC_INQ_GRPS_HPP	include/ncInqGrps.hpp	7;"	d
+NC_INQ_HPP	include/ncInq.hpp	7;"	d
+NC_INQ_ID_AN	include/ncArchTimeSeries.hpp	27;"	d
+NC_INQ_ID_AN	include/ncInqId.hpp	19;"	d
+NC_INQ_ID_HPP	include/ncInqId.hpp	7;"	d
+NC_INQ_WITH_ID_AN	include/ncArchTimeSeries.hpp	28;"	d
+NC_INQ_WITH_ID_AN	include/ncInqWithId.hpp	19;"	d
+NC_INQ_WITH_ID_HPP	include/ncInqWithId.hpp	7;"	d
+NC_INT	include/ncGetVarsByType.hpp	25;"	d
+NC_INT64	include/ncGetVarsByType.hpp	31;"	d
+NC_MAX_DIMS	include/ncGetVarsByType.hpp	36;"	d
+NC_NETCDF4	include/ncGetVarsByType.hpp	43;"	d
+NC_NOWRITE	include/ncGetVarsByType.hpp	34;"	d
+NC_OPEN_AN	include/ncArchTimeSeries.hpp	24;"	d
+NC_OPEN_AN	include/ncOpen.hpp	21;"	d
+NC_OPEN_GROUP_AN	include/ncArchTimeSeries.hpp	31;"	d
+NC_OPEN_GROUP_AN	include/ncOpenGroup.hpp	22;"	d
+NC_OPEN_GROUP_HPP	include/ncOpenGroup.hpp	7;"	d
+NC_OPEN_HPP	include/ncOpen.hpp	7;"	d
+NC_REG_GLOBAL_ATTR_AN	include/ncArchTimeSeries.hpp	33;"	d
+NC_REG_GLOBAL_ATTR_AN	include/ncRegGlobalAttr.hpp	29;"	d
+NC_REG_GLOBAL_ATTR_HPP	include/ncRegGlobalAttr.hpp	7;"	d
+NC_SHORT	include/ncGetVarsByType.hpp	24;"	d
+NC_STRING	include/ncGetVarsByType.hpp	33;"	d
+NC_UBYTE	include/ncGetVarsByType.hpp	28;"	d
+NC_UINT	include/ncGetVarsByType.hpp	30;"	d
+NC_UINT64	include/ncGetVarsByType.hpp	32;"	d
+NC_USHORT	include/ncGetVarsByType.hpp	29;"	d
+NC_VAR_T	include/ncInqId.hpp	22;"	d
+NC_VAR_TRANS_SZ	include/ncInq.hpp	21;"	d
+NC_VAR_TYPE	include/ncInq.hpp	27;"	d
+NC_WRITE	include/ncGetVarsByType.hpp	35;"	d
+NcAggElement_PI	include/ncGetAggElement.hpp	34;"	d
+NcAggInfo_PI	include/ncGetAggInfo.hpp	39;"	d
+NcArchTimeSeriesInp_PI	include/ncArchTimeSeries.hpp	59;"	d
+NcCloseInp_PI	include/ncClose.hpp	26;"	d
+NcGenAttOut_PI	include/ncInq.hpp	64;"	d
+NcGenDimOut_PI	include/ncInq.hpp	53;"	d
+NcGenVarOut_PI	include/ncInq.hpp	78;"	d
+NcGetVarInp_PI	include/ncGetVarsByType.hpp	74;"	d
+NcGetVarOut_PI	include/ncGetVarsByType.hpp	81;"	d
+NcInqGrpsInp_PI	include/ncInqGrps.hpp	28;"	d
+NcInqGrpsOut_PI	include/ncInqGrps.hpp	36;"	d
+NcInqIdInp_PI	include/ncInqId.hpp	33;"	d
+NcInqInp_PI	include/ncInq.hpp	44;"	d
+NcInqOut_PI	include/ncInq.hpp	95;"	d
+NcInqWithIdOut_PI	include/ncInqWithId.hpp	32;"	d
+NcOpenGroupInp_PI	include/ncOpenGroup.hpp	23;"	d
+NcOpenInp_PI	include/ncOpen.hpp	33;"	d
+NcRegGlobalAttrInp_PI	include/ncRegGlobalAttr.hpp	30;"	d
+OBJDIR	lib/Makefile	/^OBJDIR = .objs$/;"	m
+OBJS	lib/Makefile	/^OBJS = $(patsubst %.cpp, ${OBJDIR}\/%.o, ${SRCS})$/;"	m
+ONE_MILLION	include/ncArchTimeSeries.hpp	50;"	d
+READ_TIME_SIZE	include/ncArchTimeSeries.hpp	48;"	d
+RS_NC_ARCH_TIME_SERIES	include/ncArchTimeSeries.hpp	62;"	d
+RS_NC_ARCH_TIME_SERIES	include/ncArchTimeSeries.hpp	79;"	d
+RS_NC_CLOSE	include/ncClose.hpp	29;"	d
+RS_NC_CLOSE	include/ncClose.hpp	34;"	d
+RS_NC_CREATE	include/ncCreate.hpp	20;"	d
+RS_NC_CREATE	include/ncCreate.hpp	25;"	d
+RS_NC_GET_AGG_ELEMENT	include/ncGetAggElement.hpp	37;"	d
+RS_NC_GET_AGG_ELEMENT	include/ncGetAggElement.hpp	43;"	d
+RS_NC_GET_AGG_INFO	include/ncGetAggInfo.hpp	51;"	d
+RS_NC_GET_AGG_INFO	include/ncGetAggInfo.hpp	57;"	d
+RS_NC_GET_VARS_BY_TYPE	include/ncGetVarsByType.hpp	84;"	d
+RS_NC_GET_VARS_BY_TYPE	include/ncGetVarsByType.hpp	96;"	d
+RS_NC_INQ	include/ncInq.hpp	115;"	d
+RS_NC_INQ	include/ncInq.hpp	126;"	d
+RS_NC_INQ_GRPS	include/ncInqGrps.hpp	39;"	d
+RS_NC_INQ_GRPS	include/ncInqGrps.hpp	47;"	d
+RS_NC_INQ_ID	include/ncInqId.hpp	35;"	d
+RS_NC_INQ_ID	include/ncInqId.hpp	46;"	d
+RS_NC_INQ_WITH_ID	include/ncInqWithId.hpp	34;"	d
+RS_NC_INQ_WITH_ID	include/ncInqWithId.hpp	49;"	d
+RS_NC_OPEN	include/ncOpen.hpp	36;"	d
+RS_NC_OPEN	include/ncOpen.hpp	47;"	d
+RS_NC_OPEN_GROUP	include/ncOpenGroup.hpp	26;"	d
+RS_NC_OPEN_GROUP	include/ncOpenGroup.hpp	31;"	d
+RS_NC_REG_GLOBAL_ATTR	include/ncRegGlobalAttr.hpp	33;"	d
+RS_NC_REG_GLOBAL_ATTR	include/ncRegGlobalAttr.hpp	40;"	d
+SODIR	lib/Makefile	/^SODIR = ..$/;"	m
+SRCS	lib/Makefile	/^SRCS = ncUtil.cpp \\$/;"	m
+SRCS	rsNcArchTimeSeries/Makefile	/^SRCS = ${TARGET}.cpp readAggInfo.cpp$/;"	m
+SRCS	rsNcClose/Makefile	/^SRCS = ${TARGET}.cpp$/;"	m
+SRCS	rsNcCreate/Makefile	/^SRCS = ${TARGET}.cpp$/;"	m
+SRCS	rsNcGetAggElement/Makefile	/^SRCS = ${TARGET}.cpp$/;"	m
+SRCS	rsNcGetAggInfo/Makefile	/^SRCS = ${TARGET}.cpp$/;"	m
+SRCS	rsNcGetVarsByType/Makefile	/^SRCS = ${TARGET}.cpp$/;"	m
+SRCS	rsNcInq/Makefile	/^SRCS = ${TARGET}.cpp$/;"	m
+SRCS	rsNcInqGrps/Makefile	/^SRCS = ${TARGET}.cpp$/;"	m
+SRCS	rsNcInqId/Makefile	/^SRCS = ${TARGET}.cpp$/;"	m
+SRCS	rsNcInqWithId/Makefile	/^SRCS = ${TARGET}.cpp$/;"	m
+SRCS	rsNcOpen/Makefile	/^SRCS = ${TARGET}.cpp readAggInfo.cpp$/;"	m
+SRCS	rsNcOpenGroup/Makefile	/^SRCS = ${TARGET}.cpp$/;"	m
+SRCS	rsNcRegGlobalAttr/Makefile	/^SRCS = ${TARGET}.cpp$/;"	m
+SUBS	Makefile	/^SUBS = lib rsNcRegGlobalAttr rsNcOpenGroup rsNcOpen rsNcInqWithId rsNcInqId rsNcInqGrps rsNcInq rsNcGetVarsByType rsNcGetAggInfo rsNcGetAggElement rsNcCreate rsNcClose rsNcArchTimeSeries$/;"	m
+TARGET	lib/Makefile	/^TARGET = irods_netcdf_lib.a$/;"	m
+TARGET	rsNcArchTimeSeries/Makefile	/^TARGET = rsNcArchTimeSeries$/;"	m
+TARGET	rsNcClose/Makefile	/^TARGET = rsNcClose$/;"	m
+TARGET	rsNcCreate/Makefile	/^TARGET = rsNcCreate$/;"	m
+TARGET	rsNcGetAggElement/Makefile	/^TARGET = rsNcGetAggElement$/;"	m
+TARGET	rsNcGetAggInfo/Makefile	/^TARGET = rsNcGetAggInfo$/;"	m
+TARGET	rsNcGetVarsByType/Makefile	/^TARGET = rsNcGetVarsByType$/;"	m
+TARGET	rsNcInq/Makefile	/^TARGET = rsNcInq$/;"	m
+TARGET	rsNcInqGrps/Makefile	/^TARGET = rsNcInqGrps$/;"	m
+TARGET	rsNcInqId/Makefile	/^TARGET = rsNcInqId$/;"	m
+TARGET	rsNcInqWithId/Makefile	/^TARGET = rsNcInqWithId$/;"	m
+TARGET	rsNcOpen/Makefile	/^TARGET = rsNcOpen$/;"	m
+TARGET	rsNcOpenGroup/Makefile	/^TARGET = rsNcOpenGroup$/;"	m
+TARGET	rsNcRegGlobalAttr/Makefile	/^TARGET = rsNcRegGlobalAttr$/;"	m
+UNLIMITED_DIM_INX	include/ncInq.hpp	80;"	d
+_rcNcCreate	lib/rcNcCreate.cpp	/^_rcNcCreate( rcComm_t *conn, ncOpenInp_t *ncCreateInp, int **ncid ) {$/;"	f
+_rcNcOpen	lib/rcNcOpen.cpp	/^_rcNcOpen( rcComm_t *conn, ncOpenInp_t *ncOpenInp, int **ncid ) {$/;"	f
+_rcNcOpenGroup	lib/rcNcOpenGroup.cpp	/^_rcNcOpenGroup( rcComm_t *conn, ncOpenInp_t *ncOpenGroupInp, int **ncid ) {$/;"	f
+_rsNcArchTimeSeries	rsNcArchTimeSeries/rsNcArchTimeSeries.cpp	/^_rsNcArchTimeSeries( rsComm_t *rsComm,$/;"	f
+_rsNcGetAggElement	rsNcGetAggElement/rsNcGetAggElement.cpp	/^_rsNcGetAggElement( rsComm_t *rsComm, dataObjInfo_t *dataObjInfo,$/;"	f	file:
+_rsNcGetVarsByType	lib/_rsNcGetVarsByType.cpp	/^_rsNcGetVarsByType( int ncid, ncGetVarInp_t *ncGetVarInp,$/;"	f
+_rsNcInq	rsNcInq/rsNcInq.cpp	/^_rsNcInq( rsComm_t *rsComm, ncInqInp_t *ncInqInp, ncInqOut_t **ncInqOut ) {$/;"	f
+_rsNcInqGrps	rsNcInqGrps/rsNcInqGrps.cpp	/^_rsNcInqGrps( int ncid, ncInqGrpsOut_t **ncInqGrpsOut ) {$/;"	f
+_rsNcInqId	rsNcInqId/rsNcInqId.cpp	/^_rsNcInqId( int paramType, int ncid, char *name, int **outId ) {$/;"	f
+_rsNcInqWithId	rsNcInqWithId/rsNcInqWithId.cpp	/^_rsNcInqWithId( int paramType, int ncid, int myid, char *name,$/;"	f
+_rsNcRegGlobalAttr	rsNcRegGlobalAttr/rsNcRegGlobalAttr.cpp	/^_rsNcRegGlobalAttr( rsComm_t *rsComm, ncRegGlobalAttrInp_t *ncRegGlobalAttrInp ) {$/;"	f
+addNcAggElement	lib/rcNcGetAggInfo.cpp	/^addNcAggElement( ncAggElement_t *ncAggElement, ncAggInfo_t *ncAggInfo ) {$/;"	f
+aendTime	include/ncGetAggElement.hpp	/^    char aendTime[NAME_LEN];$/;"	m	struct:__anon12
+aggCollection	include/ncArchTimeSeries.hpp	/^    char aggCollection[MAX_NAME_LEN];  \/* target aggregate collection *\/$/;"	m	struct:__anon14
+aggElemetInx	include/ncGetAggInfo.hpp	/^    int aggElemetInx;	\/* index into the ncAggElement of objNcid *\/$/;"	m	struct:__anon11
+archPartialTimeSeries	rsNcArchTimeSeries/rsNcArchTimeSeries.cpp	/^archPartialTimeSeries( rsComm_t *rsComm, ncInqOut_t *ncInqOut,$/;"	f
+arrayLen	include/ncInq.hpp	/^    rodsLong_t arrayLen;$/;"	m	struct:__anon4
+arraylen	include/ncGetAggElement.hpp	/^    rodsLong_t arraylen;$/;"	m	struct:__anon12
+asciToTime	lib/rcNcInq.cpp	/^asciToTime( char *asciTime, time_t *mytime ) {$/;"	f
+astartTime	include/ncGetAggElement.hpp	/^    char astartTime[NAME_LEN];$/;"	m	struct:__anon12
+att	include/ncInq.hpp	/^    ncGenAttOut_t *att;		\/* array of natts length *\/$/;"	m	struct:__anon6
+attrNameArray	include/ncRegGlobalAttr.hpp	/^    char **attrNameArray;    \/* array of pointers *\/$/;"	m	struct:__anon2
+bufrsizehint	include/ncOpen.hpp	/^    rodsULong_t bufrsizehint;	\/* used for nc__open, nc__create *\/$/;"	m	struct:__anon18
+catAggInfo	lib/ncUtil.cpp	/^catAggInfo( rcComm_t *conn, char *srcColl ) {$/;"	f
+clearNcGetVarInp	lib/rcNcGetVarsByType.cpp	/^clearNcGetVarInp( ncGetVarInp_t *ncGetVarInp ) {$/;"	f
+clearNcGetVarOut	lib/rcNcGetVarsByType.cpp	/^clearNcGetVarOut( ncGetVarOut_t *ncGetVarOut ) {$/;"	f
+clearRegGlobalAttrInp	lib/rcNcRegGlobalAttr.cpp	/^clearRegGlobalAttrInp( ncRegGlobalAttrInp_t *ncRegGlobalAttrInp ) {$/;"	f
+closeAggrFiles	rsNcClose/rsNcClose.cpp	/^static int closeAggrFiles( rsComm_t *rsComm, int l1descInx ) {$/;"	f	file:
+closeAndRmNeFile	lib/rcNcInq.cpp	/^closeAndRmNeFile( int ncid, char *outFileName ) {$/;"	f
+condInput	include/ncArchTimeSeries.hpp	/^    keyValPair_t condInput;$/;"	m	struct:__anon14
+condInput	include/ncClose.hpp	/^    keyValPair_t condInput;$/;"	m	struct:__anon17
+condInput	include/ncGetVarsByType.hpp	/^    keyValPair_t condInput;$/;"	m	struct:__anon19
+condInput	include/ncInq.hpp	/^    keyValPair_t condInput;$/;"	m	struct:__anon3
+condInput	include/ncInqGrps.hpp	/^    keyValPair_t condInput;$/;"	m	struct:__anon15
+condInput	include/ncInqId.hpp	/^    keyValPair_t condInput;$/;"	m	struct:__anon13
+condInput	include/ncOpen.hpp	/^    keyValPair_t condInput;	\/* not used *\/$/;"	m	struct:__anon18
+condInput	include/ncRegGlobalAttr.hpp	/^    keyValPair_t condInput;$/;"	m	struct:__anon2
+count	include/ncGetVarsByType.hpp	/^    rodsLong_t *count;  \/* array of ndim length *\/$/;"	m	struct:__anon19
+dataArray	include/ncGetVarsByType.hpp	/^    dataArray_t *dataArray;$/;"	m	struct:__anon20
+dataType	include/ncGetVarsByType.hpp	/^    int dataType;$/;"	m	struct:__anon19
+dataType	include/ncInq.hpp	/^    int dataType;$/;"	m	struct:__anon5
+dataType	include/ncInq.hpp	/^    int dataType;$/;"	m	struct:__anon6
+dataType	include/ncInqWithId.hpp	/^    int dataType;		\/* data type for NC_VAR_T. *\/$/;"	m	struct:__anon1
+dataType_PI	include/ncGetVarsByType.hpp	/^    char dataType_PI[NAME_LEN];	  \/* the packing instruction of the dataType *\/$/;"	m	struct:__anon20
+dim	include/ncInq.hpp	/^    ncGenDimOut_t *dim;		\/* array of ndims length *\/$/;"	m	struct:__anon7
+dimId	include/ncInq.hpp	/^    int *dimId;			\/* arrays of dim id *\/$/;"	m	struct:__anon6
+dumpNcInqOut	lib/rcNcInq.cpp	/^dumpNcInqOut( rcComm_t *conn, char *fileName, int ncid, int dumpVarLen,$/;"	f
+dumpNcInqOutToNcFile	lib/rcNcInq.cpp	/^dumpNcInqOutToNcFile( rcComm_t *conn, int srcNcid, int noattrFlag,$/;"	f
+dumpSubsetToFile	lib/rcNcInq.cpp	/^dumpSubsetToFile( rcComm_t *conn, int srcNcid, int noattrFlag,$/;"	f
+end	include/ncInq.hpp	/^    int end;$/;"	m	struct:__anon8
+endStr	include/ncInq.hpp	/^    char endStr[NAME_LEN];$/;"	m	struct:__anon8
+endTime	include/ncGetAggElement.hpp	/^    unsigned int endTime;$/;"	m	struct:__anon12
+fileSizeLimit	include/ncArchTimeSeries.hpp	/^    rodsLong_t fileSizeLimit;$/;"	m	struct:__anon14
+flags	include/ncGetAggInfo.hpp	/^    int flags;		\/* not used *\/$/;"	m	struct:__anon10
+flags	include/ncInq.hpp	/^    int flags;  \/* not used *\/$/;"	m	struct:__anon6
+flags	include/ncInq.hpp	/^    int flags;$/;"	m	struct:__anon3
+flags	include/ncInqGrps.hpp	/^    int flags;		\/* not used *\/$/;"	m	struct:__anon16
+flags	include/ncInqGrps.hpp	/^    int flags;$/;"	m	struct:__anon15
+flags	include/ncInqId.hpp	/^    int flags;		\/* not used *\/$/;"	m	struct:__anon13
+flags	include/ncRegGlobalAttr.hpp	/^    int flags;		\/* not used *\/$/;"	m	struct:__anon2
+format	include/ncInq.hpp	/^    int format;		\/* one of NC_FORMAT_CLASSIC, NC_FORMAT_64BIT,$/;"	m	struct:__anon7
+freeAggInfo	lib/rcNcGetAggInfo.cpp	/^freeAggInfo( ncAggInfo_t **ncAggInfo ) {$/;"	f
+freeNcGetVarOut	lib/rcNcGetVarsByType.cpp	/^freeNcGetVarOut( ncGetVarOut_t **ncGetVarOut ) {$/;"	f
+freeNcInqGrpsOut	lib/rcNcInqGrps.cpp	/^freeNcInqGrpsOut( ncInqGrpsOut_t **ncInqGrpsOut ) {$/;"	f
+freeNcInqOut	lib/rcNcInq.cpp	/^freeNcInqOut( ncInqOut_t **ncInqOut ) {$/;"	f
+gatt	include/ncInq.hpp	/^    ncGenAttOut_t *gatt;	\/* array of ngatts length *\/$/;"	m	struct:__anon7
+getAggBasePath	lib/rcNcGetAggInfo.cpp	/^getAggBasePath( char *aggCollection, char *basePath ) {$/;"	f
+getAndPutVarToFile	lib/rcNcInq.cpp	/^getAndPutVarToFile( rcComm_t *conn, int srcNcid, int srcVarid, int ndim,$/;"	f
+getAttValue	lib/rcNcInq.cpp	/^getAttValue( int ncid, int varid, char *name, int dataType, int length,$/;"	f
+getDataTypeSize	lib/rcNcGetVarsByType.cpp	/^getDataTypeSize( int dataType ) {$/;"	f
+getNcIntVar	lib/rcNcInq.cpp	/^getNcIntVar( int ncid, int varid, int dataType, rodsLong_t inx ) {$/;"	f
+getNcTypeStr	lib/rcNcInq.cpp	/^getNcTypeStr( int dataType, char *outString ) {$/;"	f
+getNextAggEleObjPath	lib/rcNcGetAggInfo.cpp	/^getNextAggEleObjPath( ncAggInfo_t *ncAggInfo, char *aggCollection,$/;"	f
+getSingleNcVarData	lib/rcNcInq.cpp	/^getSingleNcVarData( rcComm_t *conn, int ncid, int varInx, ncInqOut_t *ncInqOut,$/;"	f
+getSizeForGetVars	lib/rcNcGetVarsByType.cpp	/^getSizeForGetVars( ncGetVarInp_t *ncGetVarInp ) {$/;"	f
+getTimeInxForArch	rsNcArchTimeSeries/rsNcArchTimeSeries.cpp	/^getTimeInxForArch( rsComm_t *rsComm, int ncid, ncInqOut_t *ncInqOut,$/;"	f
+getTimeInxInVar	lib/rcNcInq.cpp	/^getTimeInxInVar( ncInqOut_t *ncInqOut, int varid ) {$/;"	f
+getTimeStepSize	lib/rcNcInq.cpp	/^getTimeStepSize( ncInqOut_t *ncInqOut ) {$/;"	f
+grpName	include/ncInqGrps.hpp	/^    char **grpName;	\/* array of grpNcid *\/$/;"	m	struct:__anon16
+id	include/ncInq.hpp	/^    int id;$/;"	m	struct:__anon4
+id	include/ncInq.hpp	/^    int id;$/;"	m	struct:__anon5
+id	include/ncInq.hpp	/^    int id;$/;"	m	struct:__anon6
+initCondForNcOper	lib/ncUtil.cpp	/^initCondForNcOper( rodsEnv *myRodsEnv, rodsArguments_t *rodsArgs,$/;"	f
+initCondForNcarch	lib/ncarchUtil.cpp	/^initCondForNcarch( rodsEnv *myRodsEnv, rodsArguments_t *rodsArgs,$/;"	f
+initCondForNcattr	lib/ncattrUtil.cpp	/^initCondForNcattr( rodsEnv *myRodsEnv, rodsArguments_t *rodsArgs,$/;"	f
+initNcInqOut	lib/rcNcInq.cpp	/^initNcInqOut( int ndims, int nvars, int ngatts, int unlimdimid, int format,$/;"	f
+inqAtt	lib/rcNcInq.cpp	/^inqAtt( int ncid, int varid, int natt, char *name, int id, int allFlag,$/;"	f
+intArray	include/ncInqWithId.hpp	/^    int *intArray;	\/* int array of ndim length *\/$/;"	m	struct:__anon1
+intialsz	include/ncOpen.hpp	/^    rodsULong_t	intialsz;	\/* used for nc__open, nc__create *\/$/;"	m	struct:__anon18
+length	include/ncInq.hpp	/^    int length;$/;"	m	struct:__anon5
+listAttrCollUtil	lib/ncattrUtil.cpp	/^listAttrCollUtil( rcComm_t *conn, char *srcColl, rodsEnv *myRodsEnv,$/;"	f
+listAttrDataObjUtil	lib/ncattrUtil.cpp	/^listAttrDataObjUtil( rcComm_t *conn, char *srcPath,$/;"	f
+mode	include/ncOpen.hpp	/^    int mode;$/;"	m	struct:__anon18
+myid	include/ncInq.hpp	/^    int myid;           \/* for NC_ALL_FLAG == 0, the id of the type *\/$/;"	m	struct:__anon3
+myid	include/ncInqId.hpp	/^    int myid;		\/* used by some APIs such as rcNcInqWithId *\/$/;"	m	struct:__anon13
+myint	include/ncInq.hpp	/^    int myint;	\/* used to store the dim id of the target if dump to a file *\/$/;"	m	struct:__anon4
+myint	include/ncInq.hpp	/^    int myint;  \/* not used *\/$/;"	m	struct:__anon5
+myint	include/ncInq.hpp	/^    int myint;  \/* not used *\/$/;"	m	struct:__anon7
+myint	include/ncInq.hpp	/^    int myint;  \/* used to store the var id of the target if dump to a file *\/$/;"	m	struct:__anon6
+myint	include/ncInqWithId.hpp	/^    int myint;		\/* not used *\/$/;"	m	struct:__anon1
+mylong	include/ncInqWithId.hpp	/^    rodsLong_t mylong;	\/* an int output.content depends on paramType.For$/;"	m	struct:__anon1
+name	include/ncInq.hpp	/^    char name[LONG_NAME_LEN];$/;"	m	struct:__anon4
+name	include/ncInq.hpp	/^    char name[LONG_NAME_LEN];$/;"	m	struct:__anon5
+name	include/ncInq.hpp	/^    char name[LONG_NAME_LEN];$/;"	m	struct:__anon6
+name	include/ncInq.hpp	/^    char name[MAX_NAME_LEN];  \/* for NC_ALL_FLAG == 0, the name *\/$/;"	m	struct:__anon3
+name	include/ncInqGrps.hpp	/^    char name[MAX_NAME_LEN];  \/* for NC_ALL_FLAG == 0, the name *\/$/;"	m	struct:__anon15
+name	include/ncInqId.hpp	/^    char name[MAX_NAME_LEN];$/;"	m	struct:__anon13
+name	include/ncInqWithId.hpp	/^    char name[MAX_NAME_LEN];$/;"	m	struct:__anon1
+natts	include/ncInq.hpp	/^    int natts;$/;"	m	struct:__anon6
+natts	include/ncInqWithId.hpp	/^    int natts;		\/* no. of attrs for NC_VAR_T *\/$/;"	m	struct:__anon1
+ncAggElement	include/ncGetAggInfo.hpp	/^    ncAggElement_t *ncAggElement;	\/* pointer to numFiles of$/;"	m	struct:__anon10
+ncAggElement_t	include/ncGetAggElement.hpp	/^} ncAggElement_t;$/;"	t	typeref:struct:__anon12
+ncAggInfo	include/ncGetAggInfo.hpp	/^    ncAggInfo_t *ncAggInfo;$/;"	m	struct:__anon11
+ncAggInfo_t	include/ncGetAggInfo.hpp	/^} ncAggInfo_t;$/;"	t	typeref:struct:__anon10
+ncArchTimeSeriesInp_t	include/ncArchTimeSeries.hpp	/^} ncArchTimeSeriesInp_t;$/;"	t	typeref:struct:__anon14
+ncCloseColl	rsNcClose/rsNcClose.cpp	/^static int ncCloseColl( rsComm_t *rsComm, int l1descInx ) {$/;"	f	file:
+ncCloseDataObj	rsNcClose/rsNcClose.cpp	/^static int ncCloseDataObj( rsComm_t *rsComm, int l1descInx ) {$/;"	f	file:
+ncCloseInp_t	include/ncClose.hpp	/^} ncCloseInp_t;$/;"	t	typeref:struct:__anon17
+ncFormatToCmode	lib/rcNcInq.cpp	/^ncFormatToCmode( int format ) {$/;"	f
+ncGenAttOut_t	include/ncInq.hpp	/^} ncGenAttOut_t;$/;"	t	typeref:struct:__anon5
+ncGenDimOut_t	include/ncInq.hpp	/^} ncGenDimOut_t;$/;"	t	typeref:struct:__anon4
+ncGenVarOut_t	include/ncInq.hpp	/^} ncGenVarOut_t;$/;"	t	typeref:struct:__anon6
+ncGetVarInp_t	include/ncGetVarsByType.hpp	/^} ncGetVarInp_t;$/;"	t	typeref:struct:__anon19
+ncGetVarOut_t	include/ncGetVarsByType.hpp	/^} ncGetVarOut_t;$/;"	t	typeref:struct:__anon20
+ncInq	lib/rcNcInq.cpp	/^ncInq( ncInqInp_t *ncInqInp, ncInqOut_t **ncInqOut ) {$/;"	f
+ncInqGrpsInp_t	include/ncInqGrps.hpp	/^} ncInqGrpsInp_t;$/;"	t	typeref:struct:__anon15
+ncInqGrpsOut_t	include/ncInqGrps.hpp	/^} ncInqGrpsOut_t;$/;"	t	typeref:struct:__anon16
+ncInqIdInp_t	include/ncInqId.hpp	/^} ncInqIdInp_t;$/;"	t	typeref:struct:__anon13
+ncInqInp_t	include/ncInq.hpp	/^} ncInqInp_t;$/;"	t	typeref:struct:__anon3
+ncInqOut	include/ncGetAggInfo.hpp	/^    ncInqOut_t *ncInqOut;	\/* ncInqOut for objNcid *\/$/;"	m	struct:__anon11
+ncInqOut0	include/ncGetAggInfo.hpp	/^    ncInqOut_t *ncInqOut0;	\/* ncInqOut for objNcid0 *\/$/;"	m	struct:__anon11
+ncInqOut_t	include/ncInq.hpp	/^} ncInqOut_t;$/;"	t	typeref:struct:__anon7
+ncInqWithIdOut_t	include/ncInqWithId.hpp	/^} ncInqWithIdOut_t;$/;"	t	typeref:struct:__anon1
+ncObjectName	include/ncGetAggInfo.hpp	/^    char ncObjectName[MAX_NAME_LEN];$/;"	m	struct:__anon10
+ncOpenInp_t	include/ncOpen.hpp	/^} ncOpenInp_t;$/;"	t	typeref:struct:__anon18
+ncOperCollUtil	lib/ncUtil.cpp	/^ncOperCollUtil( rcComm_t *conn, char *srcColl, rodsEnv *myRodsEnv,$/;"	f
+ncOperDataObjUtil	lib/ncUtil.cpp	/^ncOperDataObjUtil( rcComm_t *conn, char *srcPath,$/;"	f
+ncRegGlobalAttrInp_t	include/ncRegGlobalAttr.hpp	/^} ncRegGlobalAttrInp_t;$/;"	t	typeref:struct:__anon2
+ncSubset	include/ncInq.hpp	/^    ncSubset_t ncSubset[MAX_NUM_VAR];$/;"	m	struct:__anon9
+ncSubset_t	include/ncInq.hpp	/^} ncSubset_t;$/;"	t	typeref:struct:__anon8
+ncUtil	lib/ncUtil.cpp	/^ncUtil( rcComm_t *conn, rodsEnv *myRodsEnv, rodsArguments_t *myRodsArgs,$/;"	f
+ncValueToInt	lib/rcNcInq.cpp	/^ncValueToInt( int dataType, void **invalue ) {$/;"	f
+ncValueToStr	lib/rcNcInq.cpp	/^ncValueToStr( int dataType, void **invalue, char *outString ) {$/;"	f
+ncVarSubset_t	include/ncInq.hpp	/^} ncVarSubset_t;$/;"	t	typeref:struct:__anon9
+ncarchUtil	lib/ncarchUtil.cpp	/^ncarchUtil( rcComm_t *conn, rodsEnv *myRodsEnv, rodsArguments_t *myRodsArgs,$/;"	f
+ncattrUtil	lib/ncattrUtil.cpp	/^ncattrUtil( rcComm_t *conn, rodsEnv *myRodsEnv, rodsArguments_t *myRodsArgs,$/;"	f
+ncid	include/ncClose.hpp	/^    int ncid;$/;"	m	struct:__anon17
+ncid	include/ncGetVarsByType.hpp	/^    int ncid;$/;"	m	struct:__anon19
+ncid	include/ncInq.hpp	/^    int ncid;$/;"	m	struct:__anon3
+ncid	include/ncInqGrps.hpp	/^    int ncid;$/;"	m	struct:__anon15
+ncid	include/ncInqId.hpp	/^    int ncid;$/;"	m	struct:__anon13
+ndim	include/ncGetVarsByType.hpp	/^    int ndim;		\/* no. of dimension *\/$/;"	m	struct:__anon19
+ndim	include/ncInqWithId.hpp	/^    int ndim;		\/* no. of dimension *\/$/;"	m	struct:__anon1
+ndims	include/ncInq.hpp	/^    int ndims;$/;"	m	struct:__anon7
+ngatts	include/ncInq.hpp	/^    int ngatts;	\/* number of global gttr *\/$/;"	m	struct:__anon7
+ngrps	include/ncInqGrps.hpp	/^    int ngrps;$/;"	m	struct:__anon16
+numAttrName	include/ncRegGlobalAttr.hpp	/^    int numAttrName;	\/* number of AttrName in attrNameArray *\/$/;"	m	struct:__anon2
+numFiles	include/ncGetAggInfo.hpp	/^    int numFiles;$/;"	m	struct:__anon10
+numSubset	include/ncInq.hpp	/^    int numSubset;	  \/* number of ncSubset *\/$/;"	m	struct:__anon9
+numVar	include/ncInq.hpp	/^    int numVar;    \/* number of variables in varName *\/$/;"	m	struct:__anon9
+nvars	include/ncInq.hpp	/^    int nvars;$/;"	m	struct:__anon7
+nvdims	include/ncInq.hpp	/^    int nvdims;$/;"	m	struct:__anon6
+objNcid	include/ncGetAggInfo.hpp	/^    int objNcid;        \/* the opened object L1desc *\/$/;"	m	struct:__anon11
+objNcid0	include/ncGetAggInfo.hpp	/^    int objNcid0;	\/* the opened object L1desc for element 0 *\/$/;"	m	struct:__anon11
+objPath	include/ncArchTimeSeries.hpp	/^    char objPath[MAX_NAME_LEN];	\/* The time series netcdf path to archive *\/$/;"	m	struct:__anon14
+objPath	include/ncGetAggElement.hpp	/^    char objPath[MAX_NAME_LEN];$/;"	m	struct:__anon12
+objPath	include/ncOpen.hpp	/^    char objPath[MAX_NAME_LEN];	\/* for ncOpenGroup, this is the full group$/;"	m	struct:__anon18
+objPath	include/ncRegGlobalAttr.hpp	/^    char objPath[MAX_NAME_LEN];$/;"	m	struct:__anon2
+openAggrFile	rsNcOpen/rsNcOpen.cpp	/^openAggrFile( rsComm_t *rsComm, int l1descInx, int aggElemetInx ) {$/;"	f
+openedAggInfo_t	include/ncGetAggInfo.hpp	/^} openedAggInfo_t;$/;"	t	typeref:struct:__anon11
+paramType	include/ncInq.hpp	/^    int paramType;$/;"	m	struct:__anon3
+paramType	include/ncInqId.hpp	/^    int paramType;$/;"	m	struct:__anon13
+parseNcSubset	lib/rcNcInq.cpp	/^parseNcSubset( ncSubset_t *ncSubset ) {$/;"	f
+parseSubsetStr	lib/rcNcInq.cpp	/^parseSubsetStr( char *subsetStr, ncVarSubset_t *ncVarSubset ) {$/;"	f
+parseVarStrForSubset	lib/rcNcInq.cpp	/^parseVarStrForSubset( char *varStr, ncVarSubset_t *ncVarSubset ) {$/;"	f
+plugin_factory	rsNcArchTimeSeries/rsNcArchTimeSeries.cpp	/^    irods::api_entry* plugin_factory($/;"	f
+plugin_factory	rsNcClose/rsNcClose.cpp	/^    irods::api_entry* plugin_factory($/;"	f
+plugin_factory	rsNcCreate/rsNcCreate.cpp	/^    irods::api_entry* plugin_factory($/;"	f
+plugin_factory	rsNcGetAggElement/rsNcGetAggElement.cpp	/^    irods::api_entry* plugin_factory($/;"	f
+plugin_factory	rsNcGetAggInfo/rsNcGetAggInfo.cpp	/^    irods::api_entry* plugin_factory($/;"	f
+plugin_factory	rsNcGetVarsByType/rsNcGetVarsByType.cpp	/^    irods::api_entry* plugin_factory($/;"	f
+plugin_factory	rsNcInq/rsNcInq.cpp	/^    irods::api_entry* plugin_factory($/;"	f
+plugin_factory	rsNcInqGrps/rsNcInqGrps.cpp	/^    irods::api_entry* plugin_factory($/;"	f
+plugin_factory	rsNcInqId/rsNcInqId.cpp	/^    irods::api_entry* plugin_factory($/;"	f
+plugin_factory	rsNcInqWithId/rsNcInqWithId.cpp	/^    irods::api_entry* plugin_factory($/;"	f
+plugin_factory	rsNcOpen/rsNcOpen.cpp	/^    irods::api_entry* plugin_factory($/;"	f
+plugin_factory	rsNcOpenGroup/rsNcOpenGroup.cpp	/^    irods::api_entry* plugin_factory($/;"	f
+plugin_factory	rsNcRegGlobalAttr/rsNcRegGlobalAttr.cpp	/^    irods::api_entry* plugin_factory($/;"	f
+prFirstNcLine	lib/rcNcInq.cpp	/^prFirstNcLine( char *objPath ) {$/;"	f
+prNcDimVar	lib/rcNcInq.cpp	/^prNcDimVar( rcComm_t *conn, char *fileName, int ncid, int printAsciTime,$/;"	f
+prNcHeader	lib/rcNcInq.cpp	/^prNcHeader( rcComm_t *conn, int ncid, int noattr, ncInqOut_t *ncInqOut ) {$/;"	f
+prNcVarData	lib/rcNcInq.cpp	/^prNcVarData( rcComm_t *conn, char *fileName, int ncid, int printAsciTime,$/;"	f
+prSingleDimVar	lib/rcNcInq.cpp	/^prSingleDimVar( rcComm_t *conn, int ncid, int varInx,$/;"	f
+printNice	lib/rcNcInq.cpp	/^printNice( char *str, char *margin, int charPerLine ) {$/;"	f
+queryAUVForDataObj	lib/ncattrUtil.cpp	/^queryAUVForDataObj( rcComm_t *conn, char *collPath, rodsEnv *myRodsEnv, rodsArguments_t *rodsArgs ) {$/;"	f
+queryDataObjForAUV	lib/ncattrUtil.cpp	/^queryDataObjForAUV( rcComm_t *conn, char *objPath, rodsArguments_t *rodsArgs,$/;"	f
+rcNcArchTimeSeries	lib/rcNcArchTimeSeries.cpp	/^rcNcArchTimeSeries( rcComm_t *conn, ncArchTimeSeriesInp_t *ncArchTimeSeriesInp ) {$/;"	f
+rcNcClose	lib/rcNcClose.cpp	/^rcNcClose( rcComm_t *conn, ncCloseInp_t *ncCloseInp ) {$/;"	f
+rcNcCreate	lib/rcNcCreate.cpp	/^rcNcCreate( rcComm_t *conn, ncOpenInp_t *ncCreateInp, int *ncid ) {$/;"	f
+rcNcGetAggElement	lib/rcNcGetAggElement.cpp	/^rcNcGetAggElement( rcComm_t *conn, ncOpenInp_t *ncOpenInp,$/;"	f
+rcNcGetAggInfo	lib/rcNcGetAggInfo.cpp	/^rcNcGetAggInfo( rcComm_t *conn, ncOpenInp_t *ncOpenInp,$/;"	f
+rcNcGetVarsByType	lib/rcNcGetVarsByType.cpp	/^rcNcGetVarsByType( rcComm_t *conn,  ncGetVarInp_t *ncGetVarInp,$/;"	f
+rcNcInq	lib/rcNcInq.cpp	/^rcNcInq( rcComm_t *conn, ncInqInp_t *ncInqInp, ncInqOut_t **ncInqOut ) {$/;"	f
+rcNcInqGrps	lib/rcNcInqGrps.cpp	/^rcNcInqGrps( rcComm_t *conn, ncInqGrpsInp_t *ncInqGrpsInp,$/;"	f
+rcNcInqId	lib/rcNcInqId.cpp	/^rcNcInqId( rcComm_t *conn, ncInqIdInp_t *ncInqIdInp, int **outId ) {$/;"	f
+rcNcInqWithId	lib/rcNcInqWithId.cpp	/^rcNcInqWithId( rcComm_t *conn, ncInqIdInp_t *ncInqWithIdInp,$/;"	f
+rcNcOpen	lib/rcNcOpen.cpp	/^rcNcOpen( rcComm_t *conn, ncOpenInp_t *ncOpenInp, int *ncid ) {$/;"	f
+rcNcOpenGroup	lib/rcNcOpenGroup.cpp	/^rcNcOpenGroup( rcComm_t *conn, ncOpenInp_t *ncOpenGroupInp, int *ncid ) {$/;"	f
+rcNcRegGlobalAttr	lib/rcNcRegGlobalAttr.cpp	/^rcNcRegGlobalAttr( rcComm_t *conn, ncRegGlobalAttrInp_t *ncRegGlobalAttrInp ) {$/;"	f
+readAggInfo	rsNcArchTimeSeries/readAggInfo.cpp	/^readAggInfo( rsComm_t*     rsComm, $/;"	f
+readAggInfo	rsNcOpen/readAggInfo.cpp	/^readAggInfo( rsComm_t*     rsComm, $/;"	f
+regAttrCollUtil	lib/ncattrUtil.cpp	/^regAttrCollUtil( rcComm_t *conn, char *srcColl, rodsEnv *myRodsEnv,$/;"	f
+regAttrDataObjUtil	lib/ncattrUtil.cpp	/^regAttrDataObjUtil( rcComm_t *conn, char *srcPath,$/;"	f
+resolveSubsetVar	lib/rcNcInq.cpp	/^resolveSubsetVar( rcComm_t *conn, int ncid, ncInqOut_t *ncInqOut,$/;"	f
+rmAttrCollUtil	lib/ncattrUtil.cpp	/^rmAttrCollUtil( rcComm_t *conn, char *srcColl, rodsEnv *myRodsEnv,$/;"	f
+rmAttrDataObjUtil	lib/ncattrUtil.cpp	/^rmAttrDataObjUtil( rcComm_t *conn, char *srcPath,$/;"	f
+rootNcid	include/ncOpen.hpp	/^    int rootNcid;		\/* used only for ncOpenGroup *\/$/;"	m	struct:__anon18
+rsNcArchTimeSeries	rsNcArchTimeSeries/rsNcArchTimeSeries.cpp	/^    rsNcArchTimeSeries( rsComm_t *rsComm,$/;"	f
+rsNcClose	rsNcClose/rsNcClose.cpp	/^    rsNcClose( rsComm_t *rsComm, ncCloseInp_t *ncCloseInp ) {$/;"	f
+rsNcCreate	rsNcCreate/rsNcCreate.cpp	/^    rsNcCreate( rsComm_t *rsComm, ncOpenInp_t *ncCreateInp, int **ncid ) {$/;"	f
+rsNcGetAggElement	rsNcGetAggElement/rsNcGetAggElement.cpp	/^    rsNcGetAggElement( rsComm_t *rsComm, ncOpenInp_t *ncOpenInp,$/;"	f
+rsNcGetAggInfo	rsNcGetAggInfo/rsNcGetAggInfo.cpp	/^    rsNcGetAggInfo( rsComm_t *rsComm, ncOpenInp_t *ncOpenInp,$/;"	f
+rsNcGetVarsByType	rsNcGetVarsByType/rsNcGetVarsByType.cpp	/^    rsNcGetVarsByType( rsComm_t *rsComm, ncGetVarInp_t *ncGetVarInp,$/;"	f
+rsNcGetVarsByTypeForColl	rsNcGetVarsByType/rsNcGetVarsByType.cpp	/^rsNcGetVarsByTypeForColl( rsComm_t *rsComm, ncGetVarInp_t *ncGetVarInp,$/;"	f
+rsNcGetVarsByTypeForObj	rsNcGetVarsByType/rsNcGetVarsByType.cpp	/^rsNcGetVarsByTypeForObj( rsComm_t *rsComm, ncGetVarInp_t *ncGetVarInp,$/;"	f
+rsNcInq	rsNcInq/rsNcInq.cpp	/^    rsNcInq( rsComm_t *rsComm, ncInqInp_t *ncInqInp, ncInqOut_t **ncInqOut ) {$/;"	f
+rsNcInqColl	rsNcInq/rsNcInq.cpp	/^rsNcInqColl( rsComm_t *rsComm, ncInqInp_t *ncInqInp, ncInqOut_t **ncInqOut ) {$/;"	f
+rsNcInqDataObj	rsNcInq/rsNcInq.cpp	/^rsNcInqDataObj( rsComm_t *rsComm, ncInqInp_t *ncInqInp, ncInqOut_t **ncInqOut ) {$/;"	f
+rsNcInqGrps	rsNcInqGrps/rsNcInqGrps.cpp	/^    rsNcInqGrps( rsComm_t *rsComm, ncInqGrpsInp_t *ncInqGrpsInp,$/;"	f
+rsNcInqId	rsNcInqId/rsNcInqId.cpp	/^    rsNcInqId( rsComm_t *rsComm, ncInqIdInp_t *ncInqIdInp, int **outId ) {$/;"	f
+rsNcInqIdColl	rsNcInqId/rsNcInqId.cpp	/^rsNcInqIdColl( rsComm_t *rsComm, ncInqIdInp_t *ncInqIdInp, int **outId ) {$/;"	f
+rsNcInqIdDataObj	rsNcInqId/rsNcInqId.cpp	/^rsNcInqIdDataObj( rsComm_t *rsComm, ncInqIdInp_t *ncInqIdInp, int **outId ) {$/;"	f
+rsNcInqWithId	rsNcInqWithId/rsNcInqWithId.cpp	/^    rsNcInqWithId( rsComm_t *rsComm, ncInqIdInp_t *ncInqWithIdInp,$/;"	f
+rsNcInqWithIdColl	rsNcInqWithId/rsNcInqWithId.cpp	/^rsNcInqWithIdColl( rsComm_t *rsComm, ncInqIdInp_t *ncInqWithIdInp,$/;"	f
+rsNcInqWithIdDataObj	rsNcInqWithId/rsNcInqWithId.cpp	/^rsNcInqWithIdDataObj( rsComm_t *rsComm, ncInqIdInp_t *ncInqWithIdInp,$/;"	f
+rsNcOpen	rsNcOpen/rsNcOpen.cpp	/^    rsNcOpen( rsComm_t *rsComm, ncOpenInp_t *ncOpenInp, int **ncid ) {$/;"	f
+rsNcOpenColl	rsNcOpen/rsNcOpen.cpp	/^rsNcOpenColl( rsComm_t *rsComm, ncOpenInp_t *ncOpenInp, int **ncid ) {$/;"	f
+rsNcOpenDataObj	rsNcOpen/rsNcOpen.cpp	/^rsNcOpenDataObj( rsComm_t *rsComm, ncOpenInp_t *ncOpenInp, int **ncid ) {$/;"	f
+rsNcOpenGroup	rsNcOpenGroup/rsNcOpenGroup.cpp	/^    rsNcOpenGroup( rsComm_t *rsComm, ncOpenInp_t *ncOpenGroupInp, int **ncid ) {$/;"	f
+rsNcRegGlobalAttr	rsNcRegGlobalAttr/rsNcRegGlobalAttr.cpp	/^    rsNcRegGlobalAttr( rsComm_t *rsComm, ncRegGlobalAttrInp_t *ncRegGlobalAttrInp ) {$/;"	f
+setAggInfo	lib/ncUtil.cpp	/^setAggInfo( rcComm_t *conn, char *srcColl, rodsEnv *myRodsEnv,$/;"	f
+start	include/ncGetVarsByType.hpp	/^    rodsLong_t *start;  \/* array of ndim length *\/$/;"	m	struct:__anon19
+start	include/ncInq.hpp	/^    int start;$/;"	m	struct:__anon8
+startStr	include/ncInq.hpp	/^    char startStr[NAME_LEN];$/;"	m	struct:__anon8
+startTime	include/ncGetAggElement.hpp	/^    unsigned int startTime;$/;"	m	struct:__anon12
+stride	include/ncGetVarsByType.hpp	/^    rodsLong_t *stride; \/* array of ndim length *\/$/;"	m	struct:__anon19
+stride	include/ncInq.hpp	/^    int stride;$/;"	m	struct:__anon8
+subsetVarName	include/ncInq.hpp	/^    char subsetVarName[LONG_NAME_LEN];$/;"	m	struct:__anon8
+sumAggElementArraylen	lib/rcNcGetAggInfo.cpp	/^sumAggElementArraylen( ncAggInfo_t *ncAggInfo, int aggElemetInx ) {$/;"	f
+timeToAsci	lib/rcNcInq.cpp	/^timeToAsci( time_t mytime, char *asciTime ) {$/;"	f
+type	include/ncClose.hpp	/^    int type;			\/* not used *\/$/;"	m	struct:__anon17
+unlimdimid	include/ncInq.hpp	/^    int unlimdimid;$/;"	m	struct:__anon7
+value	include/ncInq.hpp	/^    ncGetVarOut_t value;$/;"	m	struct:__anon5
+var	include/ncInq.hpp	/^    ncGenVarOut_t *var;		\/* array of ngvars length *\/$/;"	m	struct:__anon7
+varName	include/ncInq.hpp	/^    char varName[MAX_NUM_VAR][LONG_NAME_LEN];$/;"	m	struct:__anon9
+varid	include/ncGetVarsByType.hpp	/^    int varid;$/;"	m	struct:__anon19
