@@ -107,7 +107,8 @@ END_POSTREMOVE
 # =-=-=-=-=-=-=-
 f 644 $OS_IRODS_ACCT $OS_IRODS_ACCT ${IRODS_HOME_DIR}/plugins/api/ *.so
 f 644 $OS_IRODS_ACCT $OS_IRODS_ACCT ${IRODS_HOME_DIR}/tests/pydevtest/test_irods_plugin_api_netcdf.py ./packaging/test_irods_plugin_api_netcdf.py
-
+f 644 $OS_IRODS_ACCT $OS_IRODS_ACCT ${IRODS_HOME_DIR}/tests/pydevtest/pres_temp_4D.nc ./packaging/pres_temp_4D.nc
+f 644 $OS_IRODS_ACCT $OS_IRODS_ACCT ${IRODS_HOME_DIR}/tests/pydevtest/sfc_pres_temp.nc ./packaging/sfc_pres_temp.nc
 
 
 
