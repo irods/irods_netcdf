@@ -9,6 +9,7 @@
 #include "miscUtil.hpp"
 #include "rcPortalOpr.hpp"
 #include "ncUtil.hpp"
+#include "ncGetVarsByType.hpp"
 
 int
 ncUtil( rcComm_t *conn, rodsEnv *myRodsEnv, rodsArguments_t *myRodsArgs,

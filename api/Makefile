@@ -1,4 +1,4 @@
-SUBS = lib rsNcRegGlobalAttr rsNcOpenGroup rsNcOpen rsNcInqWithId rsNcInqId rsNcInqGrps rsNcInq rsNcGetVarsByType rsNcGetAggInfo rsNcGetAggElement rsNcCreate rsNcClose rsNcArchTimeSeries
+SUBS = lib rsNcRegGlobalAttr rsNcOpenGroup rsNcOpen rsNcInqWithId rsNcInqId rsNcInqGrps rsNcInq rsNcGetVarsByType rsNcGetAggInfo rsNcGetAggElement rsNcCreate rsNcClose rsNcArchTimeSeries rsOoiGenServReq
 
 
 ######################################################################
@@ -14,6 +14,6 @@ ${SUBS}:
 	${MAKE} -C $@
 
 clean:
-	@-for dir in ${SUBS}; do \
+	@for dir in ${SUBS}; do \
 	${MAKE} -C $$dir clean; \
 	done

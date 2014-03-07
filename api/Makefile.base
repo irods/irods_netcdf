@@ -19,9 +19,9 @@ CLI_OBJS = $(patsubst %.cpp, ${CLI_OBJDIR}/%.o, ${SRCS})
 
 DEPS = $(patsubst %.cpp, ${DEPDIR}/%.d, ${SRCS})
 
-GCC = g++ -Wno-write-strings -DNETCDF_API 
+GCC = g++ -Wno-write-strings -DNETCDF_API -DRODS_SERVER
 
-INC = -I../include/ -I/usr/include/irods ${EXTRAINCS}
+INC = -I../include/ -I/usr/include/irods -I/usr/include/irods/netcdf/include ${EXTRAINCS}
 
 BOOST_DIR=/usr/lib/irods/
 BOOST_LIBS = \

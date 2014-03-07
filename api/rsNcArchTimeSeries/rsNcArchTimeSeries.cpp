@@ -21,6 +21,7 @@
 #include "regDataObj.hpp"
 #include "ncUtil.hpp"
 #include "irods_get_l1desc.hpp"
+#include "irods_resource_backport.hpp"
 
 #ifdef RODS_SERVER
 
@@ -74,8 +75,7 @@ _rsNcArchTimeSeries( rsComm_t *rsComm,
             return SYS_INVALID_RESC_INPUT;
         }
         else {
-            remoteFlag = resolveHostByRescInfo( myRescGrpInfo->rescInfo,
-                                                &rodsServerHost );
+            irods::error ret = irods::get_host_for_hier_string( getValByKey( &ncArchTimeSeriesInp->condInput, RESC_HIER_STR_KW ), remoteFlag, rodsServerHost );
             if ( remoteFlag < 0 ) {
                 freeRescGrpInfo( myRescGrpInfo );
                 return ( remoteFlag );

@@ -3,6 +3,7 @@ TARGET = libirods_netcdf.a
 SRCS = ncUtil.cpp \
        ncarchUtil.cpp  \
        ncattrUtil.cpp \
+       ooiCi.cpp \
        _rsNcGetVarsByType.cpp \
        rcNcArchTimeSeries.cpp \
        rcNcClose.cpp  \
@@ -22,7 +23,7 @@ HEADERS =
 
 EXTRALIBS = /usr/lib/libirods.a 
 
-EXTRAINCS = 
+EXTRAINCS = -I/usr/include/irods/jansson/src/
 
 ######################################################################
 # General settings below.
@@ -40,7 +41,7 @@ DEPS = $(patsubst %.cpp, ${DEPDIR}/%.d, ${SRCS})
 
 GCC = g++ -Wno-write-strings -DRODS_SERVER -DNETCDF_API
 
-INC = -I../include/ -I/usr/include/irods ${EXTRAINCS}
+INC = -I../include/ -I/usr/include/irods -I/usr/include/irods/netcdf/include ${EXTRAINCS}
 
 .PHONY: clean
 
