@@ -1,13 +1,15 @@
 # =-=-=-=-=-=-=-
 # EPM Variables
 # =-=-=-=-=-=-=-
-%product iRODS WOS Resource Plugin
+%product iRODS NetCDF API Plugin
 %copyright 2014, The University of North Carolina at Chapel Hill
 %vendor Renaissance Computing Institute <info@irods-consortium.org>
 %license LICENSE
 %readme README
 %description The integrated Rule-Oriented Data System
 %version TEMPLATE_PLUGINVERSION TEMPLATE_PLUGINVERSIONINT
+
+%requires irods-runtime
 
 %if DEB
 %requires libc6
