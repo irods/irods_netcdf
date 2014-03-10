@@ -11,7 +11,7 @@ GCC = g++
 default: ${SUBS}
 
 ${SUBS}:
-	${MAKE} -C $@
+	@${MAKE} -C $@
 
 clean:
 	@for dir in ${SUBS}; do \

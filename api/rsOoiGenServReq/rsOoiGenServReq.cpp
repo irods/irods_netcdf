@@ -69,7 +69,7 @@ extern "C" {
                                 REMOTE_USER_AUTH,
                                 "OoiGenServReqInp_PI", 0,
                                 "OoiGenServReqOut_PI", 0,
-                                0
+                                0, 0
                               }; // null fcn ptr, handled in delay_load
         // =-=-=-=-=-=-=-
         // create an api object

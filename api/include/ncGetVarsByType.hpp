@@ -124,8 +124,8 @@ extern "C" {
     freeNcGetVarOut( ncGetVarOut_t **ncGetVarOut );
     int
     clearNcGetVarOut( ncGetVarOut_t *ncGetVarOut );
-    int
-    clearNcGetVarInp( ncGetVarInp_t *ncGetVarInp );
+    void
+    clearNcGetVarInp( void *voidInp );
     int
     _rsNcGetVarsByType( int ncid, ncGetVarInp_t *ncGetVarInp,
                         ncGetVarOut_t **ncGetVarOut );

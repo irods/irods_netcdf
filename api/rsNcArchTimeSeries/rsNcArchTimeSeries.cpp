@@ -476,7 +476,7 @@ extern "C" {
                                 REMOTE_USER_AUTH,
                                 "NcArchTimeSeriesInp_PI", 0,
                                 NULL, 0,
-                                0
+                                0, 0
                               }; // null fcn ptr, handled in delay_load
         // =-=-=-=-=-=-=-
         // create an api object

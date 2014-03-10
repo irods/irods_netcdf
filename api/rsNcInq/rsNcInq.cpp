@@ -177,8 +177,8 @@ extern "C" {
                                 REMOTE_USER_AUTH,
                                 "NcInqInp_PI", 0,
                                 "NcInqOut_PI", 0,
-                                0 // null fcn ptr, handled in delay_load
-                              }; 
+                                0, 0 // null fcn ptr, handled in delay_load
+                              };
         // =-=-=-=-=-=-=-
         // create an api object
         irods::api_entry* api = new irods::api_entry( def );
@@ -188,32 +188,25 @@ extern "C" {
 #ifdef RODS_SERVER
         api->fcn_name_ = "rsNcInq";
 #endif // RODS_SERVER
-         
+
         // =-=-=-=-=-=-=-
         // assign the pack struct key and value
         api->in_pack_key   = "NcInqInp_PI";
         api->in_pack_value = NcInqInp_PI;
-        
+
         api->out_pack_key   = "NcInqOut_PI";
         api->out_pack_value = NcInqOut_PI;
-        
+
         // =-=-=-=-=-=-=-
         // add all the supporting packinstructions
         api->extra_pack_struct[ "NcGenVarOut_PI" ] = NcGenVarOut_PI;
         api->extra_pack_struct[ "NcGenAttOut_PI" ] = NcGenAttOut_PI;
         api->extra_pack_struct[ "NcGenDimOut_PI" ] = NcGenDimOut_PI;
-        
+
         // =-=-=-=-=-=-=-
         // and... were done.
         return api;
 
     } // plugin_factory
 
-
-
 }; // extern "C"
-
-
-
-
-

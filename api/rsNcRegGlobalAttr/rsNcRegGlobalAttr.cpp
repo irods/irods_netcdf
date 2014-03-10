@@ -163,8 +163,8 @@ extern "C" {
                                 REMOTE_USER_AUTH,
                                 REMOTE_USER_AUTH,
                                 "NcRegGlobalAttrInp_PI", 0,
-                                NULL, 0,
-                                0 // null fcn ptr, handled in delay_load
+                                NULL, 0, 0, // null fcn ptr, handled in delay_load
+                                clearRegGlobalAttrInp
                               }; 
         // =-=-=-=-=-=-=-
         // create an api object

@@ -65,13 +65,14 @@ rcNcRegGlobalAttr( rcComm_t *conn, ncRegGlobalAttrInp_t *ncRegGlobalAttrInp ) {
     return ( status );
 }
 
-int
-clearRegGlobalAttrInp( ncRegGlobalAttrInp_t *ncRegGlobalAttrInp ) {
+void
+clearRegGlobalAttrInp( void* voidInp) {
+    ncRegGlobalAttrInp_t * ncRegGlobalAttrInp = ( ncRegGlobalAttrInp_t *)voidInp;
     int i;
 
     if ( ncRegGlobalAttrInp == NULL || ncRegGlobalAttrInp->numAttrName <= 0 ||
             ncRegGlobalAttrInp->attrNameArray == NULL ) {
-        return ( 0 );
+        return;
     }
 
     for ( i = 0; i < ncRegGlobalAttrInp->numAttrName; i++ ) {
@@ -80,7 +81,6 @@ clearRegGlobalAttrInp( ncRegGlobalAttrInp_t *ncRegGlobalAttrInp ) {
     free( ncRegGlobalAttrInp->attrNameArray );
     clearKeyVal( &ncRegGlobalAttrInp->condInput );
     memset( ncRegGlobalAttrInp, 0, sizeof( ncRegGlobalAttrInp_t ) );
-    return( 0 );
+    return;
 
 }
-

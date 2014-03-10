@@ -88,10 +88,13 @@ clearNcGetVarOut( ncGetVarOut_t *ncGetVarOut ) {
     return 0;
 }
 
-int
-clearNcGetVarInp( ncGetVarInp_t *ncGetVarInp ) {
+void
+clearNcGetVarInp( void * voidInp ) {
+    ncGetVarInp_t * ncGetVarInp = ( ncGetVarInp_t * ) voidInp;
     if ( ncGetVarInp == NULL ) {
-        return USER__NULL_INPUT_ERR;
+        irods::log( ERROR( USER__NULL_INPUT_ERR, 
+              "Null input error in clearNcGetVarInp." ) );
+        return;
     }
     if ( ncGetVarInp->start != NULL ) {
         free( ncGetVarInp->start );
@@ -106,7 +109,7 @@ clearNcGetVarInp( ncGetVarInp_t *ncGetVarInp ) {
         ncGetVarInp->stride = NULL;
     }
     clearKeyVal( &ncGetVarInp->condInput );
-    return 0;
+    return;
 }
 
 int

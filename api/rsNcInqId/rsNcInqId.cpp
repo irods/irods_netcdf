@@ -173,8 +173,8 @@ extern "C" {
                                 REMOTE_USER_AUTH,
                                 "NcInqIdInp_PI", 0,
                                 "INT_PI", 0,
-                                0 // null fcn ptr, handled in delay_load
-                              }; 
+                                0, 0 // null fcn ptr, handled in delay_load
+                              };
         // =-=-=-=-=-=-=-
         // create an api object
         irods::api_entry* api = new irods::api_entry( def );
@@ -184,24 +184,16 @@ extern "C" {
 #ifdef RODS_SERVER
         api->fcn_name_ = "rsNcInqId";
 #endif // RODS_SERVER
-                     
+
         // =-=-=-=-=-=-=-
         // assign the pack struct key and value
         api->in_pack_key   = "NcInqIdInp_PI";
         api->in_pack_value = NcInqIdInp_PI;
-        
+
         // =-=-=-=-=-=-=-
         // and... were done.
         return api;
 
     } // plugin_factory
 
-
-
-
 }; // extern "C"
-
-
-
-
-

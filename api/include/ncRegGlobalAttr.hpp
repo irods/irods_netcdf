@@ -58,8 +58,8 @@ extern "C" {
     int
     rcNcRegGlobalAttr( rcComm_t *conn, ncRegGlobalAttrInp_t *ncRegGlobalAttrInp );
 
-    int
-    clearRegGlobalAttrInp( ncRegGlobalAttrInp_t *ncRegGlobalAttrInp );
+    void
+    clearRegGlobalAttrInp( void *voidInp );
 
 }
 

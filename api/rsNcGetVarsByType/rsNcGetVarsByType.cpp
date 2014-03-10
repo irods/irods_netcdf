@@ -322,9 +322,9 @@ extern "C" {
                                 REMOTE_USER_AUTH,
                                 REMOTE_USER_AUTH,
                                 "NcGetVarInp_PI", 0,
-                                "NcGetVarOut_PI", 0,
-                                0 // null fcn ptr, handled in delay_load
-                              }; 
+                                "NcGetVarOut_PI", 0, 0, // null fcn ptr, handled in delay_load
+                                clearNcGetVarInp
+                              };
         // =-=-=-=-=-=-=-
         // create an api object
         irods::api_entry* api = new irods::api_entry( def );
@@ -334,32 +334,19 @@ extern "C" {
 #ifdef RODS_SERVER
         api->fcn_name_ = "rsNcGetVarsByType";
 #endif // RODS_SERVER
-                 
+
         // =-=-=-=-=-=-=-
         // assign the pack struct key and value
         api->in_pack_key   = "NcGetVarInp_PI";
         api->in_pack_value = NcGetVarInp_PI;
-        
+
         api->out_pack_key   = "NcGetVarOut_PI";
         api->out_pack_value = NcGetVarOut_PI;
-        
+
         // =-=-=-=-=-=-=-
         // and... were done.
         return api;
 
     } // plugin_factory
 
-
-
-
-
-
-}; // exten "C"
-
-
-
-
-
-
-
-
+}; // extern "C"
