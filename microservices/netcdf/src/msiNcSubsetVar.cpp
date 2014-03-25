@@ -3,6 +3,8 @@
 #include "reGlobalsExtern.hpp"
 #include "irods_ms_plugin.hpp"
 #include "netcdfMS.hpp"
+#include "irods_server_api_call.hpp"
+#include "ncApiIndex.hpp"
 
 // =-=-=-=-=-=-=-
 // STL Includes
@@ -187,10 +189,10 @@ extern "C" {
         ncGetVarInp.count = count;
         ncGetVarInp.stride = stride;
 
-        status = rsNcGetVarsByType (rsComm, &ncGetVarInp, ncGetVarOut);
+        status = irods::server_api_call ( NC_GET_VARS_BY_TYPE_AN, rsComm, &ncGetVarInp, ncGetVarOut);
 
         if (status < 0) {
-          std::string msg = "ncSubsetVar: rcNcGetVarsByType error for ";
+          std::string msg = "ncSubsetVar: api call to rsGetVarsByType encountered error for ";
           msg += std::string( ncInqOut->var[varInx].name );
           irods::log ( ERROR( status, msg.c_str() ) );
         }

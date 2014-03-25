@@ -25,7 +25,6 @@ rsNcCreate( rsComm_t *rsComm, ncOpenInp_t *ncCreateInp, int **ncid );
 #define RS_NC_CREATE NULL
 #endif
 
-#define NC_CREATE_AN 1001
 
 extern "C" {
 

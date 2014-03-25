@@ -179,8 +179,7 @@ echo ""
 # =-=-=-=-=-=-=-
 # build the plugin itself
 echo "${text_green}${text_bold}Building...${text_reset}"
-$MAKEJCMD -C netcdf/
-$MAKEJCMD -C hdf5/
+$MAKEJCMD
 
 # =-=-=-=-=-=-=-
 # generate EPM list file from the template

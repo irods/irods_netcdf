@@ -3,6 +3,8 @@
 #include "reGlobalsExtern.hpp"
 #include "irods_ms_plugin.hpp"
 #include "netcdfMS.hpp"
+#include "irods_server_api_call.hpp"
+#include "ncApiIndex.hpp"
 
 // =-=-=-=-=-=-=-
 // STL Includes
@@ -91,14 +93,14 @@ extern "C" {
             if (ncOpenInp.mode < 0) return (ncOpenInp.mode);
         }
 
-        rei->status = rsNcOpen (rsComm, &ncOpenInp, &ncid);
+        rei->status = irods::server_api_call ( NC_OPEN_AN, rsComm, &ncOpenInp, &ncid);
         clearKeyVal (&ncOpenInp.condInput);
         if (rei->status >= 0) {
             fillIntInMsParam (outParam, *ncid);
             free (ncid);
         } else {
           rodsLogAndErrorMsg (LOG_ERROR, &rsComm->rError, rei->status,
-            "msiNcOpen: rsNcOpen failed for %s, status = %d",
+            "msiNcOpen: api call to ncOpen failed for %s, status = %d",
             ncOpenInp.objPath, rei->status);
         }
 

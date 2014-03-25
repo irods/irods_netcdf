@@ -1,5 +1,5 @@
 
-#include "nc_util.hpp"
+#include "ncUtil.hpp"
 
 /* _rsNcGetVarsByType - moved from server to client because it can be
  * called by client too

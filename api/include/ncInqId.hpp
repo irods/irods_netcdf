@@ -16,8 +16,6 @@
 #include "dataObjInpOut.hpp"
 #include "ncOpen.hpp"
 
-#define NC_INQ_ID_AN                    1003
-
 /* definition for paramType */
 #define NC_VAR_T		0	/* nc variable */
 #define NC_DIM_T		1	/* nc dimension */
@@ -39,9 +37,9 @@ rsNcInqId( rsComm_t *rsComm, ncInqIdInp_t *ncInqIdInp, int **outId );
 int
 _rsNcInqId( int type, int ncid, char *name, int **outId );
 int
-rsNcInqIdDataObj( rsComm_t *rsComm, ncInqIdInp_t *ncInqIdInp, int **outId );
+_rsNcInqIdDataObj( rsComm_t *rsComm, ncInqIdInp_t *ncInqIdInp, int **outId );
 int
-rsNcInqIdColl( rsComm_t *rsComm, ncInqIdInp_t *ncInqIdInp, int **outId );
+_rsNcInqIdColl( rsComm_t *rsComm, ncInqIdInp_t *ncInqIdInp, int **outId );
 #else
 #define RS_NC_INQ_ID NULL
 #endif

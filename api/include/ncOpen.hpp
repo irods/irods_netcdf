@@ -18,8 +18,6 @@
 #include "netcdf.h"
 #endif
 
-#define NC_OPEN_AN                      1000
-
 typedef struct {
     char objPath[MAX_NAME_LEN];	/* for ncOpenGroup, this is the full group
 				 * path */
@@ -38,9 +36,9 @@ typedef struct {
 extern "C" int
 rsNcOpen( rsComm_t *rsComm, ncOpenInp_t *ncOpenInp, int **ncid );
 int
-rsNcOpenDataObj( rsComm_t *rsComm, ncOpenInp_t *ncOpenInp, int **ncid );
+_rsNcOpenDataObj( rsComm_t *rsComm, ncOpenInp_t *ncOpenInp, int **ncid );
 int
-rsNcOpenColl( rsComm_t *rsComm, ncOpenInp_t *ncOpenInp, int **ncid );
+_rsNcOpenColl( rsComm_t *rsComm, ncOpenInp_t *ncOpenInp, int **ncid );
 int
 openAggrFile( rsComm_t *rsComm, int l1descInx, int aggElemetInx );
 #else

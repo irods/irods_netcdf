@@ -1,0 +1,7 @@
+libirods_netcdf_server.a
+libirods_netcdf_client.a
+obj
+build
+.deps
+.depends
+~.gitignore

@@ -146,4 +146,5 @@ usage() {
         printf( "%s\n", msgs[i] );
     }
     printReleaseInfo( "incattr" );
+
 }

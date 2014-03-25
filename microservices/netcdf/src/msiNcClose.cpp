@@ -4,6 +4,8 @@
 #include "irods_ms_plugin.hpp"
 #include "netcdfMS.hpp"
 #include "ncClose.hpp"
+#include "irods_server_api_call.hpp"
+#include "ncApiIndex.hpp"
 
 // =-=-=-=-=-=-=-
 // STL Includes
@@ -82,11 +84,11 @@ extern "C" {
             return (USER_PARAM_TYPE_ERR);
         }
 
-        rei->status = rsNcClose (rsComm, &ncCloseInp);
+        rei->status = irods::server_api_call ( NC_CLOSE_AN, rsComm, &ncCloseInp );
         clearKeyVal (&ncCloseInp.condInput);
         if (rei->status < 0) {
           rodsLogAndErrorMsg (LOG_ERROR, &rsComm->rError, rei->status,
-            "msiNcClose: rsNcClose failed for %d, status = %d",
+            "msiNcClose: api call to ncClose failed for %d, status = %d",
             ncCloseInp.ncid, rei->status);
         }
 

@@ -3,7 +3,7 @@
 
 # =-=-=-=-=-=-=-
 # build execs and options
-GCC = g++ -Wno-write-strings -DADDR_64BITS -Dlinux_platform 
+GCC = g++
 LDR = g++
 
 # =-=-=-=-=-=-=-
@@ -17,13 +17,13 @@ srcDir = src
 #
 OBJS =  $(objDir)/inc.o \
 		$(objDir)/incarch.o \
-		$(objDir)/incattr.o  
+		$(objDir)/incattr.o
 
 
 BINS =		\
 		$(binDir)/inc \
 		$(binDir)/incarch  \
-		$(binDir)/incattr 
+		$(binDir)/incattr
 
 # =-=-=-=-=-=-=-
 # libraries
@@ -34,7 +34,7 @@ BOOST_LIBS = \
              $(BOOST_DIR)/libboost_regex.a \
              $(BOOST_DIR)/libboost_thread.a
 
-LIBRARY = ../api/libirods_netcdf.a \
+LIBRARY = ../api/libirods_netcdf_client.a \
           /usr/lib/irods/libirods_client.a \
           $(BOOST_LIBS)
 #          /usr/lib/irods/libhdf5_hl.a \
@@ -45,12 +45,14 @@ LIBRARY = ../api/libirods_netcdf.a \
 LDFLAGS +=	$(LIBRARY) $(MODULE_LDFLAGS) $(CL_LDADD) 
 LDFLAGS += -L/usr/lib/irods/ -lnetcdf -rdynamic -lrt -lpthread -ldl -lcurl -lz -lssl -lcrypto 
 
-CFLAGS = -I/usr/include/irods \
-         -I../api/include/ \
-         $(CFLAGS_OPTIONS) \
-         $(LIB_INCLUDES) \
-         $(SVR_INCLUDES) \
-         $(MODULE_CFLAGS)
+CFLAGS += -Wno-write-strings -DADDR_64BITS -Dlinux_platform -DNETCDF_API
+CFLAGS += -I/usr/include/irods \
+					-I /usr/include/irods/netcdf/include \
+					-I../api/include/ \
+					$(CFLAGS_OPTIONS) \
+					$(LIB_INCLUDES) \
+					$(SVR_INCLUDES) \
+					$(MODULE_CFLAGS)
 
 CFLAGS_OPTIONS := -g $(CFLAGS) $(MY_CFLAG)
 
@@ -83,10 +85,6 @@ print_cflags:
 print_ldflags:
 	@echo "Link flags:"
 	@echo "    $(LDFLAGS)"
-
-
-
-
 
 # Clean
 clean:

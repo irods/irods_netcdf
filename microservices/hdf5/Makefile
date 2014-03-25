@@ -1,30 +1,21 @@
-ifndef $(CC)
-CC=g++
-endif
-hdf5MSObjDir=obj
-hdf5MSIncDir=include
-hdf5MSSrcDir=src
+SRCDIR=src
 
-INCLUDES+= -I/usr/include/irods -I/usr/include/irods/hdf5/src -I$(hdf5MSIncDir)
-LDFLAGS+= -L/usr/lib/irods
-LDLIBS+= libirods.a
+SRCS=$(SRCDIR)/msiH5Dataset_read.cpp \
+		$(SRCDIR)/msiH5Dataset_read_attribute.cpp \
+		$(SRCDIR)/msiH5Group_read_attribute.cpp \
+		$(SRCDIR)/msiH5File_close.cpp \
+		$(SRCDIR)/msiH5File_open.cpp
 
-CFLAGS+= $(INCLUDES)
-CFLAGS+= -DRODS_SERVER
-CFLAGS+= -Wall -Werror
+CFLAGS += -DNETCDF_API -DRODS_SERVER
 
-HDF5_MS_OBJS=$(hdf5MSObjDir)/msiH5Dataset_read.o \
-		$(hdf5MSObjDir)/msiH5Dataset_read_attribute.o \
-		$(hdf5MSObjDir)/msiH5Group_read_attribute.o \
-		$(hdf5MSObjDir)/msiH5File_close.o \
-		$(hdf5MSObjDir)/msiH5File_open.o
-.PHONY : default all clean
+EXTRAINCS+= -I/usr/include/irods/netcdf/include -I../../api/include -I/usr/include/irods/hdf5/src
 
-default: $(HDF5_MS_OBJS)
+EXTRALIBS+= -lnetcdf
 
-$(HDF5_MS_OBJS) : $(hdf5MSObjDir)/%.o : $(hdf5MSSrcDir)/%.cpp
-	@echo "Compile hdf5 microservice `basename $@`..."
-	$(CC) -c $(CFLAGS) -o $@ $<
+.PHONY: default clean
 
-clean :
-	@rm -f $(hdf5MSObjDir)/*
+default: agnostic-base
+
+clean: clean-base
+
+include ../../Makefile.base

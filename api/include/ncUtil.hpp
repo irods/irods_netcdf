@@ -9,14 +9,15 @@
 #include "parseCommandLine.hpp"
 #include "rodsPath.hpp"
 #include "ncInq.hpp"
+#include "ncGetVarsByType.hpp"
 #include "ncClose.hpp"
 #include "ncOpen.hpp"
 #include "ncGetAggInfo.hpp"
+#include "netcdf.h"
 
 extern "C" {
 
     int readAggInfo( rsComm_t *rsComm, char *aggColl, keyValPair_t *condInput, ncAggInfo_t **ncAggInfo );
-    int _rsNcGetVarsByType( int ncid, ncGetVarInp_t *ncGetVarInp, ncGetVarOut_t **ncGetVarOut );
 
     int
     ncUtil( rcComm_t *conn, rodsEnv *myRodsEnv, rodsArguments_t *myRodsArgs,

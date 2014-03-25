@@ -70,7 +70,6 @@ typedef struct {
     keyValPair_t condInput;
 } ncGetVarInp_t;
 
-#define NC_GET_VARS_BY_TYPE_AN 1005
 #define NcGetVarInp_PI         "int varType; int ncid; int varid; int ndim; double *start(ndim); double *count(ndim); double *stride(ndim); struct KeyValPair_PI;"
 
 typedef struct {
@@ -87,10 +86,12 @@ extern "C" int
 rsNcGetVarsByType( rsComm_t *rsComm, ncGetVarInp_t *ncGetVarInp,
                    ncGetVarOut_t **ncGetVarOut );
 extern "C" int
-rsNcGetVarsByTypeForColl( rsComm_t *rsComm, ncGetVarInp_t *ncGetVarInp,
+_rsNcGetVarsByType( int ncid, ncGetVarInp_t *ncGetVarInp, ncGetVarOut_t **ncGetVarOut );
+extern "C" int
+_rsNcGetVarsByTypeForColl( rsComm_t *rsComm, ncGetVarInp_t *ncGetVarInp,
                           ncGetVarOut_t **ncGetVarOut );
 extern "C" int
-rsNcGetVarsByTypeForObj( rsComm_t *rsComm, ncGetVarInp_t *ncGetVarInp,
+_rsNcGetVarsByTypeForObj( rsComm_t *rsComm, ncGetVarInp_t *ncGetVarInp,
                          ncGetVarOut_t **ncGetVarOut );
 #else
 #define RS_NC_GET_VARS_BY_TYPE NULL

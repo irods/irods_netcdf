@@ -4,6 +4,8 @@
 #include "irods_ms_plugin.hpp"
 #include "ncGetVarsByType.hpp"
 #include "netcdfMS.hpp"
+#include "irods_server_api_call.hpp"
+#include "ncApiIndex.hpp"
 
 // =-=-=-=-=-=-=-
 // STL Includes
@@ -139,13 +141,13 @@ extern "C" {
             }
         }
 
-        rei->status = rsNcGetVarsByType (rsComm, &ncGetVarInp, &ncGetVarOut);
+        rei->status = irods::server_api_call ( NC_GET_VARS_BY_TYPE_AN, rsComm, &ncGetVarInp, &ncGetVarOut);
         clearNcGetVarInp (&ncGetVarInp);
         if (rei->status >= 0) {
             fillMsParam (outParam, NULL, NcGetVarOut_MS_T, ncGetVarOut, NULL);
         } else {
           rodsLogAndErrorMsg (LOG_ERROR, &rsComm->rError, rei->status,
-            "msiNcGetVarsByType: rsNcGetVarsByType failed, status = %d",
+            "msiNcGetVarsByType: api call to ncGetVarsByType failed, status = %d",
             rei->status);
         }
 

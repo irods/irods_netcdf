@@ -16,8 +16,6 @@
 #include "dataObjInpOut.hpp"
 #include "ncOpen.hpp"
 
-#define NC_INQ_GRPS_AN                  1009
-
 typedef struct {
     int ncid;
     int flags;

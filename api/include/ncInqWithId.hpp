@@ -16,8 +16,6 @@
 #include "dataObjInpOut.hpp"
 #include "ncInqId.hpp"
 
-#define NC_INQ_WITH_ID_AN               1004
-
 typedef struct {
     rodsLong_t mylong;	/* an int output.content depends on paramType.For
 			 * NC_DIM_T, this is arrayLen. not used for NC_VAR_T */
@@ -40,10 +38,10 @@ int
 _rsNcInqWithId( int type, int ncid, int myid, char *name,
                 ncInqWithIdOut_t **ncInqWithIdOut );
 int
-rsNcInqWithIdColl( rsComm_t *rsComm, ncInqIdInp_t *ncInqWithIdInp,
+_rsNcInqWithIdColl( rsComm_t *rsComm, ncInqIdInp_t *ncInqWithIdInp,
                    ncInqWithIdOut_t **ncInqWithIdOut );
 int
-rsNcInqWithIdDataObj( rsComm_t *rsComm, ncInqIdInp_t *ncInqWithIdInp,
+_rsNcInqWithIdDataObj( rsComm_t *rsComm, ncInqIdInp_t *ncInqWithIdInp,
                       ncInqWithIdOut_t **ncInqWithIdOut );
 #else
 #define RS_NC_INQ_WITH_ID NULL

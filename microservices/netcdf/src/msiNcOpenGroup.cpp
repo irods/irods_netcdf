@@ -4,6 +4,8 @@
 #include "irods_ms_plugin.hpp"
 #include "netcdfMS.hpp"
 #include "ncOpenGroup.hpp"
+#include "irods_server_api_call.hpp"
+#include "ncApiIndex.hpp"
 
 // =-=-=-=-=-=-=-
 // STL Includes
@@ -68,7 +70,7 @@ extern "C" {
               fullGrpNameParam->type);
             return (USER_PARAM_TYPE_ERR);
         }
-        rei->status = rsNcOpenGroup (rsComm, &ncOpenInp, &grpNcid);
+        rei->status = irods::server_api_call ( NC_OPEN_GROUP_AN, rsComm, &ncOpenInp, &grpNcid);
 
         clearKeyVal (&ncOpenInp.condInput);
         if (rei->status >= 0) {
@@ -76,7 +78,7 @@ extern "C" {
             free (grpNcid);
         } else {
           rodsLogAndErrorMsg (LOG_ERROR, &rsComm->rError, rei->status,
-            "msiNcOpenGroup: rsNcOpenGroup failed for rootNcid %d, status = %d",
+            "msiNcOpenGroup: api call to ncOpenGroup failed for rootNcid %d, status = %d",
             ncOpenInp.rootNcid, rei->status);
         }
         return (rei->status);

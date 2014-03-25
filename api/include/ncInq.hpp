@@ -20,7 +20,6 @@
 
 #define NC_VAR_TRANS_SZ         (4*1024*1024)
 
-#define NC_INQ_AN                       1007
 
 /* definition for paramType, can be or'ed to inquire more than 1 type */
 
@@ -117,9 +116,9 @@ typedef struct {
 extern "C" int
 rsNcInq( rsComm_t *rsComm, ncInqInp_t *ncInqInp, ncInqOut_t **ncInqOut );
 int
-rsNcInqDataObj( rsComm_t *rsComm, ncInqInp_t *ncInqInp, ncInqOut_t **ncInqOut );
+_rsNcInqDataObj( rsComm_t *rsComm, ncInqInp_t *ncInqInp, ncInqOut_t **ncInqOut );
 int
-rsNcInqColl( rsComm_t *rsComm, ncInqInp_t *ncInqInp, ncInqOut_t **ncInqOut );
+_rsNcInqColl( rsComm_t *rsComm, ncInqInp_t *ncInqInp, ncInqOut_t **ncInqOut );
 int
 _rsNcInq( rsComm_t *rsComm, ncInqInp_t *ncInqInp, ncInqOut_t **ncInqOut );
 #else

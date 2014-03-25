@@ -2,6 +2,7 @@
 /* See ncArchTimeSeries.h for a description of this API call.*/
 
 #include "ncArchTimeSeries.hpp"
+#include "ncApiIndex.hpp"
 
 /* rcNcArchTimeSeries - Archive a time series data set given in objPath to
  * a aggregate collection.

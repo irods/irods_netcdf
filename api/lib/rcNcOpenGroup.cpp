@@ -85,6 +85,7 @@
 **/
 
 #include "ncOpenGroup.hpp"
+#include "ncApiIndex.hpp"
 
 int
 rcNcOpenGroup( rcComm_t *conn, ncOpenInp_t *ncOpenGroupInp, int *ncid ) {

@@ -5,6 +5,8 @@
 #include "h5File.hpp"
 #include "hdf5MS.hpp"
 #include "dataObjClose.hpp"
+#include "irods_server_api_call.hpp"
+#include "ncApiIndex.hpp"
 
 // =-=-=-=-=-=-=-
 // STL Includes
@@ -123,7 +125,7 @@ extern "C" {
         }
 
         L1desc[l1descInx].l3descInx = 0;
-        rsDataObjClose (rsComm, &dataObjCloseInp);
+        irods::server_api_call ( DATA_OBJ_CLOSE_AN,rsComm, &dataObjCloseInp);
 
         /* prepare the output */
 

@@ -4,6 +4,8 @@
 #include "irods_ms_plugin.hpp"
 #include "netcdfMS.hpp"
 #include "ncCreate.hpp"
+#include "irods_server_api_call.hpp"
+#include "ncApiIndex.hpp"
 
 // =-=-=-=-=-=-=-
 // STL Includes
@@ -92,14 +94,14 @@ extern "C" {
             if (ncOpenInp.mode < 0) return (ncOpenInp.mode);
         }
 
-        rei->status = rsNcCreate (rsComm, &ncOpenInp, &ncid);
+        rei->status = irods::server_api_call ( NC_CREATE_AN, rsComm, &ncOpenInp, &ncid);
         clearKeyVal (&ncOpenInp.condInput);
         if (rei->status >= 0) {
             fillIntInMsParam (outParam, *ncid);
             free (ncid);
         } else {
           rodsLogAndErrorMsg (LOG_ERROR, &rsComm->rError, rei->status,
-            "msiNcCreate: rsNcCreate failed for %s, status = %d",
+            "msiNcCreate: api call to ncCreate failed for %s, status = %d",
             ncOpenInp.objPath, rei->status);
         }
 

@@ -4,6 +4,8 @@
 #include "irods_ms_plugin.hpp"
 #include "netcdfMS.hpp"
 #include "ncInqGrps.hpp"
+#include "irods_server_api_call.hpp"
+#include "ncApiIndex.hpp"
 
 // =-=-=-=-=-=-=-
 // STL Includes
@@ -71,14 +73,14 @@ extern "C" {
 
         ncInqGrpsInp.ncid = parseMspForPosInt (ncidParam);
 
-        rei->status = rsNcInqGrps (rsComm, &ncInqGrpsInp, &ncInqGrpsOut);
+        rei->status = irods::server_api_call( NC_INQ_GRPS_AN, rsComm, &ncInqGrpsInp, &ncInqGrpsOut);
 
         clearKeyVal (&ncInqGrpsInp.condInput);
         if (rei->status >= 0) {
             fillMsParam (outParam, NULL, NcInqGrpsOut_MS_T, ncInqGrpsOut, NULL);
         } else {
           rodsLogAndErrorMsg (LOG_ERROR, &rsComm->rError, rei->status,
-            "msiNcInqGrps: rsNcInqGrps failed for ncid %d, status = %d",
+            "msiNcInqGrps: api call to ncInqGrps failed for ncid %d, status = %d",
             ncInqGrpsInp.ncid, rei->status);
         }
         return (rei->status);

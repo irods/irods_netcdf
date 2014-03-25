@@ -3,6 +3,8 @@
 #include "reGlobalsExtern.hpp"
 #include "irods_ms_plugin.hpp"
 #include "netcdfMS.hpp"
+#include "irods_server_api_call.hpp"
+#include "ncApiIndex.hpp"
 
 // =-=-=-=-=-=-=-
 // STL Includes
@@ -69,14 +71,14 @@ extern "C" {
 
         ncInqInp.ncid = parseMspForPosInt (ncidParam);
 
-        rei->status = rsNcInq (rsComm, &ncInqInp, &ncInqOut);
+        rei->status = irods::server_api_call( NC_INQ_AN, rsComm, &ncInqInp, &ncInqOut);
 
         clearKeyVal (&ncInqInp.condInput);
         if (rei->status >= 0) {
             fillMsParam (outParam, NULL, NcInqOut_MS_T, ncInqOut, NULL);
         } else {
           rodsLogAndErrorMsg (LOG_ERROR, &rsComm->rError, rei->status,
-            "msiNcInq: rsNcInq failed for ncid %d, status = %d",
+            "msiNcInq: api call to ncInq failed for ncid %d, status = %d",
             ncInqInp.ncid, rei->status);
         }
 

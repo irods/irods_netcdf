@@ -30,7 +30,6 @@ typedef struct {
     char objPath[MAX_NAME_LEN];
 } ncAggElement_t;
 
-#define NC_GET_AGG_ELEMENT_AN 1011
 #define NcAggElement_PI       "int startTime; int endTime; str astartTime[NAME_LEN]; str aendTime[NAME_LEN]; double arraylen; str objPath[MAX_NAME_LEN];"
 
 #if defined(RODS_SERVER) && defined(NETCDF_API)

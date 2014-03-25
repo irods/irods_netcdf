@@ -7,6 +7,7 @@
 /* See ncClose.h for a description of this API call.*/
 
 #include "ncClose.hpp"
+#include "ncApiIndex.hpp"
 
 /**
  * \fn rcNcClose (rcComm_t *conn, ncCloseInp_t *ncCloseInp)

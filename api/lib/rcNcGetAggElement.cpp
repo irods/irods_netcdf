@@ -10,6 +10,7 @@
 
 #include "ncGetAggElement.hpp"
 #include "ncInq.hpp"
+#include "ncApiIndex.hpp"
 
 /**
  * \fn ncGetAggElement (rcComm_t *conn, ncOpenInp_t *ncOpenInp,

@@ -9,6 +9,7 @@
 /* See ncOpen.h for a description of this API call.*/
 
 #include "ncOpen.hpp"
+#include "ncApiIndex.hpp"
 
 /**
  * \fn rcNcOpen (rcComm_t *conn, ncOpenInp_t *ncOpenInp, int *ncid)

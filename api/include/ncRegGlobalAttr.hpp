@@ -26,7 +26,6 @@ typedef struct {
     keyValPair_t condInput;
 } ncRegGlobalAttrInp_t;
 
-#define NC_REG_GLOBAL_ATTR_AN 1010
 #define NcRegGlobalAttrInp_PI "str objPath[MAX_NAME_LEN]; int flags; int numAttrName; str *attrNameArray[numAttrName]; struct KeyValPair_PI;"
 
 #if defined(RODS_SERVER) && defined(NETCDF_API)

@@ -9,6 +9,7 @@
 /* See ncCreate.h for a description of this API call.*/
 
 #include "ncCreate.hpp"
+#include "ncApiIndex.hpp"
 
 /**
  * \fn rcNcCreate (rcComm_t *conn, ncOpenInp_t *ncCreateInp, int *ncid)

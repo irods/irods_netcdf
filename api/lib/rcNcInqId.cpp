@@ -7,6 +7,7 @@
 /* See ncInqId.h for a description of this API call.*/
 
 #include "ncInqId.hpp"
+#include "ncApiIndex.hpp"
 
 /**
  * \fn rcNcInqId (rcComm_t *conn, ncInqIdInp_t *ncInqIdInp, int **outId)

@@ -7,6 +7,7 @@
 /* See ncInqGrps.h for a description of this API call.*/
 
 #include "ncInqGrps.hpp"
+#include "ncApiIndex.hpp"
 
 /**
  * \fn rcNcInqGrps (rcComm_t *conn, ncInqGrpsInp_t *ncInqGrpsInp, ncInqGrpsOut_t **ncInqGrpsOut)

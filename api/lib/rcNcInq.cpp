@@ -7,6 +7,7 @@
 /* See ncInq.h for a description of this API call.*/
 
 #include "ncInq.hpp"
+#include "ncApiIndex.hpp"
 #include <limits>
 
 /**

@@ -4,6 +4,8 @@
 #include "irods_ms_plugin.hpp"
 #include "netcdfMS.hpp"
 #include "ncRegGlobalAttr.hpp"
+#include "irods_server_api_call.hpp"
+#include "ncApiIndex.hpp"
 
 // =-=-=-=-=-=-=-
 // STL Includes
@@ -86,12 +88,12 @@ extern "C" {
                 addKeyVal (&ncRegGlobalAttrInp.condInput, ADMIN_KW, "");
             }
         }
-        rei->status = rsNcRegGlobalAttr (rsComm, &ncRegGlobalAttrInp);
+        rei->status = irods::server_api_call ( NC_REG_GLOBAL_ATTR_AN, rsComm, &ncRegGlobalAttrInp );
         clearKeyVal (&ncRegGlobalAttrInp.condInput);
         fillIntInMsParam (outParam, rei->status);
         if (rei->status < 0) {
           rodsLogAndErrorMsg (LOG_ERROR, &rsComm->rError, rei->status,
-            "msiNcRegGlobalAttr: rscNcRegGlobalAttr failed for %s, status = %d",
+            "msiNcRegGlobalAttr: server api call to ncRegGlobalAttr failed for %s, status = %d",
             ncRegGlobalAttrInp.objPath, rei->status);
         }
 

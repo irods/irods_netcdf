@@ -2,6 +2,7 @@
 /* See ooiGenServReq.h for a description of this API call.*/
 
 #include "ooiGenServReq.hpp"
+#include "ncApiIndex.hpp"
 
 int
 rcOoiGenServReq( rcComm_t *conn, ooiGenServReqInp_t *ooiGenServReqInp,

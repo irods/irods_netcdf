@@ -7,6 +7,7 @@
 /* See ncGetVarsByType.h for a description of this API call.*/
 
 #include "ncGetVarsByType.hpp"
+#include "ncApiIndex.hpp"
 #include "ncUtil.hpp"
 /**
  * \fn rcNcGetVarsByType (rcComm_t *conn,  ncGetVarInp_t *ncGetVarInp,

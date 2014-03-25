@@ -4,6 +4,8 @@
 #include "irods_ms_plugin.hpp"
 #include "h5File.hpp"
 #include "hdf5MS.hpp"
+#include "irods_server_api_call.hpp"
+#include "ncApiIndex.hpp"
 
 // =-=-=-=-=-=-=-
 // STL Includes
@@ -141,7 +143,7 @@ extern "C" {
                 rodsLogAndErrorMsg (LOG_ERROR, &rsComm->rError, rei->status,
                   ( char * )"msiH5File_open: _local copy of %s does not exist",
                   dataObjInp.objPath);
-                rsDataObjClose (rsComm, &dataObjCloseInp);
+                irods::server_api_call ( DATA_OBJ_CLOSE_AN,rsComm, &dataObjCloseInp);
                 return (rei->status);
             }
         } else {
@@ -160,7 +162,7 @@ extern "C" {
         } else {
             /* do the remote open */
             if ((rei->status = svrToSvrConnect (rsComm, rodsServerHost)) < 0) {
-                rsDataObjClose (rsComm, &dataObjCloseInp);
+                irods::server_api_call ( DATA_OBJ_CLOSE_AN,rsComm, &dataObjCloseInp);
                 return rei->status;
             }
 
@@ -175,7 +177,7 @@ extern "C" {
             rodsLogAndErrorMsg (LOG_ERROR, &rsComm->rError, rei->status,
               ( char * )"msiH5File_open: H5File_open %s error",
               dataObjInp.objPath);
-            rsDataObjClose (rsComm, &dataObjCloseInp);
+            irods::server_api_call ( DATA_OBJ_CLOSE_AN,rsComm, &dataObjCloseInp);
             return rei->status;
         }
 

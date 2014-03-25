@@ -1,60 +1,49 @@
-ifndef $(CC)
-CC=g++
-endif
-netcdfMSObjDir=obj
-netcdfMSIncDir=include
-netcdfMSSrcDir=src
-netcdfApiIncDir=../../api/include
+SRCDIR=src
 
-INCLUDES+= -I/usr/include/irods -I/usr/include/irods/netcdf/include -I$(netcdfMSIncDir) -I$(netcdfApiIncDir)
-LDFLAGS+= -L/usr/lib/irods
-LDLIBS+= libirods.a
+SRCS=$(SRCDIR)/msiAddToNcArray.cpp \
+		$(SRCDIR)/msiFloatToString.cpp \
+		$(SRCDIR)/msiFreeNcStruct.cpp \
+		$(SRCDIR)/msiNcClose.cpp \
+		$(SRCDIR)/msiNcCreate.cpp \
+		$(SRCDIR)/msiNcGetArrayLen.cpp \
+		$(SRCDIR)/msiNcGetAttNameInInqOut.cpp \
+		$(SRCDIR)/msiNcGetAttValStrInInqOut.cpp \
+		$(SRCDIR)/msiNcGetDataType.cpp \
+		$(SRCDIR)/msiNcGetDimLenInInqOut.cpp \
+		$(SRCDIR)/msiNcGetDimNameInInqOut.cpp \
+		$(SRCDIR)/msiNcGetElementInArray.cpp \
+		$(SRCDIR)/msiNcGetFormatInInqOut.cpp \
+		$(SRCDIR)/msiNcGetGrpInInqOut.cpp \
+		$(SRCDIR)/msiNcGetNattsInInqOut.cpp \
+		$(SRCDIR)/msiNcGetNdimsInInqOut.cpp \
+		$(SRCDIR)/msiNcGetNGrpsInInqOut.cpp \
+		$(SRCDIR)/msiNcGetNumDim.cpp \
+		$(SRCDIR)/msiNcGetNvarsInInqOut.cpp \
+		$(SRCDIR)/msiNcGetVarIdInInqOut.cpp \
+		$(SRCDIR)/msiNcGetVarNameInInqOut.cpp \
+		$(SRCDIR)/msiNcGetVarsByType.cpp \
+		$(SRCDIR)/msiNcGetVarTypeInInqOut.cpp \
+		$(SRCDIR)/msiNcInq.cpp \
+		$(SRCDIR)/msiNcInqGrps.cpp \
+		$(SRCDIR)/msiNcInqId.cpp \
+		$(SRCDIR)/msiNcInqWithId.cpp \
+		$(SRCDIR)/msiNcIntDataTypeToStr.cpp \
+		$(SRCDIR)/msiNcOpen.cpp \
+		$(SRCDIR)/msiNcOpenGroup.cpp \
+		$(SRCDIR)/msiNcRegGlobalAttr.cpp \
+		$(SRCDIR)/msiNcSubsetVar.cpp \
+		$(SRCDIR)/msiNcVarStat.cpp
 
-CFLAGS+= $(INCLUDES)
-CFLAGS+= -DRODS_SERVER -DNETCDF_API
-CFLAGS+= -Wall -Werror
+CFLAGS += -DNETCDF_API -DRODS_SERVER
 
-NETCDF_MS_OBJS=$(netcdfMSObjDir)/msiAddToNcArray.o \
-		$(netcdfMSObjDir)/msiFloatToString.o \
-		$(netcdfMSObjDir)/msiFreeNcStruct.o \
-		$(netcdfMSObjDir)/msiNcClose.o \
-		$(netcdfMSObjDir)/msiNcCreate.o \
-		$(netcdfMSObjDir)/msiNcGetArrayLen.o \
-		$(netcdfMSObjDir)/msiNcGetAttNameInInqOut.o \
-		$(netcdfMSObjDir)/msiNcGetAttValStrInInqOut.o \
-		$(netcdfMSObjDir)/msiNcGetDataType.o \
-		$(netcdfMSObjDir)/msiNcGetDimLenInInqOut.o \
-		$(netcdfMSObjDir)/msiNcGetDimNameInInqOut.o \
-		$(netcdfMSObjDir)/msiNcGetElementInArray.o \
-		$(netcdfMSObjDir)/msiNcGetFormatInInqOut.o \
-		$(netcdfMSObjDir)/msiNcGetGrpInInqOut.o \
-		$(netcdfMSObjDir)/msiNcGetNattsInInqOut.o \
-		$(netcdfMSObjDir)/msiNcGetNdimsInInqOut.o \
-		$(netcdfMSObjDir)/msiNcGetNGrpsInInqOut.o \
-		$(netcdfMSObjDir)/msiNcGetNumDim.o \
-		$(netcdfMSObjDir)/msiNcGetNvarsInInqOut.o \
-		$(netcdfMSObjDir)/msiNcGetVarIdInInqOut.o \
-		$(netcdfMSObjDir)/msiNcGetVarNameInInqOut.o \
-		$(netcdfMSObjDir)/msiNcGetVarsByType.o \
-		$(netcdfMSObjDir)/msiNcGetVarTypeInInqOut.o \
-		$(netcdfMSObjDir)/msiNcInq.o \
-		$(netcdfMSObjDir)/msiNcInqGrps.o \
-		$(netcdfMSObjDir)/msiNcInqId.o \
-		$(netcdfMSObjDir)/msiNcInqWithId.o \
-		$(netcdfMSObjDir)/msiNcIntDataTypeToStr.o \
-		$(netcdfMSObjDir)/msiNcOpen.o \
-		$(netcdfMSObjDir)/msiNcOpenGroup.o \
-		$(netcdfMSObjDir)/msiNcRegGlobalAttr.o \
-		$(netcdfMSObjDir)/msiNcSubsetVar.o \
-		$(netcdfMSObjDir)/msiNcVarStat.o
+EXTRAINCS+= -I/usr/include/irods/netcdf/include -I../../api/include
 
-.PHONY : default all clean
+EXTRALIBS+= -lnetcdf
 
-default: $(NETCDF_MS_OBJS)
+.PHONY: default clean
 
-$(NETCDF_MS_OBJS) : $(netcdfMSObjDir)/%.o : $(netcdfMSSrcDir)/%.cpp
-	@echo "Compile netcdf microservice `basename $@`..."
-	$(CC) -c $(CFLAGS) -o $@ $<
+default: agnostic-base
 
-clean :
-	@rm -f $(netcdfMSObjDir)/*
+clean: clean-base
+
+include ../../Makefile.base

@@ -35,7 +35,6 @@ typedef struct {
                                          * ncAggElement_t */
 } ncAggInfo_t;
 
-#define NC_GET_AGG_INFO_AN 1012
 #define NcAggInfo_PI       "int numFiles; int flags; str  ncObjectName[MAX_NAME_LEN]; struct *NcAggElement_PI(numFiles);"
 
 typedef struct {

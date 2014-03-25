@@ -22,7 +22,6 @@ typedef struct {
     keyValPair_t condInput;
 } ncCloseInp_t;
 
-#define NC_CLOSE_AN   1002
 #define NcCloseInp_PI "int type; int ncid; struct KeyValPair_PI;"
 
 #if defined(RODS_SERVER) && defined(NETCDF_API)

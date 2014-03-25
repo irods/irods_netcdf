@@ -109,5 +109,5 @@ END_POSTREMOVE
 # =-=-=-=-=-=-=-
 f 644 $OS_IRODS_ACCT $OS_IRODS_ACCT ${IRODS_HOME_DIR}/iRODS/clients/icommands/test/rules3.0/ rules/*
 f 644 $OS_IRODS_ACCT $OS_IRODS_ACCT ${IRODS_HOME_DIR}/iRODS/clients/icommands/test/rules3.0/netcdf/ rules/netcdf/*
-f 644 $OS_IRODS_ACCT $OS_IRODS_ACCT ${IRODS_HOME_DIR}/plugins/microservices/ netcdf/obj/*.o
-f 644 $OS_IRODS_ACCT $OS_IRODS_ACCT ${IRODS_HOME_DIR}/plugins/microservices/ hdf5/obj/*.o
+f 644 $OS_IRODS_ACCT $OS_IRODS_ACCT ${IRODS_HOME_DIR}/plugins/microservices/ netcdf/obj/*.so
+f 644 $OS_IRODS_ACCT $OS_IRODS_ACCT ${IRODS_HOME_DIR}/plugins/microservices/ hdf5/obj/*.so

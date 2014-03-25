@@ -4,6 +4,8 @@
 #include "irods_ms_plugin.hpp"
 #include "netcdfMS.hpp"
 #include "ncInqWithId.hpp"
+#include "irods_server_api_call.hpp"
+#include "ncApiIndex.hpp"
 
 // =-=-=-=-=-=-=-
 // STL Includes
@@ -99,13 +101,13 @@ extern "C" {
             ncInqWithIdInp.ncid = parseMspForPosInt (inpParam3);
         }
 
-        rei->status = rsNcInqWithId (rsComm, &ncInqWithIdInp, &ncInqWithIdOut);
+        rei->status = irods::server_api_call ( NC_INQ_WITH_ID_AN, rsComm, &ncInqWithIdInp, &ncInqWithIdOut);
         clearKeyVal (&ncInqWithIdInp.condInput);
         if (rei->status >= 0) {
             fillMsParam (outParam, NULL, NcInqWithIdOut_MS_T, ncInqWithIdOut, NULL);
         } else {
           rodsLogAndErrorMsg (LOG_ERROR, &rsComm->rError, rei->status,
-            "msiNcInqWithId: rsNcInqWithId failed for %s, status = %d",
+            "msiNcInqWithId: api call to ncInqWithId failed for %s, status = %d",
             ncInqWithIdInp.name, rei->status);
         }
 

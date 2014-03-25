@@ -17,8 +17,6 @@
 #define DEF_OOI_GATEWAY_URL "http://localhost"
 #define DEF_OOI_GATEWAY_PORT "5000"
 
-#define OOI_GEN_SERV_REQ_AN             1060
-
 /* definition for outType */
 #define OOI_DICT_TYPE		0
 #define OOI_ARRAY_TYPE		1       /* array of Value */
