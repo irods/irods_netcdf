@@ -11,7 +11,6 @@
 #include "resource.hpp"
 #include "miscServerFunct.hpp"
 #include "irods_resource_backport.hpp"
-#include "irods_server_api_table.hpp"
 #include "ncApiIndex.hpp"
 extern "C" {
 #ifdef RODS_SERVER
