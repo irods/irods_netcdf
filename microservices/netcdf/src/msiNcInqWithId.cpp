@@ -3,6 +3,7 @@
 #include "reGlobalsExtern.hpp"
 #include "irods_ms_plugin.hpp"
 #include "netcdfMS.hpp"
+#include "netcdfParseUtilities.hpp"
 #include "ncInqWithId.hpp"
 #include "irods_server_api_call.hpp"
 #include "ncApiIndex.hpp"

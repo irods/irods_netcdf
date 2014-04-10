@@ -19,7 +19,7 @@ SRCS= $(SRCDIR)/rsNcArchTimeSeries.cpp \
 
 MAKEFLAGS += --no-print-directory
 
-CFLAGS += -Wno-write-strings -DNETCDF_API
+CFLAGS += -Wno-write-strings
 CFLAGS += -L/usr/lib/irods
 
 EXTRAINCS += -I/usr/include/irods/netcdf/include -I/usr/include/irods/jansson/src/

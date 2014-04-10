@@ -575,11 +575,7 @@ getSingleNcVarData( rcComm_t *conn, int ncid, int varInx, ncInqOut_t *ncInqOut,
 
     if ( conn == NULL ) {
         /* local call */
-#ifdef NETCDF_API
         status = _rsNcGetVarsByType( ncid, &ncGetVarInp, ncGetVarOut );
-#else
-        status = NETCDF_BUILD_WITH_NETCDF_API_NEEDED;
-#endif
     }
     else {
         status = rcNcGetVarsByType( conn, &ncGetVarInp, ncGetVarOut );
@@ -698,7 +694,6 @@ ncValueToStr( int dataType, void **invalue, char *outString ) {
     return 0;
 }
 
-#ifdef NETCDF_API
 int
 dumpNcInqOutToNcFile( rcComm_t *conn, int srcNcid, int noattrFlag,
                       ncInqOut_t *ncInqOut, char *outFileName ) {
@@ -1087,7 +1082,6 @@ dumpSubsetToFile( rcComm_t *conn, int srcNcid, int noattrFlag,
     nc_close( ncid );
     return 0;
 }
-#endif
 
 int
 ncFormatToCmode( int format ) {
@@ -1118,14 +1112,12 @@ ncFormatToCmode( int format ) {
     return cmode;
 }
 
-#ifdef NETCDF_API
 int
 closeAndRmNeFile( int ncid, char *outFileName ) {
     nc_close( ncid );
     unlink( outFileName );
     return 0;
 }
-#endif
 
 int
 printNice( char *str, char *margin, int charPerLine ) {
@@ -1455,7 +1447,6 @@ resolveSubsetVar( rcComm_t *conn, int ncid, ncInqOut_t *ncInqOut,
     }
     return 0;
 }
-#ifdef NETCDF_API
 int
 ncInq( ncInqInp_t *ncInqInp, ncInqOut_t **ncInqOut ) {
     int ndims, nvars, ngatts, unlimdimid, format;
@@ -1865,7 +1856,6 @@ getNcIntVar( int ncid, int varid, int dataType, rodsLong_t inx ) {
 
     return retint;
 }
-#endif	/* NETCDF_API */
 
 int
 getTimeInxInVar( ncInqOut_t *ncInqOut, int varid ) {

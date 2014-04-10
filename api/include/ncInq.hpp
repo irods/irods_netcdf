@@ -110,16 +110,16 @@ typedef struct {
     ncSubset_t ncSubset[MAX_NUM_VAR];
 } ncVarSubset_t;
 
-#if defined(RODS_SERVER) && defined(NETCDF_API)
+#if defined(RODS_SERVER)
 #define RS_NC_INQ rsNcInq
 /* prototype for the server handler */
 extern "C" int
 rsNcInq( rsComm_t *rsComm, ncInqInp_t *ncInqInp, ncInqOut_t **ncInqOut );
-int
+extern "C" int
 _rsNcInqDataObj( rsComm_t *rsComm, ncInqInp_t *ncInqInp, ncInqOut_t **ncInqOut );
-int
+extern "C" int
 _rsNcInqColl( rsComm_t *rsComm, ncInqInp_t *ncInqInp, ncInqOut_t **ncInqOut );
-int
+extern "C" int
 _rsNcInq( rsComm_t *rsComm, ncInqInp_t *ncInqInp, ncInqOut_t **ncInqOut );
 #else
 #define RS_NC_INQ NULL

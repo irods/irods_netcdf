@@ -14,9 +14,7 @@
 //#include "apiNumber.hpp"
 //#include "initServer.hpp"
 #include "dataObjInpOut.hpp"
-#ifdef NETCDF_API
 #include "netcdf.h"
-#endif
 
 typedef struct {
     char objPath[MAX_NAME_LEN];	/* for ncOpenGroup, this is the full group
@@ -30,7 +28,7 @@ typedef struct {
 
 #define NcOpenInp_PI "str objPath[MAX_NAME_LEN]; int mode; int rootNcid; double intialsz; double bufrsizehint; struct KeyValPair_PI;"
 
-#if defined(RODS_SERVER) && defined(NETCDF_API)
+#if defined(RODS_SERVER)
 #define RS_NC_OPEN rsNcOpen
 /* prototype for the server handler */
 extern "C" int
@@ -40,7 +38,7 @@ _rsNcOpenDataObj( rsComm_t *rsComm, ncOpenInp_t *ncOpenInp, int **ncid );
 int
 _rsNcOpenColl( rsComm_t *rsComm, ncOpenInp_t *ncOpenInp, int **ncid );
 int
-openAggrFile( rsComm_t *rsComm, int l1descInx, int aggElemetInx );
+openAggrFile( rsComm_t *rsComm, int l1descInx, int aggElementInx );
 #else
 #define RS_NC_OPEN NULL
 #endif

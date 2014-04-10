@@ -1,5 +1,6 @@
 // =-=-=-=-=-=-=-
 #include "msParam.hpp"
+#include "ncInq.hpp"
 #include "reGlobalsExtern.hpp"
 #include "irods_ms_plugin.hpp"
 #include "netcdfMS.hpp"

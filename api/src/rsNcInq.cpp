@@ -13,6 +13,7 @@
 #include "getRemoteZoneResc.hpp"
 #include "irods_get_l1desc.hpp"
 #include "ncApiIndex.hpp"
+#include "ncGetAggInfo.hpp"
 
 extern "C" {
 #ifdef RODS_SERVER
@@ -37,7 +38,8 @@ extern "C" {
         if ( my_desc.inuseFlag != FD_INUSE ) {
             return BAD_INPUT_DESC_INDEX;
         }
-        if ( my_desc.openedAggInfo.ncAggInfo != NULL ) {
+        openedAggInfo_t * openedAggInfo = boost::any_cast< openedAggInfo_t >( &my_desc.pluginData );
+        if ( openedAggInfo != NULL && openedAggInfo->ncAggInfo != NULL ) {
             status = _rsNcInqColl( rsComm, ncInqInp, ncInqOut );
         }
         else {

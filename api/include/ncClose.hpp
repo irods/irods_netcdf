@@ -24,7 +24,7 @@ typedef struct {
 
 #define NcCloseInp_PI "int type; int ncid; struct KeyValPair_PI;"
 
-#if defined(RODS_SERVER) && defined(NETCDF_API)
+#if defined(RODS_SERVER)
 #define RS_NC_CLOSE rsNcClose
 /* prototype for the server handler */
 extern "C" int

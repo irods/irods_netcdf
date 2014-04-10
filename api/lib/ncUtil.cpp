@@ -173,7 +173,6 @@ ncOperDataObjUtil( rcComm_t *conn, char *srcPath,
         printf( "}\n" );
     }
     else {
-#ifdef NETCDF_API
         if ( rodsArgs->var + rodsArgs->subset + rodsArgs->subsetByVal > 0 ) {
             status = dumpSubsetToFile( conn, ncid, rodsArgs->noattr, ncInqOut,
                                        ncVarSubset, rodsArgs->optionString );
@@ -183,9 +182,6 @@ ncOperDataObjUtil( rcComm_t *conn, char *srcPath,
             status = dumpNcInqOutToNcFile( conn, ncid, rodsArgs->noattr,
                                            ncInqOut, rodsArgs->optionString );
         }
-#else
-        return USER_OPTION_INPUT_ERR;
-#endif
     }
 
     bzero( &ncCloseInp, sizeof( ncCloseInp_t ) );
@@ -218,11 +214,6 @@ initCondForNcOper( rodsEnv *myRodsEnv, rodsArguments_t *rodsArgs,
         return ( 0 );
     }
     if ( rodsArgs->option == True ) {
-#ifndef NETCDF_API
-        rodsLog( LOG_ERROR,
-                 "initCondForNcOper: -o option cannot be used if client is built with NETCDF_CLIENT only" );
-        return USER_OPTION_INPUT_ERR;
-#endif
         if ( rodsArgs->recursive == True ) {
             rodsLog( LOG_ERROR,
                      "initCondForNcOper: -o and -r options cannot be used together" );

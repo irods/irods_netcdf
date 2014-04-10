@@ -137,7 +137,7 @@ extern "C" {
         // =-=-=-=-=-=-=-
         // 4.  allocate a microservice plugin which takes the number of function
         //     params as a parameter to the constructor
-        irods::ms_table_entry* msvc = new irods::ms_table_entry( 2 );
+        irods::ms_table_entry* msvc = new irods::ms_table_entry( 3 );
 
         // =-=-=-=-=-=-=-
         // 5. add the microservice function as an operation to the plugin

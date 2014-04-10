@@ -66,14 +66,14 @@ addNcAggElement( ncAggElement_t *ncAggElement, ncAggInfo_t *ncAggInfo ) {
 }
 
 rodsLong_t
-sumAggElementArraylen( ncAggInfo_t *ncAggInfo, int aggElemetInx ) {
+sumAggElementArraylen( ncAggInfo_t *ncAggInfo, int aggElementInx ) {
     rodsLong_t arrayLenSum = 0;
     int i;
 
-    if ( aggElemetInx > ncAggInfo->numFiles ) {
+    if ( aggElementInx > ncAggInfo->numFiles ) {
         rodsLog( LOG_ERROR,
-                 "sumAggElementArraylen: Input aggElemetInx %d > numFiles %d",
-                 aggElemetInx, ncAggInfo->numFiles );
+                 "sumAggElementArraylen: Input aggElementInx %d > numFiles %d",
+                 aggElementInx, ncAggInfo->numFiles );
         return NETCDF_AGG_ELE_INX_OUT_OF_RANGE;
     }
     for ( i = 0; i < ncAggInfo->numFiles; i++ ) {

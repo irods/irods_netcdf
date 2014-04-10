@@ -49,7 +49,7 @@ DEPS = $(patsubst %.cpp, ${DEPDIR}/%.d, ${SRCS})
 
 GCC = g++
 
-CFLAGS = -Wno-write-strings -DNETCDF_API
+CFLAGS = -Wno-write-strings
 
 INC = -I../include/ -I/usr/include/irods -I/usr/include/irods/netcdf/include ${EXTRAINCS}
 

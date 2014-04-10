@@ -17,9 +17,7 @@
 #include "ncOpen.hpp"
 #include "ncGetAggElement.hpp"
 #include "ncInq.hpp"
-#ifdef NETCDF_API
 #include "netcdf.h"
-#endif
 
 /* The file name for the aggregate info */
 #define NC_AGG_INFO_FILE_NAME	".aggInfo"
@@ -37,16 +35,42 @@ typedef struct {
 
 #define NcAggInfo_PI       "int numFiles; int flags; str  ncObjectName[MAX_NAME_LEN]; struct *NcAggElement_PI(numFiles);"
 
-typedef struct {
-    int aggElemetInx;	/* index into the ncAggElement of objNcid */
+struct openedAggInfo_t {
+    int aggElementInx;	/* index into the ncAggElement of objNcid */
     int objNcid0;	/* the opened object L1desc for element 0 */
     int objNcid;        /* the opened object L1desc */
     ncAggInfo_t *ncAggInfo;
     ncInqOut_t *ncInqOut0;	/* ncInqOut for objNcid0 */
     ncInqOut_t *ncInqOut;	/* ncInqOut for objNcid */
-} openedAggInfo_t;
+    openedAggInfo_t& operator =(const openedAggInfo_t& _rhs) {
+        aggElementInx = _rhs.aggElementInx;
+        objNcid0 = _rhs.objNcid0;
+        objNcid = _rhs.objNcid;
+        ncAggInfo = _rhs.ncAggInfo;
+        ncInqOut0 = _rhs.ncInqOut0;
+        ncInqOut = _rhs.ncInqOut;
+        return *this;
+    }
+    openedAggInfo_t(const openedAggInfo_t& _rhs) {
+        aggElementInx = _rhs.aggElementInx;
+        objNcid0 = _rhs.objNcid0;
+        objNcid = _rhs.objNcid;
+        ncAggInfo = _rhs.ncAggInfo;
+        ncInqOut0 = _rhs.ncInqOut0;
+        ncInqOut = _rhs.ncInqOut;
+    }
+    openedAggInfo_t() :
+    aggElementInx(0),
+    objNcid0(-1),
+    objNcid(-1),
+    ncAggInfo(NULL),
+    ncInqOut0(NULL),
+    ncInqOut(NULL)
+    {
+    }
+};
 
-#if defined(RODS_SERVER) && defined(NETCDF_API)
+#if defined(RODS_SERVER)
 #define RS_NC_GET_AGG_INFO rsNcGetAggInfo
 /* prototype for the server handler */
 extern "C" int
@@ -77,7 +101,7 @@ extern "C" {
     int
     addNcAggElement( ncAggElement_t *ncAggElement, ncAggInfo_t *ncAggInfo );
     rodsLong_t
-    sumAggElementArraylen( ncAggInfo_t *ncAggInfo, int aggElemetInx );
+    sumAggElementArraylen( ncAggInfo_t *ncAggInfo, int aggElementInx );
     int
     freeAggInfo( ncAggInfo_t **ncAggInfo );
     int

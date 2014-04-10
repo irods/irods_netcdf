@@ -130,6 +130,7 @@ _rsNcOpenColl( rsComm_t *rsComm, ncOpenInp_t *ncOpenInp, int **ncid ) {
     int status;
     ncAggInfo_t *ncAggInfo = NULL;
     int l1descInx;
+    openedAggInfo_t newOpenedAggInfo;
 
     status = readAggInfo( rsComm, ncOpenInp->objPath, &ncOpenInp->condInput,
                           &ncAggInfo );
@@ -140,13 +141,19 @@ _rsNcOpenColl( rsComm_t *rsComm, ncOpenInp_t *ncOpenInp, int **ncid ) {
     l1descInx = allocL1desc();
     if ( l1descInx < 0 ) {
         return l1descInx;
-    }    
-    
+    }
+
     l1desc_t& my_desc = irods::get_l1desc( l1descInx );
-    bzero( &my_desc.openedAggInfo, sizeof( openedAggInfo_t ) );
-    my_desc.openedAggInfo.ncAggInfo = ncAggInfo;
-    my_desc.openedAggInfo.objNcid = -1;	/* not opened */
-    my_desc.openedAggInfo.objNcid0 = -1;	/* not opened */
+    openedAggInfo_t * openedAggInfo = boost::any_cast< openedAggInfo_t >( &my_desc.pluginData );
+    if(openedAggInfo == NULL)
+    {
+        openedAggInfo = &newOpenedAggInfo;
+    }
+    bzero( openedAggInfo, sizeof( openedAggInfo_t ) );
+    openedAggInfo->ncAggInfo = ncAggInfo;
+    openedAggInfo->objNcid = -1;	/* not opened */
+    openedAggInfo->objNcid0 = -1;	/* not opened */
+    my_desc.pluginData = openedAggInfo;
     status = openAggrFile( rsComm, l1descInx, 0 );
     if ( status < 0 ) {
         return status;
@@ -158,25 +165,30 @@ _rsNcOpenColl( rsComm_t *rsComm, ncOpenInp_t *ncOpenInp, int **ncid ) {
 }
 
 int
-openAggrFile( rsComm_t *rsComm, int l1descInx, int aggElemetInx ) {
+openAggrFile( rsComm_t *rsComm, int l1descInx, int aggElementInx ) {
     int status, status1;
     ncOpenInp_t ncOpenInp;
     ncCloseInp_t ncCloseInp;
     openedAggInfo_t *openedAggInfo;
+    openedAggInfo_t newOpenedAggInfo;
     int *ncid = NULL;
 
     l1desc_t& my_desc = irods::get_l1desc( l1descInx );
-    openedAggInfo = &my_desc.openedAggInfo;
-    if ( aggElemetInx > 0 && aggElemetInx == openedAggInfo->aggElemetInx ) {
+    openedAggInfo = boost::any_cast< openedAggInfo_t >( &my_desc.pluginData );
+    if(openedAggInfo == NULL)
+    {
+        openedAggInfo = &newOpenedAggInfo;
+    }
+    if ( aggElementInx > 0 && aggElementInx == openedAggInfo->aggElementInx ) {
         return 0;
     }
     bzero( &ncOpenInp, sizeof( ncOpenInp ) );
     rstrcpy( ncOpenInp.objPath,
-             openedAggInfo->ncAggInfo->ncAggElement[aggElemetInx].objPath,
+             openedAggInfo->ncAggInfo->ncAggElement[aggElementInx].objPath,
              MAX_NAME_LEN );
     status = _rsNcOpenDataObj( rsComm, &ncOpenInp, &ncid );
     if ( status >= 0 ) {
-        if ( aggElemetInx > 0 && openedAggInfo->aggElemetInx > 0 ) {
+        if ( aggElementInx > 0 && openedAggInfo->aggElementInx > 0 ) {
             bzero( &ncCloseInp, sizeof( ncCloseInp ) );
             ncCloseInp.ncid = openedAggInfo->objNcid;
             status1 = irods::server_api_call ( NC_CLOSE_AN, rsComm, &ncCloseInp );
@@ -189,19 +201,20 @@ openAggrFile( rsComm_t *rsComm, int l1descInx, int aggElemetInx ) {
                 freeNcInqOut( &openedAggInfo->ncInqOut );
             }
         }
-        if ( aggElemetInx == 0 ) {
+        if ( aggElementInx == 0 ) {
             openedAggInfo->objNcid0 = *ncid;
         }
         else {
             openedAggInfo->objNcid = *ncid;
-            openedAggInfo->aggElemetInx = aggElemetInx;
+            openedAggInfo->aggElementInx = aggElementInx;
         }
+        my_desc.pluginData = openedAggInfo;
         free( ncid );
     }
     else {
         rodsLogError( LOG_ERROR, status,
                       "openAndInqAggrFile: rsNcOpen error for %s",
-                      openedAggInfo->ncAggInfo->ncAggElement[aggElemetInx].objPath );
+                      openedAggInfo->ncAggInfo->ncAggElement[aggElementInx].objPath );
         return status;
     }
     return status;

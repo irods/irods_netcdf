@@ -156,7 +156,7 @@ extern "C" {
                                 RODS_API_VERSION,
                                 REMOTE_USER_AUTH,
                                 REMOTE_USER_AUTH,
-                                "NcOpen_PI", 0,
+                                "NcOpenInp_PI", 0,
                                 NULL, 0,
                                 0, 0
                               }; // null fcn ptr, handled in delay_load
@@ -172,7 +172,7 @@ extern "C" {
          
         // =-=-=-=-=-=-=-
         // assign the pack struct key and value
-        api->in_pack_key   = "NcOpen_PI";
+        api->in_pack_key   = "NcOpenInp_PI";
         api->in_pack_value = NcOpenInp_PI;
         
         // =-=-=-=-=-=-=-

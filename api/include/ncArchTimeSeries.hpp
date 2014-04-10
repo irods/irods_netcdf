@@ -30,7 +30,7 @@ typedef struct {
 
 #define NcArchTimeSeriesInp_PI "double fileSizeLimit; str objPath[MAX_NAME_LEN]; str aggCollection[MAX_NAME_LEN]; struct KeyValPair_PI;"
 
-#if defined(RODS_SERVER) && defined(NETCDF_API)
+#if defined(RODS_SERVER)
 #define RS_NC_ARCH_TIME_SERIES rsNcArchTimeSeries
 /* prototype for the server handler */
 extern "C" int

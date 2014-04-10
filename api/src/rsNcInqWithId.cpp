@@ -16,6 +16,7 @@
 #include "getRemoteZoneResc.hpp"
 #include "irods_get_l1desc.hpp"
 #include "ncApiIndex.hpp"
+#include "ncGetAggInfo.hpp"
 
 #ifdef RODS_SERVER
 int
@@ -128,11 +129,12 @@ _rsNcInqWithIdColl( rsComm_t *rsComm, ncInqIdInp_t *ncInqWithIdInp,
     l1descInx = ncInqWithIdInp->ncid;
     l1desc_t& my_desc = irods::get_l1desc( l1descInx );
     /* always use element 0 file aggr collection */
-    if ( my_desc.openedAggInfo.objNcid0 == -1 ) {
+    openedAggInfo_t * openedAggInfo = boost::any_cast< openedAggInfo_t >( &my_desc.pluginData );
+    if ( openedAggInfo == NULL || openedAggInfo->objNcid0 == -1 ) {
         return NETCDF_AGG_ELE_FILE_NOT_OPENED;
     }
     myNcInqWithIdInp = *ncInqWithIdInp;
-    myNcInqWithIdInp.ncid = my_desc.openedAggInfo.objNcid0;
+    myNcInqWithIdInp.ncid = openedAggInfo->objNcid0;
     bzero( &myNcInqWithIdInp.condInput, sizeof( keyValPair_t ) );
     status = _rsNcInqWithIdDataObj( rsComm, &myNcInqWithIdInp, ncInqWithIdOut );
     if ( status < 0 ) {
@@ -184,7 +186,8 @@ extern "C" {
                                     &myNcInqWithIdInp, ncInqWithIdOut );
         }
         else {
-            if ( my_desc.openedAggInfo.ncAggInfo != NULL ) {
+            openedAggInfo_t * openedAggInfo = boost::any_cast< openedAggInfo_t >( &my_desc.pluginData );
+            if ( openedAggInfo != NULL && openedAggInfo->ncAggInfo != NULL ) {
                 status = _rsNcInqWithIdColl( rsComm, ncInqWithIdInp, ncInqWithIdOut );
             }
             else {

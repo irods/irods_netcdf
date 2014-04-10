@@ -6,7 +6,7 @@ SRCS=$(SRCDIR)/msiH5Dataset_read.cpp \
 		$(SRCDIR)/msiH5File_close.cpp \
 		$(SRCDIR)/msiH5File_open.cpp
 
-CFLAGS += -DNETCDF_API -DRODS_SERVER
+CFLAGS += -DRODS_SERVER
 
 EXTRAINCS+= -I/usr/include/irods/netcdf/include -I../../api/include -I/usr/include/irods/hdf5/src
 

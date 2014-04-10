@@ -14,9 +14,7 @@
 #include "apiNumber.hpp"
 #include "initServer.hpp"
 #include "dataObjInpOut.hpp"
-#ifdef NETCDF_API
 #include "netcdf.h"
-#endif
 
 typedef struct {
     char objPath[MAX_NAME_LEN];
@@ -28,7 +26,7 @@ typedef struct {
 
 #define NcRegGlobalAttrInp_PI "str objPath[MAX_NAME_LEN]; int flags; int numAttrName; str *attrNameArray[numAttrName]; struct KeyValPair_PI;"
 
-#if defined(RODS_SERVER) && defined(NETCDF_API)
+#if defined(RODS_SERVER)
 #define RS_NC_REG_GLOBAL_ATTR rsNcRegGlobalAttr
 /* prototype for the server handler */
 extern "C" int

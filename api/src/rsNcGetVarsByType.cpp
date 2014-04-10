@@ -15,6 +15,7 @@
 #include "irods_get_l1desc.hpp"
 #include "irods_server_api_call.hpp"
 #include "ncApiIndex.hpp"
+#include "ncGetAggInfo.hpp"
 
 #ifdef RODS_SERVER
 int
@@ -91,8 +92,8 @@ _rsNcGetVarsByTypeForColl( rsComm_t *rsComm, ncGetVarInp_t *ncGetVarInp,
     *dataType_PI = '\0';
     l1descInx = ncGetVarInp->ncid;
     l1desc_t& my_desc = irods::get_l1desc( l1descInx );
-    openedAggInfo = &my_desc.openedAggInfo;
-    if ( openedAggInfo->objNcid0 == -1 ) {
+    openedAggInfo = boost::any_cast< openedAggInfo_t >( &my_desc.pluginData );
+    if ( openedAggInfo == NULL || openedAggInfo->objNcid0 == -1 ) {
         return NETCDF_AGG_ELE_FILE_NOT_OPENED;
     }
     if ( openedAggInfo->ncInqOut0 == NULL ) {
@@ -153,7 +154,7 @@ _rsNcGetVarsByTypeForColl( rsComm_t *rsComm, ncGetVarInp_t *ncGetVarInp,
                  openedAggInfo->ncAggInfo->ncAggElement[i].arraylen - 1;
         if ( curPos >= eleStart && curPos <= eleEnd ) {
             /* in range */
-            if ( i != 0 && i != openedAggInfo->aggElemetInx ) {
+            if ( i != 0 && i != openedAggInfo->aggElementInx ) {
                 status = openAggrFile( rsComm, l1descInx, i );
                 if ( status < 0 ) {
                     free( buf );
@@ -302,7 +303,8 @@ extern "C" {
         if ( my_desc.inuseFlag != FD_INUSE ) {
             return BAD_INPUT_DESC_INDEX;
         }
-        if ( my_desc.openedAggInfo.ncAggInfo != NULL ) {
+        openedAggInfo_t * openedAggInfo = boost::any_cast< openedAggInfo_t >( &my_desc.pluginData );
+        if (openedAggInfo != NULL && openedAggInfo->ncAggInfo != NULL ) {
             status = _rsNcGetVarsByTypeForColl( rsComm, ncGetVarInp, ncGetVarOut );
         }
         else {

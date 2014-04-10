@@ -16,6 +16,7 @@
 #include "irods_get_l1desc.hpp"
 #include "ncApiIndex.hpp"
 #include "irods_server_api_call.hpp"
+#include "ncGetAggInfo.hpp"
 
 #ifdef RODS_SERVER
 static int ncCloseColl( rsComm_t *rsComm, int l1descInx );
@@ -27,8 +28,15 @@ static int closeAggrFiles( rsComm_t *rsComm, int l1descInx ) {
     int savedStatus = 0;
 
     l1desc_t& my_desc = irods::get_l1desc( l1descInx );
-    openedAggInfo = &my_desc.openedAggInfo;
-    if ( openedAggInfo->aggElemetInx > 0 && openedAggInfo->objNcid >= 0 ) {
+    openedAggInfo = boost::any_cast< openedAggInfo_t >( &my_desc.pluginData );
+    if(openedAggInfo == NULL)
+    {
+        status = -1;
+        rodsLogError( LOG_ERROR, status,
+                      "closeAggrFiles: rcNcClose error - no associated openedAggInfo" );
+        savedStatus = status;
+    }
+    if ( openedAggInfo->aggElementInx > 0 && openedAggInfo->objNcid >= 0 ) {
         status = ncCloseDataObj( rsComm, openedAggInfo->objNcid );
         if ( status < 0 ) {
             rodsLogError( LOG_ERROR, status,
@@ -46,7 +54,7 @@ static int closeAggrFiles( rsComm_t *rsComm, int l1descInx ) {
             savedStatus = status;
         }
     }
-    openedAggInfo->aggElemetInx = openedAggInfo->objNcid =
+    openedAggInfo->aggElementInx = openedAggInfo->objNcid =
                                       openedAggInfo->objNcid0 = -1;
     return savedStatus;
 }
@@ -61,9 +69,13 @@ static int ncCloseColl( rsComm_t *rsComm, int l1descInx ) {
                       "ncCloseColl: closeAggrFiles error" );
     }
     l1desc_t& my_desc = irods::get_l1desc( l1descInx );
-    freeAggInfo( &my_desc.openedAggInfo.ncAggInfo );
-    freeNcInqOut( &my_desc.openedAggInfo.ncInqOut0 );
-    freeNcInqOut( &my_desc.openedAggInfo.ncInqOut );
+    openedAggInfo_t * openedAggInfo = boost::any_cast< openedAggInfo_t >( &my_desc.pluginData );
+    if(openedAggInfo != NULL)
+    {
+        freeAggInfo( &openedAggInfo->ncAggInfo );
+        freeNcInqOut( &openedAggInfo->ncInqOut0 );
+        freeNcInqOut( &openedAggInfo->ncInqOut );
+    }
 
     bzero( &dataObjCloseInp, sizeof( dataObjCloseInp ) );
     dataObjCloseInp.l1descInx = l1descInx;
@@ -178,7 +190,9 @@ extern "C" {
                 freeL1desc( l1descInx );
                 return 0;
             }
-            if ( my_desc.openedAggInfo.ncAggInfo != NULL ) {
+
+            openedAggInfo_t * openedAggInfo = boost::any_cast< openedAggInfo_t >( &my_desc.pluginData );
+            if ( openedAggInfo != NULL && openedAggInfo->ncAggInfo != NULL ) {
                 status = ncCloseColl( rsComm, l1descInx );
             }
             else {

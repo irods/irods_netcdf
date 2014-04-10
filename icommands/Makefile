@@ -35,7 +35,8 @@ BOOST_LIBS = \
              $(BOOST_DIR)/libboost_thread.a
 
 LIBRARY = ../api/libirods_netcdf_client.a \
-          /usr/lib/irods/libirods_client.a \
+          -lirods_client \
+					-lirods_client_api \
           $(BOOST_LIBS)
 #          /usr/lib/irods/libhdf5_hl.a \
 #          /usr/lib/irods/libh5tools.a \

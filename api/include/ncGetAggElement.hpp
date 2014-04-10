@@ -15,9 +15,7 @@
 #include "initServer.hpp"
 #include "dataObjInpOut.hpp"
 #include "ncOpen.hpp"
-#ifdef NETCDF_API
 #include "netcdf.h"
-#endif
 
 /* data struct for aggregation of netcdf files. Our first attempt assumes
  * the aggregation is based on the time dimension - time series */
@@ -32,7 +30,7 @@ typedef struct {
 
 #define NcAggElement_PI       "int startTime; int endTime; str astartTime[NAME_LEN]; str aendTime[NAME_LEN]; double arraylen; str objPath[MAX_NAME_LEN];"
 
-#if defined(RODS_SERVER) && defined(NETCDF_API)
+#if defined(RODS_SERVER)
 #define RS_NC_GET_AGG_ELEMENT rsNcGetAggElement
 /* prototype for the server handler */
 extern "C" int
