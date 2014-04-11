@@ -16,6 +16,8 @@
 #include "dataObjInpOut.hpp"
 #include "ncOpen.hpp"
 
+#define NC_CREATE 1002 // create NETCDF
+
 #if defined(RODS_SERVER)
 #define RS_NC_CREATE rsNcCreate
 /* prototype for the server handler */

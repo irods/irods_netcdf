@@ -26,6 +26,8 @@ typedef struct {
     keyValPair_t condInput;	/* not used */
 } ncOpenInp_t;
 
+#define NC_OPEN_FOR_READ  1001 // open NETCDF for read
+#define NC_OPEN_FOR_WRITE 1000 // open/create NETCDF for write
 #define NcOpenInp_PI "str objPath[MAX_NAME_LEN]; int mode; int rootNcid; double intialsz; double bufrsizehint; struct KeyValPair_PI;"
 
 #if defined(RODS_SERVER)

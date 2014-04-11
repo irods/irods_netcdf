@@ -15,6 +15,7 @@
 #include "initServer.hpp"
 #include "dataObjInpOut.hpp"
 #include "ncOpen.hpp"
+#include "ncOpenGroup.hpp"
 
 typedef struct {
     int type;			/* not used */

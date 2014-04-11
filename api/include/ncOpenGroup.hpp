@@ -17,6 +17,7 @@
 #include "ncOpen.hpp"
 #include "netcdf.h"
 
+#define NC_OPEN_GROUP 1003 // open netcdf group
 #define NcOpenGroupInp_PI "str objPath[MAX_NAME_LEN]; int mode; int rootNcid; double intialsz; double bufrsizehint; struct KeyValPair_PI;"
 
 #if defined(RODS_SERVER)
