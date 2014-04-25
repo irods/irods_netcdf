@@ -1,2 +1,2 @@
 irods_api_plugin_netcdf.list
-~.gitignore
+!.gitignore

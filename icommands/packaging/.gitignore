@@ -1,2 +1,2 @@
 irods_icommands_netcdf.list
-~.gitignore
+!.gitignore

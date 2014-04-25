@@ -4,4 +4,4 @@ obj
 build
 .deps
 .depends
-~.gitignore
+!.gitignore
