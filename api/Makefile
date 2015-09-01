@@ -24,7 +24,7 @@ CFLAGS += -L/usr/lib/irods
 
 EXTRAINCS += -I/usr/include/irods/netcdf/include -I/usr/include/irods/jansson/src/
 
-BOOST_LIBS = \
+BOOST_LIBS = -L/usr/lib/irods/externals\
     -lboost_filesystem \
     -lboost_system \
     -lboost_regex \

@@ -24,6 +24,7 @@
 #include "irods_resource_backport.hpp"
 #include "ncApiIndex.hpp"
 #include "irods_server_api_call.hpp"
+#include "irods_resource_redirect.hpp"
 
 #ifdef RODS_SERVER
 
@@ -33,11 +34,6 @@ _rsNcArchTimeSeries( rsComm_t *rsComm,
     int status;
     int dimInx, varInx;
     char *tmpStr;
-    rescGrpInfo_t *myRescGrpInfo = NULL;
-    rescGrpInfo_t *tmpRescGrpInfo;
-    rescInfo_t *tmpRescInfo;
-    int remoteFlag;
-    rodsServerHost_t *rodsServerHost;
     dataObjInp_t dataObjInp;
     unsigned int endTime;
     ncOpenInp_t ncOpenInp;
@@ -53,49 +49,42 @@ _rsNcArchTimeSeries( rsComm_t *rsComm,
     rstrcpy( dataObjInp.objPath, ncArchTimeSeriesInp->aggCollection,
              MAX_NAME_LEN );
     replKeyVal( &ncArchTimeSeriesInp->condInput, &dataObjInp.condInput );
+    
+    int               local = LOCAL_HOST;
+    rodsServerHost_t* host  =  0;
+    std::string       resc_hier;
+    if ( getValByKey( &dataObjInp.condInput, RESC_HIER_STR_KW ) == NULL ) {
+        irods::error ret = irods::resource_redirect(
+                               irods::OPEN_OPERATION,
+                               rsComm,
+                               &dataObjInp,
+                               resc_hier,
+                               host,
+                               local );
+        if ( !ret.ok() ) {
+            std::stringstream msg;
+            msg << "failed for [";
+            msg << dataObjInp.objPath << "]";
+            irods::log( PASSMSG( msg.str(), ret ) );
+            return ret.code();
+        }
 
-    status = getRescGrpForCreate( rsComm, &dataObjInp, &myRescGrpInfo );
-    clearKeyVal( &dataObjInp.condInput );
+        // =-=-=-=-=-=-=-
+        // we resolved the redirect and have a host, set the hier str for subsequent
+        // api calls, etc.
+        addKeyVal(
+            &dataObjInp.condInput,
+            RESC_HIER_STR_KW,
+            resc_hier.c_str() );
 
-    /* pick the first local host */
-    tmpRescGrpInfo = myRescGrpInfo;
-    while ( tmpRescGrpInfo != NULL ) {
-        tmpRescInfo = tmpRescGrpInfo->rescInfo;
-        if ( isLocalHost( tmpRescInfo->rescLoc ) ) {
-            break;
-        }
-        tmpRescGrpInfo = tmpRescGrpInfo->next;
+    } // if keyword
+
+    if ( LOCAL_HOST != local ) {
+        status = rcNcArchTimeSeries(
+                     host->conn,
+                     ncArchTimeSeriesInp );
+        return status;
     }
-    if ( tmpRescGrpInfo == NULL ) {
-        /* we don't have a local resource */
-        if ( getValByKey( &ncArchTimeSeriesInp->condInput, NATIVE_NETCDF_CALL_KW )
-                != NULL ) {
-            rodsLog( LOG_ERROR,
-                     "_rsNcArchTimeSeries: No local resc for NATIVE_NETCDF_CALL of %s",
-                     ncArchTimeSeriesInp->objPath );
-            freeRescGrpInfo( myRescGrpInfo );
-            return SYS_INVALID_RESC_INPUT;
-        }
-        else {
-            irods::error ret = irods::get_host_for_hier_string( getValByKey( &ncArchTimeSeriesInp->condInput, RESC_HIER_STR_KW ), remoteFlag, rodsServerHost );
-            if ( remoteFlag < 0 ) {
-                freeRescGrpInfo( myRescGrpInfo );
-                return ( remoteFlag );
-            }
-            else if ( remoteFlag == REMOTE_HOST ) {
-                freeRescGrpInfo( myRescGrpInfo );
-                addKeyVal( &ncArchTimeSeriesInp->condInput,
-                           NATIVE_NETCDF_CALL_KW, "" );
-                if ( ( status = svrToSvrConnect( rsComm, rodsServerHost ) ) < 0 ) {
-                    return status;
-                }
-                status = rcNcArchTimeSeries( rodsServerHost->conn,
-                                             ncArchTimeSeriesInp );
-                return status;
-            }
-        }
-    }
-    /* get here when tmpRescGrpInfo != NULL. Will do it locally */
 
     bzero( &ncOpenInp, sizeof( ncOpenInp_t ) );
     rstrcpy( ncOpenInp.objPath, ncArchTimeSeriesInp->objPath, MAX_NAME_LEN );
@@ -111,7 +100,6 @@ _rsNcArchTimeSeries( rsComm_t *rsComm,
     if ( status < 0 ) {
         rodsLogError( LOG_ERROR, status,
                       "_rsNcArchTimeSeries: rsNcOpen error for %s", ncOpenInp.objPath );
-        freeRescGrpInfo( myRescGrpInfo );
         return status;
     }
     bzero( &ncInqInp, sizeof( ncInqInp ) );
@@ -126,7 +114,6 @@ _rsNcArchTimeSeries( rsComm_t *rsComm,
         rodsLogError( LOG_ERROR, status,
                       "_rsNcArchTimeSeries: rcNcInq error for %s", ncOpenInp.objPath );
         irods::server_api_call ( NC_CLOSE_AN, rsComm, &ncCloseInp );
-        freeRescGrpInfo( myRescGrpInfo );
         return status;
     }
     for ( dimInx = 0; dimInx < ncInqOut->ndims; dimInx++ ) {
@@ -140,7 +127,6 @@ _rsNcArchTimeSeries( rsComm_t *rsComm,
                  "_rsNcArchTimeSeries: 'time' dim does not exist for %s",
                  ncOpenInp.objPath );
         irods::server_api_call ( NC_CLOSE_AN, rsComm, &ncCloseInp );
-        freeRescGrpInfo( myRescGrpInfo );
         freeNcInqOut( &ncInqOut );
         return NETCDF_DIM_MISMATCH_ERR;
     }
@@ -156,7 +142,6 @@ _rsNcArchTimeSeries( rsComm_t *rsComm,
                  "_rsNcArchTimeSeries: 'time' var does not exist for %s",
                  ncOpenInp.objPath );
         irods::server_api_call ( NC_CLOSE_AN, rsComm, &ncCloseInp );
-        freeRescGrpInfo( myRescGrpInfo );
         freeNcInqOut( &ncInqOut );
         return NETCDF_DIM_MISMATCH_ERR;
     }
@@ -166,7 +151,6 @@ _rsNcArchTimeSeries( rsComm_t *rsComm,
                  "_rsNcArchTimeSeries: 'time' .nvdims = %d is not 1 for %s",
                  ncInqOut->var[varInx].nvdims, ncOpenInp.objPath );
         irods::server_api_call ( NC_CLOSE_AN, rsComm, &ncCloseInp );
-        freeRescGrpInfo( myRescGrpInfo );
         freeNcInqOut( &ncInqOut );
         return NETCDF_DIM_MISMATCH_ERR;
     }
@@ -181,7 +165,6 @@ _rsNcArchTimeSeries( rsComm_t *rsComm,
                               NULL, &ncAggInfo );
         if ( status < 0 ) {
             irods::server_api_call ( NC_CLOSE_AN, rsComm, &ncCloseInp );
-            freeRescGrpInfo( myRescGrpInfo );
             freeNcInqOut( &ncInqOut );
             return status;
         }
@@ -191,7 +174,6 @@ _rsNcArchTimeSeries( rsComm_t *rsComm,
                                     varInx, endTime, &startTimeInx );
         if ( status < 0 ) {
             irods::server_api_call ( NC_CLOSE_AN, rsComm, &ncCloseInp );
-            freeRescGrpInfo( myRescGrpInfo );
             freeNcInqOut( &ncInqOut );
             freeAggInfo( &ncAggInfo );
             return status;
@@ -207,13 +189,13 @@ _rsNcArchTimeSeries( rsComm_t *rsComm,
     }
 
     l1desc_t& my_desc = irods::get_l1desc( ncInqInp.ncid );
-    status = archPartialTimeSeries( rsComm, ncInqOut, ncAggInfo,
-                                    my_desc.l3descInx, varInx,
-                                    ncArchTimeSeriesInp->aggCollection, tmpRescGrpInfo,
-                                    startTimeInx, endTimeInx, fileSizeLimit );
-
+    status = archPartialTimeSeries(
+                 rsComm, ncInqOut, ncAggInfo,
+                 my_desc.l3descInx, varInx,
+                 ncArchTimeSeriesInp->aggCollection, 
+                 resc_hier, startTimeInx,
+                 endTimeInx, fileSizeLimit );
     irods::server_api_call ( NC_CLOSE_AN, rsComm, &ncCloseInp );
-    freeRescGrpInfo( myRescGrpInfo );
     freeNcInqOut( &ncInqOut );
     freeAggInfo( &ncAggInfo );
 
@@ -235,11 +217,17 @@ _rsNcArchTimeSeries( rsComm_t *rsComm,
     return status;
 }
 
-int
-archPartialTimeSeries( rsComm_t *rsComm, ncInqOut_t *ncInqOut,
-                       ncAggInfo_t *ncAggInfo, int srcNcid, int timeVarInx, char *aggCollection,
-                       rescGrpInfo_t *myRescGrpInfo, rodsLong_t startTimeInx, rodsLong_t endTimeInx,
-                       rodsLong_t archFileSize ) {
+int archPartialTimeSeries(
+    rsComm_t *rsComm,
+    ncInqOut_t *ncInqOut,
+    ncAggInfo_t *ncAggInfo,
+    int srcNcid,
+    int timeVarInx,
+    char *aggCollection,
+    const std::string& resc_hier,
+    rodsLong_t startTimeInx,
+    rodsLong_t endTimeInx,
+    rodsLong_t archFileSize ) {
     dataObjInp_t dataObjInp;
     int status = 0, l1descInx;
     rodsLong_t curTimeInx = startTimeInx;
@@ -286,8 +274,10 @@ archPartialTimeSeries( rsComm_t *rsComm, ncInqOut_t *ncInqOut,
         snprintf( dataObjInp.objPath, MAX_NAME_LEN, "%s%-d", basePath,
                   nextNumber );
         nextNumber++;
-        l1descInx = _rsDataObjCreateWithRescInfo( rsComm, &dataObjInp,
-                    myRescGrpInfo->rescInfo, myRescGrpInfo->rescGroupName );
+        l1descInx = _rsDataObjCreateWithResc(
+                        rsComm,
+                        &dataObjInp,
+                        resc_hier );
         if ( l1descInx < 0 ) {
             return l1descInx;
         }
@@ -310,8 +300,11 @@ archPartialTimeSeries( rsComm_t *rsComm, ncInqOut_t *ncInqOut,
         }
         curTimeInx = ncVarSubset.ncSubset[0].end + 1;
 
-        mkDirForFilePath( rsComm, "/",
-                          myDataObjInfo->filePath, myDataObjInfo->rescHier, getDefDirMode() );
+        mkDirForFilePath(
+            rsComm, 0,
+            myDataObjInfo->filePath,
+            myDataObjInfo->rescHier,
+            getDefDirMode() );
         status = dumpSubsetToFile( NULL, srcNcid, 0, ncInqOut, &ncVarSubset,
                                    my_desc.dataObjInfo->filePath );
         if ( status >= 0 ) {

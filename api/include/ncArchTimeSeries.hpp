@@ -45,7 +45,7 @@ getTimeInxForArch( rsComm_t *rsComm, int ncid, ncInqOut_t *ncInqOut,
 int
 archPartialTimeSeries( rsComm_t *rsComm, ncInqOut_t *ncInqOut,
                        ncAggInfo_t *ncAggInfo, int srcNcid, int timeVarInx, char *aggCollection,
-                       rescGrpInfo_t *myRescGrpInfo, rodsLong_t startTimeInx, rodsLong_t endTimeInx,
+                       const std::string&, rodsLong_t startTimeInx, rodsLong_t endTimeInx,
                        rodsLong_t archFileSize );
 #else
 #define RS_NC_ARCH_TIME_SERIES NULL

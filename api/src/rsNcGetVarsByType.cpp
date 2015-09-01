@@ -16,6 +16,7 @@
 #include "irods_server_api_call.hpp"
 #include "ncApiIndex.hpp"
 #include "ncGetAggInfo.hpp"
+#include "ncUtil.hpp"
 
 #ifdef RODS_SERVER
 int

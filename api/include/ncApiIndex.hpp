@@ -19,4 +19,7 @@
 /* 1060 - OOI API calls */
 #define OOI_GEN_SERV_REQ_AN             1060
 
+#define NATIVE_NETCDF_CALL_KW "nativeNetcdfCall"
+#define NEW_NETCDF_ARCH_KW    "newNetcdfArch"
+
 #endif // NC_API_INDEX_HPP__

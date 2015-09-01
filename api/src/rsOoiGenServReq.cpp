@@ -14,45 +14,39 @@
 #include "ncApiIndex.hpp"
 extern "C" {
 #ifdef RODS_SERVER
-    int
-    rsOoiGenServReq( rsComm_t *rsComm, ooiGenServReqInp_t *ooiGenServReqInp,
-                    ooiGenServReqOut_t **ooiGenServReqOut ) {
-        int status = 0;
-        rodsServerHost_t *rodsServerHost;
-        int remoteFlag;
-        rodsHostAddr_t rescAddr;
-        rescGrpInfo_t *rescGrpInfo = NULL;
-
-        rescGrpInfo = new rescGrpInfo_t;
-        rescGrpInfo->rescInfo = new rescInfo_t;
-        irods::error err = irods::get_resc_grp_info( ooiGenServReqInp->irodsRescName, *rescGrpInfo );
-        if ( !err.ok() ) {
-            rodsLogError( LOG_ERROR, status,
-                          "rsOoiGenServReq: _getRescInfo of %s error",
-                          ooiGenServReqInp->irodsRescName );
-            delete rescGrpInfo->rescInfo;
-            delete rescGrpInfo;
-            return status;
+    int rsOoiGenServReq(
+        rsComm_t *rsComm,
+        ooiGenServReqInp_t *ooiGenServReqInp,
+        ooiGenServReqOut_t **ooiGenServReqOut ) {
+        int remoteFlag = 0;
+        rodsServerHost_t* rodsServerHost = 0;
+        irods::error ret = irods::get_host_for_hier_string(
+                               ooiGenServReqInp->irodsRescName,
+                               remoteFlag,
+                               rodsServerHost );
+        if ( !ret.ok() ) {
+            irods::log( PASSMSG( "failed in call to irods::get_host_for_hier_string", ret ) );
+            return SYS_INVALID_INPUT_PARAM;
         }
 
-        bzero( &rescAddr, sizeof( rescAddr ) );
-        rstrcpy( rescAddr.hostAddr, rescGrpInfo->rescInfo->rescLoc, NAME_LEN );
-        remoteFlag = resolveHost( &rescAddr, &rodsServerHost );
-
+        int status = 0;
         if ( remoteFlag == LOCAL_HOST ) {
-            status = _rsOoiGenServReq( rsComm, ooiGenServReqInp, ooiGenServReqOut,
-                                      rescGrpInfo );
+            status = _rsOoiGenServReq(
+                         rsComm,
+                         ooiGenServReqInp,
+                         ooiGenServReqOut );
         }
         else if ( remoteFlag == REMOTE_HOST ) {
-            status = remoteOoiGenServReq( rsComm, ooiGenServReqInp,
-                                          ooiGenServReqOut, rodsServerHost );
+            status = remoteOoiGenServReq(
+                         rsComm,
+                         ooiGenServReqInp,
+                         ooiGenServReqOut,
+                         rodsServerHost );
         }
         else if ( remoteFlag < 0 ) {
             status = remoteFlag;
         }
 
-        delete rescGrpInfo->rescInfo;
-        delete rescGrpInfo;
         return status;
     }
 #endif
@@ -127,43 +121,42 @@ remoteOoiGenServReq( rsComm_t *rsComm, ooiGenServReqInp_t *ooiGenServReqInp,
     return status;
 }
 
-int
-_rsOoiGenServReq( rsComm_t *rsComm, ooiGenServReqInp_t *ooiGenServReqInp,
-                  ooiGenServReqOut_t **ooiGenServReqOut, rescGrpInfo_t *rescGrpInfo ) {
+int _rsOoiGenServReq(
+    rsComm_t*            rsComm,
+    ooiGenServReqInp_t*  ooiGenServReqInp,
+    ooiGenServReqOut_t** ooiGenServReqOut ) {
     CURL *easyhandle;
     CURLcode res;
     char myUrl[MAX_NAME_LEN];
     int status;
     char *postStr = NULL;
     ooiGenServReqStruct_t ooiGenServReqStruct;
-    char *vaultPath;
 
-    if ( ooiGenServReqInp == NULL || ooiGenServReqOut == NULL ||
-            rescGrpInfo == NULL ) {
+    if ( ooiGenServReqInp == NULL || ooiGenServReqOut == NULL ) {
         return USER__NULL_INPUT_ERR;
     }
 
-    /*
-    if ( RescTypeDef[rescTypeInx].driverType != OOICI_FILE_TYPE ) {
-        status = SYS_INVALID_RESC_TYPE;
-        rodsLogError( LOG_ERROR, status,
-                      "_rsOoiGenServReq: rescType %s is not ooici type",
-                      rescGrpInfo->rescInfo->rescType );
-        return status;
-    }
-    */
     easyhandle = curl_easy_init();
     if ( !easyhandle ) {
         rodsLog( LOG_ERROR,
                  "_rsOoiGenServReq: curl_easy_init error" );
         return OOI_CURL_EASY_INIT_ERR;
     }
-    vaultPath = rescGrpInfo->rescInfo->rescVaultPath;
-    /* the vault path must be a url e.g., http://localhost:5000 */
 
-    snprintf( myUrl, MAX_NAME_LEN, "%s/%s/%s/%s",
-              vaultPath, ION_SERVICE_STR,
-              ooiGenServReqInp->servName, ooiGenServReqInp->servOpr );
+    /* the vault path must be a url e.g., http://localhost:5000 */
+    std::string resc_vault_path;
+    irods::error ret = irods::get_resource_property< std::string >(
+                           ooiGenServReqInp->irodsRescName,
+                           irods::RESOURCE_PATH,
+                           resc_vault_path );
+    snprintf(
+        myUrl,
+        MAX_NAME_LEN,
+        "%s/%s/%s/%s",
+        resc_vault_path.c_str(),
+        ION_SERVICE_STR,
+        ooiGenServReqInp->servName,
+        ooiGenServReqInp->servOpr );
 
     if ( ooiGenServReqInp->params.len > 0 ) {
         /* do POST */

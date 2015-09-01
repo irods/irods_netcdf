@@ -15,6 +15,7 @@
 #include "getRemoteZoneResc.hpp"
 #include "irods_get_l1desc.hpp"
 #include "ncApiIndex.hpp"
+#include "ncUtil.hpp"
 
 extern "C" {
 #ifdef RODS_SERVER
@@ -120,7 +121,6 @@ extern "C" {
             rstrcpy( dataObjInfo->objPath,
                      ncOpenGroupInp->objPath, 
                      MAX_NAME_LEN );
-            dataObjInfo->rescInfo = my_desc.dataObjInfo->rescInfo;
             new_desc.l3descInx = myncid;
         }
         my_desc.oprType = NC_OPEN_GROUP;

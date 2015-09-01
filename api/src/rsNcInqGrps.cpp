@@ -15,6 +15,7 @@
 #include "getRemoteZoneResc.hpp"
 #include "irods_get_l1desc.hpp"
 #include "ncApiIndex.hpp"
+#include "ncUtil.hpp"
 
 
 #ifdef RODS_SERVER

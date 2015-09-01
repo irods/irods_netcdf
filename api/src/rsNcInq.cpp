@@ -14,6 +14,7 @@
 #include "irods_get_l1desc.hpp"
 #include "ncApiIndex.hpp"
 #include "ncGetAggInfo.hpp"
+#include "ncUtil.hpp"
 
 extern "C" {
 #ifdef RODS_SERVER

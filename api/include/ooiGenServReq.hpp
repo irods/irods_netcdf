@@ -60,7 +60,7 @@ rsOoiGenServReq( rsComm_t *rsComm, ooiGenServReqInp_t *ooiGenServReqInp,
 
 int
 _rsOoiGenServReq( rsComm_t *rsComm, ooiGenServReqInp_t *ooiGenServReqInp,
-                  ooiGenServReqOut_t **ooiGenServReqOut, rescGrpInfo_t *rescGrpInfo );
+                  ooiGenServReqOut_t **ooiGenServReqOut );
 size_t
 ooiGenServReqFunc( void *buffer, size_t size, size_t nmemb, void *userp );
 int
