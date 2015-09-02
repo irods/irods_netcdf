@@ -51,7 +51,7 @@ GCC = g++
 
 CFLAGS = -Wno-write-strings
 
-INC = -I../include/ -I/usr/include/irods -I/usr/include/irods/netcdf/include ${EXTRAINCS}
+INC = -I../include/ -I /usr/include/irods/boost -I/usr/include/irods -I/usr/include/irods/netcdf/include ${EXTRAINCS}
 
 .PHONY: default clean client-library server-library
 

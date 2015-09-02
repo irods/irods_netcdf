@@ -132,7 +132,7 @@ regAttrDataObjUtil( rcComm_t *conn, char *srcPath,
 
     if ( status >= 0 && rodsArgs->verbose == True ) {
         ( void ) gettimeofday( &endTime, ( struct timezone * )0 );
-        printTime( conn, ncRegGlobalAttrInp->objPath, &startTime, &endTime );
+        printTime( ncRegGlobalAttrInp->objPath, &startTime, &endTime );
     }
 
     return ( status );
@@ -311,7 +311,7 @@ rmAttrDataObjUtil( rcComm_t *conn, char *srcPath,
         }
         if ( status >= 0 && rodsArgs->verbose == True ) {
             ( void ) gettimeofday( &endTime, ( struct timezone * )0 );
-            printTime( conn, srcPath, &startTime, &endTime );
+            printTime( srcPath, &startTime, &endTime );
         }
     }
     return ( status );
@@ -413,7 +413,7 @@ listAttrDataObjUtil( rcComm_t *conn, char *srcPath,
         return ( USER__NULL_INPUT_ERR );
     }
 
-    if ( ( status = splitPathByKey( srcPath, myDir, myFile, '/' ) ) < 0 ) {
+    if ( ( status = splitPathByKey( srcPath, myDir, MAX_NAME_LEN, myFile, MAX_NAME_LEN, '/' ) ) < 0 ) {
         rodsLogError( LOG_NOTICE, status,
                       "listAttrDataObjUtil: splitPathByKey for %s error, status = %d",
                       srcPath, status );
@@ -576,7 +576,7 @@ queryDataObjForAUV( rcComm_t *conn, char *objPath, rodsArguments_t *rodsArgs,
         return ( USER__NULL_INPUT_ERR );
     }
 
-    splitPathByKey( objPath, collection, dataName, '/' );
+    splitPathByKey( objPath, collection, MAX_NAME_LEN, dataName, MAX_NAME_LEN, '/' );
 
     memset( &genQueryInp, 0, sizeof( genQueryInp_t ) );
 

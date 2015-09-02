@@ -22,7 +22,7 @@ MAKEFLAGS += --no-print-directory
 CFLAGS += -Wno-write-strings
 CFLAGS += -L/usr/lib/irods
 
-EXTRAINCS += -I/usr/include/irods/netcdf/include -I/usr/include/irods/jansson/src/
+EXTRAINCS += -I/usr/include/irods/boost -I/usr/include/irods/netcdf/include -I/usr/include/irods/jansson/src/ -I/usr/include/irods 
 
 BOOST_LIBS = -L/usr/lib/irods/externals\
     -lboost_filesystem \

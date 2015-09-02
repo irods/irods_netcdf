@@ -8,6 +8,7 @@
 #include "rodsLog.hpp"
 #include "miscUtil.hpp"
 #include "ncarchUtil.hpp"
+#include "ncApiIndex.hpp"
 
 int
 ncarchUtil( rcComm_t *conn, rodsEnv *myRodsEnv, rodsArguments_t *myRodsArgs,

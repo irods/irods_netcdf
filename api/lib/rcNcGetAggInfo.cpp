@@ -101,7 +101,7 @@ getAggBasePath( char *aggCollection, char *basePath ) {
     char myDir[MAX_NAME_LEN], myFile[MAX_NAME_LEN];
     int status;
 
-    if ( ( status = splitPathByKey( aggCollection, myDir, myFile, '/' ) ) < 0 ) {
+    if ( ( status = splitPathByKey( aggCollection, myDir, MAX_NAME_LEN, myFile, MAX_NAME_LEN, '/' ) ) < 0 ) {
         rodsLogError( LOG_ERROR, status,
                       "getAggBasePath: splitPathByKey error for %s", aggCollection );
         return status;

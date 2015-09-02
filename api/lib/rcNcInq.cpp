@@ -145,7 +145,7 @@ int
 prFirstNcLine( char *objPath ) {
     char myDir[MAX_NAME_LEN], myFile[MAX_NAME_LEN];
 
-    if ( objPath == NULL || splitPathByKey( objPath, myDir, myFile, '/' ) < 0 ) {
+    if ( objPath == NULL || splitPathByKey( objPath, myDir, MAX_NAME_LEN, myFile, MAX_NAME_LEN, '/' ) < 0 ) {
         printf( "netcdf UNKNOWN_FILE {\n" );
     }
     else {

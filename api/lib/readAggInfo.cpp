@@ -8,6 +8,8 @@
 #include "dataObjGet.hpp"
 #include "irods_server_api_call.hpp"
 #include "ncApiIndex.hpp"
+#include "ncApiIndex.hpp"
+#include "rodsPackTable.h"
 
 int
 readAggInfo( rsComm_t*     rsComm, 
