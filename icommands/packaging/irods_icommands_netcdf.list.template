@@ -17,7 +17,6 @@
 %endif
 
 %if RPM
-%requires 
 %endif
 
 %if ARCH
