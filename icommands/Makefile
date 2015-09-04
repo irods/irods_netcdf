@@ -37,16 +37,16 @@ BOOST_LIBS = \
              $(BOOST_DIR)/libboost_chrono.a
 
 LIBRARY = ../api/libirods_netcdf_client.a \
-          -lirods_client \
-					-lirods_client_api \
+	-lirods_client \
+	-lirods_client_api \
           $(BOOST_LIBS)
 #          /usr/lib/irods/libhdf5_hl.a \
 #          /usr/lib/irods/libh5tools.a \
 #          /usr/lib/irods/libhdf5.a \
 
-LDFLAGS += -L/usr/lib/irods/externals 
-LDFLAGS +=	$(LIBRARY) $(MODULE_LDFLAGS) $(CL_LDADD) 
-LDFLAGS += -lhdf5 -lnetcdf -lhdf5_hl -ljansson -rdynamic -lrt -lpthread -ldl -lcurl -lz -lssl -lcrypto 
+LDFLAGS += -L/usr/lib/irods/externals
+LDFLAGS +=	$(LIBRARY) $(MODULE_LDFLAGS) $(CL_LDADD)
+LDFLAGS += -lhdf5 -lnetcdf -lhdf5_hl -ljansson -rdynamic -lrt -lpthread -ldl -lcurl -lz -lssl -lcrypto
 
 CFLAGS += -Wno-write-strings -DADDR_64BITS -Dlinux_platform -DNETCDF_API
 CFLAGS += -I/usr/include/irods \
@@ -62,21 +62,21 @@ CFLAGS_OPTIONS := -g $(CFLAGS) $(MY_CFLAG)
 
 # =-=-=-=-=-=-=-
 # Principal Targets
-.PHONY: all icommands clients clean 
+.PHONY: all icommands clients clean
 all:	icommands
 	@true
 
 clients: icommands
 	@true
 
-icommands: $(OBJS) $(BINS) 
+icommands: $(OBJS) $(BINS)
 	@true
 
-$(objDir)/%.o:	$(srcDir)/%.cpp 
+$(objDir)/%.o:	$(srcDir)/%.cpp
 	@echo "Compile icommand `basename $@`..."
 	@$(GCC) -c $(CFLAGS) -o $@ $<
 
-$(binDir)/%:	$(objDir)/%.o 
+$(binDir)/%:	$(objDir)/%.o
 	@echo "Link icommand `basename $@`..."
 	@$(LDR) -o $@ $< $(LDFLAGS)
 

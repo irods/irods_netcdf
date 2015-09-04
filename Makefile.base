@@ -28,10 +28,6 @@ SERVER_CFLAGS= -DRODS_SERVER
 
 INC = -I/usr/include/irods -I/usr/include/irods/boost -I${INCDIR} ${EXTRAINCS}
 
-EXTRALIBS += \
-					-lirods_server \
-					-lirods_client
-
 .PHONY: default-base default clean-base agnostic-base api-base client-base server-base
 
 default-base: default
