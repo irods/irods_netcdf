@@ -28,11 +28,14 @@ BOOST_LIBS = -L/usr/lib/irods/externals\
     -lboost_filesystem \
     -lboost_system \
     -lboost_regex \
-    -lboost_thread
+    -lboost_thread \
+    -lboost_program_options
 
 EXTRALIBS += \
-					$(BOOST_LIBS) \
-					-lnetcdf
+					-lnetcdf \
+					-lirods_client\
+					$(BOOST_LIBS)
+
 #         -lhdf5_hl \
 #         -lh5tools \
 #         -lhdf5
