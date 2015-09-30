@@ -37,7 +37,7 @@ BOOST_LIBS = \
              $(BOOST_DIR)/libboost_chrono.a
 
 LIBRARY = ../api/libirods_netcdf_client.a \
-	-lirods_client \
+	-lirods_client_plugins \
 	-lirods_client_api \
           $(BOOST_LIBS)
 #          /usr/lib/irods/libhdf5_hl.a \

@@ -33,7 +33,7 @@ BOOST_LIBS = -L/usr/lib/irods/externals\
 
 EXTRALIBS += \
 					-lnetcdf \
-					-lirods_client\
+					-lirods_client_plugins\
 					$(BOOST_LIBS)
 
 #         -lhdf5_hl \
