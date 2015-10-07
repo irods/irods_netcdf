@@ -222,6 +222,7 @@ openAggrFile( rsComm_t *rsComm, int l1descInx, int aggElementInx ) {
 #endif // RODS_SERVER
 
 extern "C" {
+    double get_plugin_interface_version() { return 1.0; }
 #ifdef RODS_SERVER
     int
     rsNcOpen( rsComm_t *rsComm, ncOpenInp_t *ncOpenInp, int **ncid ) {

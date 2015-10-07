@@ -21,10 +21,11 @@ MAKEFLAGS += --no-print-directory
 
 CFLAGS += -Wno-write-strings
 CFLAGS += -L/usr/lib/irods
+CFLAGS += -L/usr/lib/irods/externals
 
 EXTRAINCS += -I/usr/include/irods/boost -I/usr/include/irods/netcdf/include -I/usr/include/irods/jansson/src/ -I/usr/include/irods
 
-BOOST_LIBS = -L/usr/lib/irods/externals\
+BOOST_LIBS = \
     -lboost_filesystem \
     -lboost_system \
     -lboost_regex \
@@ -32,16 +33,10 @@ BOOST_LIBS = -L/usr/lib/irods/externals\
     -lboost_program_options
 
 EXTRALIBS += \
-					-lnetcdf \
-					-lirods_client_plugins\
-					$(BOOST_LIBS)
+	-lirods_client_plugins
 
-#         -lhdf5_hl \
-#         -lh5tools \
-#         -lhdf5
-
-SERVER_LIBS += $(SERVER_LIBRARY)
-CLIENT_LIBS += $(CLIENT_LIBRARY)
+SERVER_LIBS += $(SERVER_LIBRARY) -lnetcdf
+CLIENT_LIBS += $(CLIENT_LIBRARY) -lnetcdf
 
 SERVER_DEPS += $(SERVER_LIBRARY)
 CLIENT_DEPS += $(CLIENT_LIBRARY)

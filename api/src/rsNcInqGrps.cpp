@@ -84,6 +84,7 @@ _rsNcInqGrps( int ncid, ncInqGrpsOut_t **ncInqGrpsOut ) {
 #endif // RODS_SERVER
 
 extern "C" {
+    double get_plugin_interface_version() { return 1.0; }
 #ifdef RODS_SERVER
     int
     rsNcInqGrps( rsComm_t *rsComm, ncInqGrpsInp_t *ncInqGrpsInp,

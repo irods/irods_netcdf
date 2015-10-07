@@ -278,6 +278,7 @@ _rsNcGetVarsByTypeForColl( rsComm_t *rsComm, ncGetVarInp_t *ncGetVarInp,
 /* _rsNcGetVarsByType has been moved to the client because clients need it */
 
 extern "C" {
+    double get_plugin_interface_version() { return 1.0; }
 
 #ifdef RODS_SERVER
     int

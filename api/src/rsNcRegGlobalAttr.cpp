@@ -127,6 +127,7 @@ _rsNcRegGlobalAttr( rsComm_t *rsComm, ncRegGlobalAttrInp_t *ncRegGlobalAttrInp )
 #endif // RODS_SERVER
 
 extern "C" {
+    double get_plugin_interface_version() { return 1.0; }
 #ifdef RODS_SERVER
     int
     rsNcRegGlobalAttr( rsComm_t *rsComm, ncRegGlobalAttrInp_t *ncRegGlobalAttrInp ) {

@@ -17,6 +17,7 @@
 #include "ncUtil.hpp"
 
 extern "C" {
+    double get_plugin_interface_version() { return 1.0; }
 #ifdef RODS_SERVER
     int
     rsNcInq( rsComm_t *rsComm, ncInqInp_t *ncInqInp, ncInqOut_t **ncInqOut ) {

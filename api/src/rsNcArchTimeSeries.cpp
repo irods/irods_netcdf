@@ -409,6 +409,7 @@ getTimeInxForArch( rsComm_t *rsComm, int ncid, ncInqOut_t *ncInqOut,
 }
 #endif // RODS_SERVER
 extern "C" {
+    double get_plugin_interface_version() { return 1.0; }
 #ifdef RODS_SERVER
     int
     rsNcArchTimeSeries( rsComm_t *rsComm,

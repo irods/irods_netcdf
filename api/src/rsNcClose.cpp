@@ -144,6 +144,7 @@ static int ncCloseDataObj( rsComm_t *rsComm, int l1descInx ) {
 #endif // RODS_SERVER
 
 extern "C" {
+    double get_plugin_interface_version() { return 1.0; }
 #ifdef RODS_SERVER
     int
     rsNcClose( rsComm_t *rsComm, ncCloseInp_t *ncCloseInp ) {

@@ -13,6 +13,7 @@
 #include "irods_resource_backport.hpp"
 #include "ncApiIndex.hpp"
 extern "C" {
+    double get_plugin_interface_version() { return 1.0; }
 #ifdef RODS_SERVER
     int rsOoiGenServReq(
         rsComm_t *rsComm,

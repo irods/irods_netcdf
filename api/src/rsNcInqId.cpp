@@ -116,6 +116,7 @@ _rsNcInqIdColl( rsComm_t *rsComm, ncInqIdInp_t *ncInqIdInp, int **outId ) {
 #endif // RODS_SERVER
 
 extern "C" {
+    double get_plugin_interface_version() { return 1.0; }
 #ifdef RODS_SERVER
     int
     rsNcInqId( rsComm_t *rsComm, ncInqIdInp_t *ncInqIdInp, int **outId ) {
