@@ -10,7 +10,7 @@ CFLAGS += -DRODS_SERVER
 
 EXTRAINCS+= -I/usr/include/irods/netcdf/include -I../../api/include -I/usr/include/irods/hdf5/src
 
-EXTRALIBS+= -L/usr/lib/irods/externals -lnetcdf
+EXTRALIBS+= -L/usr/lib/irods/externals -Wl,-rpath -Wl,/usr/lib/irods/externals -lnetcdf
 
 .PHONY: default clean
 

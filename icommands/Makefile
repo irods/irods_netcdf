@@ -43,13 +43,10 @@ LIBRARY = ../api/libirods_netcdf_client.a \
 	/usr/lib/libirods_server.a \
 	/usr/lib/libirods_client_core.a \
 	$(BOOST_LIBS)
-#	-lirods_client \
-#          /usr/lib/irods/libhdf5_hl.a \
-#          /usr/lib/irods/libh5tools.a \
-#          /usr/lib/irods/libhdf5.a \
 
 LDFLAGS += -L/usr/lib/irods/externals
 LDFLAGS +=	$(LIBRARY) $(MODULE_LDFLAGS) $(CL_LDADD)
+LDFLAGS += -Wl,-rpath -Wl,/usr/lib/irods/externals
 LDFLAGS += -lhdf5 -lnetcdf -lhdf5_hl -ljansson -rdynamic -lrt -lpthread -ldl -lcurl -lz -lssl -lcrypto
 
 CFLAGS += -Wno-write-strings -DADDR_64BITS -Dlinux_platform -DNETCDF_API

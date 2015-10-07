@@ -38,7 +38,7 @@ CFLAGS += -DRODS_SERVER
 
 EXTRAINCS+= -I/usr/include/irods/netcdf/include -I../../api/include
 
-EXTRALIBS+= -L/usr/lib/irods/externals -lnetcdf ../../api/libirods_netcdf_server.a
+EXTRALIBS+= -L/usr/lib/irods/externals -Wl,-rpath -Wl,/usr/lib/irods/externals -lnetcdf ../../api/libirods_netcdf_server.a
 
 .PHONY: default clean
 

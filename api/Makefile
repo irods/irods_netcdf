@@ -33,7 +33,8 @@ BOOST_LIBS = \
     -lboost_program_options
 
 EXTRALIBS += \
-	-lirods_client_plugins
+	-lirods_client_plugins \
+	-Wl,-rpath -Wl,/usr/lib/irods/externals
 
 SERVER_LIBS += $(SERVER_LIBRARY) -lnetcdf
 CLIENT_LIBS += $(CLIENT_LIBRARY) -lnetcdf
