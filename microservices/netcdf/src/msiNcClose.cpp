@@ -15,7 +15,6 @@ extern "C" {
 
     // =-=-=-=-=-=-=-
     // 1. Set the version of the plugin.  1.0 is currently the standard
-    double PLUGIN_INTERFACE_VERSION = 1.0;
 
     // =-=-=-=-=-=-=-
     // 2. Write a standard issue microservice

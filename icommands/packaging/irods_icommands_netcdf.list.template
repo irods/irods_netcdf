@@ -107,4 +107,5 @@ END_POSTREMOVE
 # Full File Listing
 # =-=-=-=-=-=-=-
 f 755 $OS_IRODS_ACCT $OS_IRODS_ACCT /usr/bin/ bin/*
+f 644 $OS_IRODS_ACCT $OS_IRODS_ACCT ${IRODS_HOME_DIR}/tests/pydevtest/test_irods_icommands_netcdf.py ./packaging/test_irods_icommands_netcdf.py
 

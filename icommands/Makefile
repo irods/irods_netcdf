@@ -37,27 +37,26 @@ BOOST_LIBS = \
              $(BOOST_DIR)/libboost_chrono.a
 
 LIBRARY = ../api/libirods_netcdf_client.a \
-	/usr/lib/libirods_client_core.a \
-	/usr/lib/libirods_client_plugins.a \
+	/usr/lib/libirods_client_core.a  \
 	/usr/lib/libirods_client_api_table.a \
-	/usr/lib/libirods_server.a \
-	/usr/lib/libirods_client_core.a \
-	$(BOOST_LIBS)
+	/usr/lib/libirods_client_plugins.a
 
 LDFLAGS += -L/usr/lib/irods/externals
-LDFLAGS +=	$(LIBRARY) $(MODULE_LDFLAGS) $(CL_LDADD)
 LDFLAGS += -Wl,-rpath -Wl,/usr/lib/irods/externals
-LDFLAGS += -lhdf5 -lnetcdf -lhdf5_hl -ljansson -rdynamic -lrt -lpthread -ldl -lcurl -lz -lssl -lcrypto
+LDFLAGS +=	$(LIBRARY)
+# ********* LDFLAGS += -lirods_client_core -lirods_client_plugins -lirods_client_api_table
+LDFLAGS += $(BOOST_LIBS)
+LDFLAGS += -lhdf5 -lnetcdf -lhdf5_hl -ljansson -rdynamic -lrt -ldl -lcurl -lz -lssl -lcrypto -lpthread
 
 CFLAGS += -Wno-write-strings -DADDR_64BITS -Dlinux_platform -DNETCDF_API
 CFLAGS += -I/usr/include/irods \
 		  -I/usr/include/irods/boost \
-					-I/usr/include/irods/netcdf/include \
-					-I../api/include/ \
-					$(CFLAGS_OPTIONS) \
-					$(LIB_INCLUDES) \
-					$(SVR_INCLUDES) \
-					$(MODULE_CFLAGS)
+		  -I/usr/include/irods/netcdf/include \
+		  -I../api/include/ \
+		  $(CFLAGS_OPTIONS) \
+		  $(LIB_INCLUDES) \
+		  $(SVR_INCLUDES) \
+		  $(MODULE_CFLAGS)
 
 CFLAGS_OPTIONS := -g $(CFLAGS) $(MY_CFLAG)
 
