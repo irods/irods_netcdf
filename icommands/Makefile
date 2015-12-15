@@ -37,7 +37,7 @@ BOOST_LIBS = \
              $(BOOST_DIR)/libboost_chrono.a
 
 LIBRARY = ../api/libirods_netcdf_client.a \
-	/usr/lib/libirods_client_core.a  \
+	-Wl,--whole-archive /usr/lib/libirods_client_core.a -Wl,--no-whole-archive \
 	/usr/lib/libirods_client_api_table.a \
 	/usr/lib/libirods_client_plugins.a
 
