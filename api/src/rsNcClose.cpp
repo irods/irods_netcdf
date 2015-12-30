@@ -131,6 +131,8 @@ static int ncCloseDataObj( rsComm_t *rsComm, int l1descInx ) {
             return ( status );
         }
     }
+    
+    my_desc.l3descInx = 0;
     bzero( &dataObjCloseInp, sizeof( dataObjCloseInp ) );
     dataObjCloseInp.l1descInx = l1descInx;
     status = irods::server_api_call ( DATA_OBJ_CLOSE_AN, rsComm, &dataObjCloseInp );
