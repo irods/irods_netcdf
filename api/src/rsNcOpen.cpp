@@ -292,6 +292,9 @@ extern "C" {
         api->in_pack_key   = "NcOpenInp_PI";
         api->in_pack_value = NcOpenInp_PI;
 
+        api->out_pack_key   = "INT_PI";
+        api->out_pack_value = INT_PI;
+
         // =-=-=-=-=-=-=-
         // and... were done.
         return api;
