@@ -22,6 +22,7 @@ endif
 
 CFLAGS+= -Wno-write-strings
 CFLAGS+= -Wall -Werror
+CFLAGS+= -fPIC
 CFLAGS+= -L/usr/lib/irods
 
 SERVER_CFLAGS= -DRODS_SERVER
