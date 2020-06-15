@@ -8,10 +8,10 @@
 
 /* This is a General OOI service request  API call */
 
-#include "rods.hpp"
+#include "rods.h"
 #include "ooiCi.hpp"
-#include "procApiRequest.hpp"
-#include "apiNumber.hpp"
+#include "procApiRequest.h"
+#include "apiNumber.h"
 #include "initServer.hpp"
 
 #define DEF_OOI_GATEWAY_URL "http://localhost"

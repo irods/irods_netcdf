@@ -8,12 +8,12 @@
 
 /* This is a NETCDF API call */
 
-#include "rods.hpp"
-#include "rcMisc.hpp"
-#include "procApiRequest.hpp"
-#include "apiNumber.hpp"
+#include "rods.h"
+#include "rcMisc.h"
+#include "procApiRequest.h"
+#include "apiNumber.h"
 #include "initServer.hpp"
-#include "dataObjInpOut.hpp"
+#include "dataObjInpOut.h"
 #include "ncOpen.hpp"
 #include "ncInqId.hpp"
 #include "ncGetVarsByType.hpp"

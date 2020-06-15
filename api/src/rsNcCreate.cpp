@@ -3,19 +3,20 @@
 /* This is script-generated code (for the most part).  */
 /* See dataObjGet.h for a description of this API call.*/
 
+#include "netcdf_port.hpp"
 #include "ncCreate.hpp"
-#include "rodsLog.hpp"
-#include "dataObjCreate.hpp"
+#include "rodsLog.h"
+#include "dataObjCreate.h"
 #include "rsGlobalExtern.hpp"
-#include "rcGlobalExtern.hpp"
+#include "rcGlobalExtern.h"
 #include "rsApiHandler.hpp"
 #include "objMetaOpr.hpp"
-#include "dataObjUnlink.hpp"
+#include "dataObjUnlink.h"
 #include "ncClose.hpp"
 #include "physPath.hpp"
 #include "specColl.hpp"
-#include "regDataObj.hpp"
-#include "getRemoteZoneResc.hpp"
+#include "regDataObj.h"
+#include "getRemoteZoneResc.h"
 #include "irods_get_l1desc.hpp"
 #include "irods_server_api_call.hpp"
 #include "ncApiIndex.hpp"
@@ -65,6 +66,7 @@ extern "C" {
         }
         else if ( remoteFlag == LOCAL_HOST ) {
             addKeyVal( &dataObjInp.condInput, NO_OPEN_FLAG_KW, "" );
+            int _rsDataObjCreate(rsComm_t*, DataObjInp*);
             l1descInx = _rsDataObjCreate( rsComm, &dataObjInp );
             clearKeyVal( &dataObjInp.condInput );
             if ( l1descInx < 0 ) {
@@ -108,12 +110,14 @@ extern "C" {
             my_desc.l3descInx = myncid;
             /* need to reg here since NO_OPEN_FLAG_KW does not do it */
             if ( my_desc.dataObjInfo->specColl == NULL ) {
+int svrRegDataObj(rsComm_t*, DataObjInfo*);
                 status = svrRegDataObj( rsComm, my_desc.dataObjInfo );
                 if ( status < 0 ) {
                     ncCloseInp_t myNcCloseInp;
                     bzero( &myNcCloseInp, sizeof( myNcCloseInp ) );
                     myNcCloseInp.ncid = l1descInx;
                     irods::server_api_call ( NC_CLOSE_AN, rsComm, &myNcCloseInp );
+int l3Unlink( rsComm_t *rsComm, dataObjInfo_t *dataObjInfo );
                     l3Unlink( rsComm, my_desc.dataObjInfo );
                     rodsLog( LOG_ERROR,
                              "rsNcCreate: svrRegDataObj for %s failed, status = %d",
@@ -154,24 +158,35 @@ extern "C" {
         const std::string& _context ) {
         // =-=-=-=-=-=-=-
         // create a api def object
+//      irods::apidef_t def = { NC_CREATE_AN,
+ //                             RODS_API_VERSION,
+  //                            REMOTE_USER_AUTH,
+   //                           REMOTE_USER_AUTH,
+    //                          "NcOpenInp_PI", 0,
+     //                         NULL, 0,
+      //                        0, 0
+       //                     }; // null fcn ptr, handled in delay_load
+
         irods::apidef_t def = { NC_CREATE_AN,
                                 RODS_API_VERSION,
                                 REMOTE_USER_AUTH,
                                 REMOTE_USER_AUTH,
                                 "NcOpenInp_PI", 0,
                                 NULL, 0,
-                                0, 0
-                              }; // null fcn ptr, handled in delay_load
+#ifdef RODS_SERVER
+                                CPP_14_FUNCTION(rsNcCreate),
+#else
+                                CPP_14_NOOPFUNC( rsComm_t*, ncOpenInp_t * , int ** ),
+#endif // RODS_SERVER
+                                "api_nc_create",
+                                [](void*){},
+                                (funcPtr) RODS_SERVER_ENABLE(( irods::netcdf::api_call_wrapper< ncOpenInp_t *, int ** > ))
+                              };
+
         // =-=-=-=-=-=-=-
         // create an api object
         irods::api_entry* api = new irods::api_entry( def );
 
-        // =-=-=-=-=-=-=-
-        // assign the fcn which will handle the api call
-#ifdef ROD_SERVER
-        api->fcn_name_ = "rsNcCreate";
-#endif // RODS_SERVER
-         
         // =-=-=-=-=-=-=-
         // assign the pack struct key and value
         api->in_pack_key   = "NcOpenInp_PI";
@@ -187,7 +202,4 @@ extern "C" {
 
 
 }; // extern "C"
-
-
-
 

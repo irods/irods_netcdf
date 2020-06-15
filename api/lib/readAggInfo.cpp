@@ -5,7 +5,7 @@
 
 
 #include "ncUtil.hpp"
-#include "dataObjGet.hpp"
+#include "dataObjGet.h"
 #include "irods_server_api_call.hpp"
 #include "ncApiIndex.hpp"
 #include "ncApiIndex.hpp"

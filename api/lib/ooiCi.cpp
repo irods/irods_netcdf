@@ -3,8 +3,11 @@
 
 /* ooiCi.c - OOI CI routines
  */
+
+#include "myjansson.h"
 #include "ooiCi.hpp"
-#include "msParam.hpp"
+#include "msParam.h"
+
 
 /* dictSetAttr - set a key/value pair. For non array, arrLen = 0 */
 int
@@ -182,90 +185,92 @@ clearGenArray( genArray_t *genArray ) {
     return( 0 );
 }
 
+
 int
-jsonPackDictionary( dictionary_t *dictionary, json_t **outObj ) {
-    json_t *paramObj;
+jsonPackDictionary( dictionary_t *dictionary, PTR(Json_t)* outObj ) {
+
     int i, status;
 
     if ( dictionary == NULL || outObj == NULL ) {
         return USER__NULL_INPUT_ERR;
     }
 
-    paramObj = json_object();
+    PTR(Json_t) paramObj { Json_object() };
 
     for ( i = 0; i < dictionary->len; i++ ) {
         char *type_PI = dictionary->value[i].type_PI;
 
         if ( strcmp( type_PI, STR_MS_T ) == 0 ) {
-            status = json_object_set_new( paramObj, dictionary->key[i],
-                                          json_string( ( char * ) dictionary->value[i].ptr ) );
+            status = Json_object_set_new( GET(paramObj), dictionary->key[i],
+                                          PTR(Json_t) { Json_string( (char *) dictionary->value[i].ptr) } );
         }
         else if ( strcmp( type_PI, INT_MS_T ) == 0 ) {
-#if JSON_INTEGER_IS_LONG_LONG
+#if JSON__INTEGER_IS_LONG_LONG
             rodsLong_t myInt = *( int * ) dictionary->value[i].ptr;
 #else
             int myInt = *( int * ) dictionary->value[i].ptr;
 #endif
-            status = json_object_set_new( paramObj, dictionary->key[i],
-                                          json_integer( myInt ) );
+            status = Json_object_set_new( GET(paramObj), dictionary->key[i],
+                                          PTR(Json_t) { Json_integer(myInt) }  );
         }
         else if ( strcmp( type_PI, FLOAT_MS_T ) == 0 ) {
-#if JSON_INTEGER_IS_LONG_LONG
+#if JSON__INTEGER_IS_LONG_LONG
             double myFloat = *( float * ) dictionary->value[i].ptr;
 #else
             float myFloat = *( float * ) dictionary->value[i].ptr;
 #endif
-            status = json_object_set_new( paramObj, dictionary->key[i],
-                                          json_real( myFloat ) );
+            status = Json_object_set_new( GET(paramObj), dictionary->key[i],
+                                          PTR(Json_t) { Json_real(myFloat) }  );
         }
         else if ( strcmp( type_PI, DOUBLE_MS_T ) == 0 ) {
             /* DOUBLE_MS_T in iRODS is longlong */
-#if JSON_INTEGER_IS_LONG_LONG
+#if JSON__INTEGER_IS_LONG_LONG
             rodsLong_t myInt = *( rodsLong_t * ) dictionary->value[i].ptr;
 #else
             int myInt = *( rodsLong_t * ) dictionary->value[i].ptr;
 #endif
-            status = json_object_set_new( paramObj, dictionary->key[i],
-                                          json_integer( myInt ) );
+            status = Json_object_set_new( GET(paramObj), dictionary->key[i],
+                                          PTR(Json_t) { Json_integer(myInt) } );
         }
         else if ( strcmp( type_PI, BOOL_MS_T ) == 0 ) {
             int myInt = *( int * ) dictionary->value[i].ptr;
             if ( myInt == 0 ) {
-                status = json_object_set_new( paramObj, dictionary->key[i],
-                                              json_false() );
+                status = Json_object_set_new( GET(paramObj), dictionary->key[i],
+                                              PTR(Json_t){ Json_false() } );
             }
             else {
-                status = json_object_set_new( paramObj, dictionary->key[i],
-                                              json_true() );
+                status = Json_object_set_new( GET(paramObj), dictionary->key[i],
+                                              PTR(Json_t){ Json_true() } );
             }
         }
         else if ( strcmp( type_PI, Dictionary_MS_T ) == 0 ) {
-            json_t *dictObj = NULL;
+            PTR(Json_t) dictObj {};
             status = jsonPackDictionary( ( dictionary_t * )
                                          dictionary->value[i].ptr, &dictObj );
             if ( status < 0 ) {
                 rodsLogError( LOG_ERROR, status,
                               "jsonPackDictionary: jsonPackDictionary error" );
-                json_decref( paramObj );
+                Json_decref( paramObj );
                 return status;
             }
-            status = json_object_set_new( paramObj, dictionary->key[i],
-                                          dictObj );
+            status = Json_object_set_new ( GET(paramObj), dictionary->key[i],
+                                                dictObj );
         }
         else {
             rodsLog( LOG_ERROR,
                      "jsonPackDictionary: type_PI %s not supported", type_PI );
-            json_decref( paramObj );
+            Json_decref( paramObj );
             return OOI_DICT_TYPE_NOT_SUPPORTED;
         }
         if ( status != 0 ) {
             rodsLog( LOG_ERROR,
                      "jsonPackDictionary: son_object_set paramObj error" );
-            json_decref( paramObj );
+            Json_decref( paramObj );
             return OOI_JSON_OBJ_SET_ERR;
         }
     }
-    *outObj = paramObj;
+
+    *outObj = paramObj ;
 
     return 0;
 }
@@ -273,7 +278,9 @@ jsonPackDictionary( dictionary_t *dictionary, json_t **outObj ) {
 int
 jsonPackOoiServReq( char *servName, char *servOpr, dictionary_t *params,
                     char **outStr ) {
-    json_t *paramObj, *obj;
+
+    PTR(Json_t) paramObj;
+
     int status;
 
     if ( servName == NULL || servOpr == NULL || params == NULL ||
@@ -287,18 +294,19 @@ jsonPackOoiServReq( char *servName, char *servOpr, dictionary_t *params,
         return status;
     }
 
-    obj = json_pack( "{s:{s:s,s:s,s:o}}",
-                     SERVICE_REQUEST_STR,
-                     SERVICE_NAME_STR, servName,
-                     SERVICE_OP_STR, servOpr,
-                     "params", paramObj );
+    PTR(Json_t) obj { Json_pack( "{s:{s:s,s:s,s:o}}",
+                                 SERVICE_REQUEST_STR,
+                                 SERVICE_NAME_STR, servName,
+                                 SERVICE_OP_STR, servOpr,
+                                 "params", Json_deep_copy(GET(paramObj)) )
+    };
 
     if ( obj == NULL ) {
         rodsLog( LOG_ERROR, "jsonPackOoiServReq: json_pack error" );
         return OOI_JSON_PACK_ERR;
     }
-    *outStr = json_dumps( obj, 0 );
-    json_decref( obj );
+    *outStr = Json_dumps( GET(obj), 0 );
+    Json_decref( obj );
     if ( *outStr == NULL ) {
         rodsLog( LOG_ERROR, "jsonPackOoiServReq: json_dumps error" );
         return OOI_JSON_DUMP_ERR;
@@ -326,23 +334,24 @@ jsonPackOoiServReqForPost( char *servName, char *servOpr, dictionary_t *params,
 }
 
 int
-jsonUnpackOoiRespStr( json_t *responseObj, char **outStr ) {
+jsonUnpackOoiRespStr( Json_t *responseObj, char **outStr ) {
+    __Json_string_value_support__;
     const char *responseStr;
     int status;
 
-    if ( !json_is_string( responseObj ) ) {
-        if ( json_is_null( responseObj ) ) {
+    if ( !Json_is_string( responseObj ) ) {
+        if ( Json_is_null( responseObj ) ) {
             responseStr = "";
         }
         else {
             rodsLog( LOG_ERROR,
                      "jsonUnpackOoiRespStr: responseObj type %d is not JSON_STRING.",
-                     json_typeof( responseObj ) );
+                     Json_typeof( responseObj ) );
             return OOI_JSON_TYPE_ERR;
         }
     }
     else {
-        responseStr = json_string_value( responseObj );
+        responseStr = Json_string_value( responseObj );
     }
 
     if ( responseStr != NULL ) {
@@ -356,17 +365,17 @@ jsonUnpackOoiRespStr( json_t *responseObj, char **outStr ) {
 }
 
 int
-jsonUnpackOoiRespInt( json_t *responseObj, int **outInt ) {
+jsonUnpackOoiRespInt( Json_t *responseObj, int **outInt ) {
     int myInt;
 
-    if ( !json_is_integer( responseObj ) ) {
+    if ( !Json_is_integer( responseObj ) ) {
         rodsLog( LOG_ERROR,
                  "jsonUnpackOoiRespInt: responseObj type %d is not JSON_INTEGER",
-                 json_typeof( responseObj ) );
+                 Json_typeof( responseObj ) );
         return OOI_JSON_TYPE_ERR;
     }
     else {
-        myInt = json_integer_value( responseObj );
+        myInt = Json_integer_value( responseObj );
     }
 
     *outInt = ( int * ) malloc( sizeof( int ) );
@@ -375,17 +384,17 @@ jsonUnpackOoiRespInt( json_t *responseObj, int **outInt ) {
 }
 
 int
-jsonUnpackOoiRespFloat( json_t *responseObj, float **outFloat ) {
+jsonUnpackOoiRespFloat( Json_t *responseObj, float **outFloat ) {
     float myFloat;
 
-    if ( !json_is_real( responseObj ) ) {
+    if ( !Json_is_real( responseObj ) ) {
         rodsLog( LOG_ERROR,
                  "jsonUnpackOoiRespInt: responseObj type %d is not JSON_REAL",
-                 json_typeof( responseObj ) );
+                 Json_typeof( responseObj ) );
         return OOI_JSON_TYPE_ERR;
     }
     else {
-        myFloat = json_real_value( responseObj );
+        myFloat = Json_real_value( responseObj );
     }
 
     *outFloat = ( float * ) malloc( sizeof( float ) );
@@ -394,19 +403,19 @@ jsonUnpackOoiRespFloat( json_t *responseObj, float **outFloat ) {
 }
 
 int
-jsonUnpackOoiRespBool( json_t *responseObj, int **outBool ) {
+jsonUnpackOoiRespBool( Json_t *responseObj, int **outBool ) {
     int myInt;
 
-    if ( json_is_true( responseObj ) ) {
+    if ( Json_is_true( responseObj ) ) {
         myInt = 1;
     }
-    else if ( json_is_false( responseObj ) ) {
+    else if ( Json_is_false( responseObj ) ) {
         myInt = 0;
     }
     else {
         rodsLog( LOG_ERROR,
                  "jsonUnpackOoiRespFloat: responseObj type %d is not JSON_TRUE/FALSE",
-                 json_typeof( responseObj ) );
+                 Json_typeof( responseObj ) );
         return OOI_JSON_TYPE_ERR;
     }
 
@@ -416,13 +425,13 @@ jsonUnpackOoiRespBool( json_t *responseObj, int **outBool ) {
 }
 
 int
-jsonUnpackOoiRespDict( json_t *responseObj, dictionary_t **outDict ) {
+jsonUnpackOoiRespDict( Json_t *responseObj, dictionary_t **outDict ) {
     int status;
 
-    if ( !json_is_object( responseObj ) ) {
+    if ( !Json_is_object( responseObj ) ) {
         rodsLog( LOG_ERROR,
                  "jsonUnpackOoiRespDict: responseObj type %d is not JSON_OBJECT.",
-                 json_typeof( responseObj ) );
+                 Json_typeof( responseObj ) );
         return OOI_JSON_TYPE_ERR;
     }
     *outDict = ( dictionary_t * ) calloc( 1, sizeof( dictionary_t ) );
@@ -435,13 +444,13 @@ jsonUnpackOoiRespDict( json_t *responseObj, dictionary_t **outDict ) {
 }
 
 int
-jsonUnpackOoiRespArray( json_t *responseObj, genArray_t **outArray ) {
+jsonUnpackOoiRespArray( Json_t *responseObj, genArray_t **outArray ) {
     int status;
 
-    if ( !json_is_array( responseObj ) ) {
+    if ( !Json_is_array( responseObj ) ) {
         rodsLog( LOG_ERROR,
                  "jsonUnpackOoiRespDict: responseObj type %d is not JSON_OBJECT.",
-                 json_typeof( responseObj ) );
+                 Json_typeof( responseObj ) );
         return OOI_JSON_TYPE_ERR;
     }
     *outArray = ( genArray_t * ) calloc( 1, sizeof( genArray_t ) );
@@ -455,15 +464,15 @@ jsonUnpackOoiRespArray( json_t *responseObj, genArray_t **outArray ) {
 
 
 int
-jsonUnpackDict( json_t *dictObj, dictionary_t *outDict ) {
-    void *iter;
+jsonUnpackDict( Json_t *dictObj, dictionary_t *outDict ) {
+    __Json_string_value_support__;
     void *tmpOut;
     dictionary_t *tmpDict;
     genArray_t *tmpGenArray;
     int *tmpInt;
     float *tmpFloat;
     const char *key;
-    json_t *value;
+    Json_t *value;
     int status = 0;
 
     if ( dictObj == NULL || outDict == NULL ) {
@@ -472,15 +481,15 @@ jsonUnpackDict( json_t *dictObj, dictionary_t *outDict ) {
         return USER__NULL_INPUT_ERR;
     }
     bzero( outDict, sizeof( dictionary_t ) );
-    iter = json_object_iter( dictObj );
-    while ( iter ) {
-        json_type myType;
+    auto iter { Json_object_iter( dictObj ) };
+    while (GOOD( dictObj, iter )) {
+        Json_type_t myType;
 
-        key = json_object_iter_key( iter );
-        value = json_object_iter_value( iter );
-        myType = json_typeof( value );
+        key = Json_object_iter_key( iter );
+        value = Json_object_iter_value( iter );
+        myType = Json_typeof( value );
         switch ( myType ) {
-        case JSON_OBJECT:
+        case JSON__OBJECT:
             tmpDict = ( dictionary_t * ) calloc( 1, sizeof( dictionary_t ) );
             status = jsonUnpackDict( value, tmpDict );
             if ( status < 0 ) {
@@ -491,7 +500,7 @@ jsonUnpackDict( json_t *dictObj, dictionary_t *outDict ) {
                                       tmpDict );
             }
             break;
-        case JSON_ARRAY:
+        case JSON__ARRAY:
             tmpGenArray = ( genArray_t * ) calloc( 1, sizeof( genArray_t ) );
             status = jsonUnpackArray( value, tmpGenArray );
             if ( status < 0 ) {
@@ -502,29 +511,29 @@ jsonUnpackDict( json_t *dictObj, dictionary_t *outDict ) {
                                       tmpGenArray );
             }
             break;
-        case JSON_STRING:
-            tmpOut = strdup( json_string_value( value ) );
+        case JSON__STRING:
+            tmpOut = strdup( Json_string_value( value ) );
             status = dictSetAttr( outDict, ( char * ) key, STR_MS_T, tmpOut );
             break;
-        case JSON_INTEGER:
+        case JSON__INTEGER:
             tmpInt = ( int * ) calloc( 1, sizeof( int ) );
-            *tmpInt = ( int ) json_integer_value( value );
+            *tmpInt = ( int ) Json_integer_value( value );
             status = dictSetAttr( outDict, ( char * ) key, INT_MS_T,
                                   ( void * ) tmpInt );
             break;
-        case JSON_REAL:
+        case JSON__REAL:
             tmpFloat = ( float * ) calloc( 1, sizeof( float ) );
-            *tmpFloat = ( float ) json_real_value( value );
+            *tmpFloat = ( float ) Json_real_value( value );
             status = dictSetAttr( outDict, ( char * ) key, FLOAT_MS_T,
                                   ( void * ) tmpFloat );
             break;
-        case JSON_TRUE:
+        case JSON__TRUE:
             tmpInt = ( int * ) calloc( 1, sizeof( int ) );
             *tmpInt = 1;
             status = dictSetAttr( outDict, ( char * ) key, BOOL_MS_T,
                                   ( void * ) tmpInt );
             break;
-        case JSON_FALSE:
+        case JSON__FALSE:
             tmpInt = ( int * ) calloc( 1, sizeof( int ) );
             *tmpInt = 0;
             status = dictSetAttr( outDict, ( char * ) key, BOOL_MS_T,
@@ -535,7 +544,7 @@ jsonUnpackDict( json_t *dictObj, dictionary_t *outDict ) {
                      "ooiGenServReqFunc: myType %d not supported", myType );
             status = OOI_JSON_TYPE_ERR;
         }
-        iter = json_object_iter_next( dictObj, iter );
+        iter = Json_object_iter_next( dictObj, iter );
     }
     if ( status < 0 ) {
         clearDictionary( outDict );
@@ -548,13 +557,14 @@ jsonUnpackDict( json_t *dictObj, dictionary_t *outDict ) {
  * output for Now. The "key" value is not used.
  */
 int
-jsonUnpackArray( json_t *genArrayObj, genArray_t *genArray ) {
+jsonUnpackArray( Json_t *genArrayObj, genArray_t *genArray ) {
+    __Json_string_value_support__;
     void *tmpOut;
     int *tmpInt;
     float *tmpFloat;
     dictionary_t *tmpDict;
     genArray_t *tmpGenArray;
-    json_t *value;
+    Json_t *value;
     int status = 0;
     int i, len;
 
@@ -564,21 +574,21 @@ jsonUnpackArray( json_t *genArrayObj, genArray_t *genArray ) {
         return USER__NULL_INPUT_ERR;
     }
     bzero( genArray, sizeof( genArray_t ) );
-    if ( !json_is_array( genArrayObj ) ) {
+    if ( !Json_is_array( genArrayObj ) ) {
         rodsLog( LOG_ERROR,
-                 "jsonUnpackArray: Obj type %d is not JSON_ARRAY.",
-                 json_typeof( genArrayObj ) );
+                 "jsonUnpackArray: Obj type %d is not JSON__ARRAY.",
+                 Json_typeof( genArrayObj ) );
         return OOI_JSON_TYPE_ERR;
     }
 
-    len = json_array_size( genArrayObj );
+    len = Json_array_size( genArrayObj );
     for ( i = 0; i < len; i++ ) {
-        json_type myType;
+        Json_type_t myType;
 
-        value = json_array_get( genArrayObj, i );
-        myType = json_typeof( value );
+        value = Json_array_get( genArrayObj, i );
+        myType = Json_typeof( value );
         switch ( myType ) {
-        case JSON_OBJECT:
+        case JSON__OBJECT:
             tmpDict = ( dictionary_t * ) calloc( 1, sizeof( dictionary_t ) );
             status = jsonUnpackDict( value, tmpDict );
             if ( status < 0 ) {
@@ -588,7 +598,7 @@ jsonUnpackArray( json_t *genArrayObj, genArray_t *genArray ) {
                 status = arraySet( genArray, Dictionary_MS_T, tmpDict );
             }
             break;
-        case JSON_ARRAY:
+        case JSON__ARRAY:
             tmpGenArray = ( genArray_t * ) calloc( 1, sizeof( genArray_t ) );
             status = jsonUnpackArray( value, tmpGenArray );
             if ( status < 0 ) {
@@ -598,26 +608,26 @@ jsonUnpackArray( json_t *genArrayObj, genArray_t *genArray ) {
                 status = arraySet( genArray, GenArray_MS_T, tmpGenArray );
             }
             break;
-        case JSON_STRING:
-            tmpOut = strdup( json_string_value( value ) );
+        case JSON__STRING:
+            tmpOut = strdup( Json_string_value( value ) );
             status = arraySet( genArray, STR_MS_T, tmpOut );
             break;
-        case JSON_INTEGER:
+        case JSON__INTEGER:
             tmpInt = ( int * ) calloc( 1, sizeof( int ) );
-            *tmpInt = ( int ) json_integer_value( value );
+            *tmpInt = ( int ) Json_integer_value( value );
             status = arraySet( genArray, INT_MS_T, ( void * ) tmpInt );
             break;
-        case JSON_REAL:
+        case JSON__REAL:
             tmpFloat = ( float * ) calloc( 1, sizeof( float ) );
-            *tmpFloat = ( float ) json_real_value( value );
+            *tmpFloat = ( float ) Json_real_value( value );
             status = arraySet( genArray, FLOAT_MS_T, ( void * ) tmpFloat );
             break;
-        case JSON_TRUE:
+        case JSON__TRUE:
             tmpInt = ( int * ) calloc( 1, sizeof( int ) );
             *tmpInt = 1;
             status = arraySet( genArray, BOOL_MS_T, ( void * ) tmpInt );
             break;
-        case JSON_FALSE:
+        case JSON__FALSE:
             tmpInt = ( int * ) calloc( 1, sizeof( int ) );
             *tmpInt = 0;
             status = arraySet( genArray, BOOL_MS_T, ( void * ) tmpInt );

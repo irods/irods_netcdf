@@ -20,7 +20,7 @@
 
 #include "h5Group.hpp"
 #include "h5Attribute.hpp"
-#include "rodsClient.hpp"
+#include "rodsClient.h"
 
 /* operation id for H5File */
 typedef enum H5File_op_t

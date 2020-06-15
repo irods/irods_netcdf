@@ -7,8 +7,8 @@
 #ifndef OOI_CI_HPP
 #define OOI_CI_HPP
 
-#include "rods.hpp"
-#include <jansson.h>
+#include "rods.h"
+#include "myjansson.h"
 #include <curl/curl.h>
 
 extern "C" {
@@ -71,7 +71,7 @@ extern "C" {
     int
     clearGenArray( genArray_t *genArray );
     int
-    jsonPackDictionary( dictionary_t *dictionary, json_t **outObj );
+    jsonPackDictionary( dictionary_t *dictionary, Json_t **outObj );
     int
     jsonPackOoiServReq( char *servName, char *servOpr, dictionary_t *param,
                         char **outStr );
@@ -79,27 +79,27 @@ extern "C" {
     jsonPackOoiServReqForPost( char *servName, char *servOpr, dictionary_t *params,
                                char **outStr );
     int
-    jsonUnpackOoiRespStr( json_t *responseObj, char **outStr );
+    jsonUnpackOoiRespStr( Json_t *responseObj, char **outStr );
     int
-    jsonUnpackOoiRespInt( json_t *responseObj, int **outInt );
+    jsonUnpackOoiRespInt( Json_t *responseObj, int **outInt );
     int
-    jsonUnpackOoiRespFloat( json_t *responseObj, float **outFloat );
+    jsonUnpackOoiRespFloat( Json_t *responseObj, float **outFloat );
     int
-    jsonUnpackOoiRespBool( json_t *responseObj, int **outBool );
+    jsonUnpackOoiRespBool( Json_t *responseObj, int **outBool );
     int
-    jsonUnpackOoiRespDict( json_t *responseObj, dictionary_t **outDict );
+    jsonUnpackOoiRespDict( Json_t *responseObj, dictionary_t **outDict );
     int
-    jsonUnpackOoiRespArray( json_t *responseObj, genArray_t **outArray );
+    jsonUnpackOoiRespArray( Json_t *responseObj, genArray_t **outArray );
     int
-    jsonUnpackDict( json_t *dictObj, dictionary_t *outDict );
+    jsonUnpackDict( Json_t *dictObj, dictionary_t *outDict );
     int
     clearDictArray( dictArray_t *dictArray );
     int
     _clearDictArray( dictionary_t *dictArray, int len );
     int
-    jsonUnpackOoiRespDictArray( json_t *responseObj, dictArray_t **outDictArray );
+    jsonUnpackOoiRespDictArray( Json_t *responseObj, dictArray_t **outDictArray );
     int
-    jsonUnpackOoiRespDictArrInArr( json_t *responseObj, dictArray_t **outDictArray,
+    jsonUnpackOoiRespDictArrInArr( Json_t *responseObj, dictArray_t **outDictArray,
                                    int outInx );
     int
     printDictArray( dictArray_t *dictArray );
@@ -108,7 +108,7 @@ extern "C" {
     int
     printGenArray( genArray_t *genArray );
     int
-    jsonUnpackArray( json_t *genArrayObj, genArray_t *genArray );
+    jsonUnpackArray( Json_t *genArrayObj, genArray_t *genArray );
     int
     getStrByType_PI( char *type_PI, void *valuePtr, char *valueStr );
     int

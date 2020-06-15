@@ -3,22 +3,23 @@
 /* This is script-generated code (for the most part).  */
 /* See ncArchTimeSeries.h for a description of this API call.*/
 
+#include "netcdf_port.hpp"
 #include "ncArchTimeSeries.hpp"
-#include "rodsLog.hpp"
-#include "dataObjOpen.hpp"
+#include "rodsLog.h"
+#include "dataObjOpen.h"
 #include "rsGlobalExtern.hpp"
-#include "rcGlobalExtern.hpp"
+#include "rcGlobalExtern.h"
 #include "rsApiHandler.hpp"
 #include "objMetaOpr.hpp"
 #include "physPath.hpp"
 #include "specColl.hpp"
-#include "getRemoteZoneResc.hpp"
+#include "getRemoteZoneResc.h"
 #include "miscServerFunct.hpp"
-#include "dataObjCreate.hpp"
+#include "dataObjCreate.h"
 #include "ncGetAggInfo.hpp"
 #include "ncClose.hpp"
 #include "ncInq.hpp"
-#include "regDataObj.hpp"
+#include "regDataObj.h"
 #include "ncUtil.hpp"
 #include "irods_get_l1desc.hpp"
 #include "irods_resource_backport.hpp"
@@ -274,6 +275,7 @@ int archPartialTimeSeries(
         snprintf( dataObjInp.objPath, MAX_NAME_LEN, "%s%-d", basePath,
                   nextNumber );
         nextNumber++;
+        int  _rsDataObjCreateWithResc(rsComm_t * , dataObjInp_t* , std::string const &);
         l1descInx = _rsDataObjCreateWithResc(
                         rsComm,
                         &dataObjInp,
@@ -318,6 +320,7 @@ int archPartialTimeSeries(
             irods::server_api_call ( DATA_OBJ_CLOSE_AN, rsComm, &dataObjCloseInp );
             return ( status );
         }
+        int svrRegDataObj(rsComm_t*, DataObjInfo*);
         status = svrRegDataObj( rsComm, myDataObjInfo );
         if ( status < 0 ) {
             rodsLogError( LOG_ERROR, status,
@@ -466,23 +469,33 @@ extern "C" {
         const std::string& _context ) {
         // =-=-=-=-=-=-=-
         // create a api def object
+//      irods::apidef_t def = { NC_ARCH_TIME_SERIES_AN,
+ //                             RODS_API_VERSION,
+  //                            REMOTE_USER_AUTH,
+   //                           REMOTE_USER_AUTH,
+    //                          "NcArchTimeSeriesInp_PI", 0,
+     //                         NULL, 0,
+      //                        0, 0
+       //                     }; // null fcn ptr, handled in delay_load
+
         irods::apidef_t def = { NC_ARCH_TIME_SERIES_AN,
                                 RODS_API_VERSION,
                                 REMOTE_USER_AUTH,
                                 REMOTE_USER_AUTH,
                                 "NcArchTimeSeriesInp_PI", 0,
                                 NULL, 0,
-                                0, 0
-                              }; // null fcn ptr, handled in delay_load
+#ifdef RODS_SERVER
+                                CPP_14_FUNCTION( rsNcArchTimeSeries ),
+#else
+                                CPP_14_NOOPFUNC( rsComm_t* , ncArchTimeSeriesInp_t* ),
+#endif // RODS_SERVER
+                                "api_nc_arch_time_series",
+                                [](void*){},
+                                (funcPtr) RODS_SERVER_ENABLE( (irods::netcdf::api_call_wrapper< ncArchTimeSeriesInp_t* >) )
+                              };
         // =-=-=-=-=-=-=-
         // create an api object
         irods::api_entry* api = new irods::api_entry( def );
-
-        // =-=-=-=-=-=-=-
-        // assign the fcn which will handle the api call
-#ifdef RODS_SERVER
-        api->fcn_name_ = "rsNcArchTimeSeries";
-#endif
 
         // =-=-=-=-=-=-=-
         // assign the pack struct key and value

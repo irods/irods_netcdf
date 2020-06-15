@@ -3,16 +3,17 @@
 /* This is script-generated code (for the most part).  */
 /* See dataObjGet.h for a description of this API call.*/
 
+#include "netcdf_port.hpp"
 #include "ncClose.hpp"
-#include "rodsLog.hpp"
-#include "dataObjClose.hpp"
+#include "rodsLog.h"
+#include "dataObjClose.h"
 #include "rsGlobalExtern.hpp"
-#include "rcGlobalExtern.hpp"
+#include "rcGlobalExtern.h"
 #include "rsApiHandler.hpp"
 #include "objMetaOpr.hpp"
 #include "physPath.hpp"
 #include "specColl.hpp"
-#include "getRemoteZoneResc.hpp"
+#include "getRemoteZoneResc.h"
 #include "irods_get_l1desc.hpp"
 #include "ncApiIndex.hpp"
 #include "irods_server_api_call.hpp"
@@ -214,24 +215,27 @@ extern "C" {
         const std::string& _context ) {
         // =-=-=-=-=-=-=-
         // create a api def object
+
         irods::apidef_t def = { NC_CLOSE_AN,
                                 RODS_API_VERSION,
                                 REMOTE_USER_AUTH,
                                 REMOTE_USER_AUTH,
                                 "NcCloseInp_PI", 0,
                                 NULL, 0,
-                                0, 0
+#ifdef RODS_SERVER
+                                CPP_14_FUNCTION(rsNcClose ),
+#else
+                                CPP_14_NOOPFUNC( rsComm_t*, ncCloseInp_t* ),
+#endif // RODS_SERVER
+                                "api_nc_close",
+                                [](void*){},
+                                (funcPtr) RODS_SERVER_ENABLE(( irods::netcdf::api_call_wrapper<  ncCloseInp_t* > ))
+
                               }; // null fcn ptr, handled in delay_load
         // =-=-=-=-=-=-=-
         // create an api object
         irods::api_entry* api = new irods::api_entry( def );
 
-        // =-=-=-=-=-=-=-
-        // assign the fcn which will handle the api call
-#ifdef RODS_SERVER
-        api->fcn_name_ = "rsNcClose";
-#endif // RODS_SERVER
-         
         // =-=-=-=-=-=-=-
         // assign the pack struct key and value
         api->in_pack_key   = "NcCloseInp_PI";

@@ -1,0 +1,8 @@
+if [ -f /etc/irods/service_account.config ] ; then
+  . /etc/irods/service_account.config
+else
+  IRODS_SERVICE_ACCOUNT_NAME=`stat --format "%U" /var/lib/irods`
+  IRODS_SERVICE_GROUP_NAME=`stat --format "%G" /var/lib/irods`
+fi
+
+chown -R $IRODS_SERVICE_ACCOUNT_NAME:$IRODS_SERVICE_GROUP_NAME /var/lib/irods/netcdf-plugin-tests

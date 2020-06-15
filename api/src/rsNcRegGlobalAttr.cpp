@@ -3,10 +3,11 @@
 /* rsNcRegGlobalAttr.c
  */
 
+#include "netcdf_port.hpp"
 #include "ncRegGlobalAttr.hpp"
 #include "ncInq.hpp"
 #include "ncClose.hpp"
-#include "modAVUMetadata.hpp"
+#include "modAVUMetadata.h"
 #include "icatHighLevelRoutines.hpp"
 #include "irods_server_api_call.hpp"
 #include "ncApiIndex.hpp"
@@ -126,9 +127,12 @@ _rsNcRegGlobalAttr( rsComm_t *rsComm, ncRegGlobalAttrInp_t *ncRegGlobalAttrInp )
 
 #endif // RODS_SERVER
 
+
 extern "C" {
     double get_plugin_interface_version() { return 1.0; }
+
 #ifdef RODS_SERVER
+
     int
     rsNcRegGlobalAttr( rsComm_t *rsComm, ncRegGlobalAttrInp_t *ncRegGlobalAttrInp ) {
         int status;
@@ -152,6 +156,7 @@ extern "C" {
         }
         return ( status );
     }
+
 #endif // RODS_SERVER
 
     // =-=-=-=-=-=-=-
@@ -166,19 +171,20 @@ extern "C" {
                                 REMOTE_USER_AUTH,
                                 REMOTE_USER_AUTH,
                                 "NcRegGlobalAttrInp_PI", 0,
-                                NULL, 0, 0, // null fcn ptr, handled in delay_load
-                                clearRegGlobalAttrInp
+                                NULL, 0, 
+#ifdef RODS_SERVER
+                                CPP_14_FUNCTION( rsNcRegGlobalAttr ),                             
+#else
+                                CPP_14_NOOPFUNC( rsComm_t*, ncRegGlobalAttrInp_t* ),
+#endif // RODS_SERVER
+                                "api_nc_get_global_attr",
+                                CPP_14_FUNCTION( clearRegGlobalAttrInp ),
+                                (funcPtr) RODS_SERVER_ENABLE(( irods::netcdf::api_call_wrapper< ncRegGlobalAttrInp_t* > ))
                               }; 
         // =-=-=-=-=-=-=-
         // create an api object
         irods::api_entry* api = new irods::api_entry( def );
 
-        // =-=-=-=-=-=-=-
-        // assign the fcn which will handle the api call
-#ifdef RODS_SERVER
-        api->fcn_name_ = "rsNcRegGlobalAttr";
-#endif // RODS_SERVER
-         
         // =-=-=-=-=-=-=-
         // assign the pack struct key and value
         api->in_pack_key   = "NcRegGlobalAttrInp_PI";
@@ -190,10 +196,4 @@ extern "C" {
 
     } // plugin_factory
 
-
-
-
 }; // extern "C"
-
-
-

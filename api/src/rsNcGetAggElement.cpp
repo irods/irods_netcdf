@@ -3,17 +3,19 @@
 /* This is script-generated code (for the most part).  */
 /* See ncGetAggElement.h for a description of this API call.*/
 
+#include "netcdf_port.hpp"
 #include "ncGetAggElement.hpp"
 #include "ncInq.hpp"
-#include "rodsLog.hpp"
-#include "dataObjOpen.hpp"
+#include "rodsLog.h"
+#include "dataObjOpen.h"
 #include "rsGlobalExtern.hpp"
-#include "rcGlobalExtern.hpp"
+#include "rcGlobalExtern.h"
 #include "rsApiHandler.hpp"
+#include "rsDataObjOpen.hpp"
 #include "objMetaOpr.hpp"
 #include "physPath.hpp"
 #include "specColl.hpp"
-#include "getRemoteZoneResc.hpp"
+#include "getRemoteZoneResc.h"
 #include "irods_get_l1desc.hpp"
 #include "ncApiIndex.hpp"
 
@@ -126,7 +128,7 @@ extern "C" {
             addKeyVal( &dataObjInp.condInput, NO_OPEN_FLAG_KW, "" );
             addKeyVal( &dataObjInp.condInput, NO_STAGING_KW, "" );
 
-            l1descInx = _rsDataObjOpen( rsComm, &dataObjInp );
+            l1descInx = rsDataObjOpen( rsComm, &dataObjInp );
             clearKeyVal( &dataObjInp.condInput );
             if ( l1descInx < 0 ) {
                 return l1descInx;
@@ -167,24 +169,26 @@ extern "C" {
         const std::string& _context ) {
         // =-=-=-=-=-=-=-
         // create a api def object
+
         irods::apidef_t def = { NC_GET_AGG_ELEMENT_AN,
                                 RODS_API_VERSION,
                                 REMOTE_USER_AUTH,
                                 REMOTE_USER_AUTH,
                                 "NcOpenInp_PI", 0,
                                 "NcAggElement_PI", 0,
-                                0, 0 // null fcn ptr, handled in delay_load
+#ifdef RODS_SERVER
+                                CPP_14_FUNCTION( rsNcGetAggElement ),
+#else
+                                CPP_14_NOOPFUNC( rsComm_t*, ncOpenInp_t *, ncAggElement_t** ),
+#endif // RODS_SERVER
+                                "api_nc_get_agg_element",
+                                [](void*){},
+                                (funcPtr) RODS_SERVER_ENABLE(( irods::netcdf::api_call_wrapper<  ncOpenInp_t *, ncAggElement_t** > ))
                               }; 
         // =-=-=-=-=-=-=-
         // create an api object
         irods::api_entry* api = new irods::api_entry( def );
 
-        // =-=-=-=-=-=-=-
-        // assign the fcn which will handle the api call
-#ifdef RODS_SERVER
-        api->fcn_name_ = "rsNcGetAggElement";
-#endif // RODS_SERVER
-         
         // =-=-=-=-=-=-=-
         // assign the pack struct key and value
         api->in_pack_key   = "NcOpenInp_PI";

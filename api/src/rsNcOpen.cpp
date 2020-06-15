@@ -3,17 +3,18 @@
 /* This is script-generated code (for the most part).  */
 /* See ncOpen.h for a description of this API call.*/
 
+#include "netcdf_port.hpp"
 #include "ncOpen.hpp"
 #include "ncClose.hpp"
-#include "rodsLog.hpp"
-#include "dataObjOpen.hpp"
+#include "rodsLog.h"
+#include "dataObjOpen.h"
 #include "rsGlobalExtern.hpp"
-#include "rcGlobalExtern.hpp"
+#include "rcGlobalExtern.h"
 #include "rsApiHandler.hpp"
 #include "objMetaOpr.hpp"
 #include "physPath.hpp"
 #include "specColl.hpp"
-#include "getRemoteZoneResc.hpp"
+#include "getRemoteZoneResc.h"
 #include "miscServerFunct.hpp"
 #include "irods_server_api_call.hpp"
 #include "ncApiIndex.hpp"
@@ -269,23 +270,25 @@ extern "C" {
         const std::string& _context ) {
         // =-=-=-=-=-=-=-
         // create a api def object
+
         irods::apidef_t def = { NC_OPEN_AN,
                                 RODS_API_VERSION,
                                 REMOTE_USER_AUTH,
                                 REMOTE_USER_AUTH,
                                 "NcOpenInp_PI", 0,
                                 "INT_PI", 0,
-                                0, 0 // null fcn ptr, handled in delay_load
+#ifdef RODS_SERVER
+                                CPP_14_FUNCTION(rsNcOpen ),
+#else
+                                CPP_14_NOOPFUNC( rsComm_t*, ncOpenInp_t *, int **),
+#endif // RODS_SERVER
+                                "api_nc_open",
+                                [](void*){},
+                                (funcPtr) RODS_SERVER_ENABLE(( irods::netcdf::api_call_wrapper< ncOpenInp_t *, int ** > ))
                               };
         // =-=-=-=-=-=-=-
         // create an api object
         irods::api_entry* api = new irods::api_entry( def );
-
-        // =-=-=-=-=-=-=-
-        // assign the fcn which will handle the api call
-#ifdef RODS_SERVER
-        api->fcn_name_ = "rsNcOpen";
-#endif // RODS_SERVER
 
         // =-=-=-=-=-=-=-
         // assign the pack struct key and value
@@ -293,7 +296,7 @@ extern "C" {
         api->in_pack_value = NcOpenInp_PI;
 
         api->out_pack_key   = "INT_PI";
-        api->out_pack_value = INT_PI;
+        api->out_pack_value = "int myInt;"; // INT_PI , stolen from rodsPackInStruct.h
 
         // =-=-=-=-=-=-=-
         // and... were done.

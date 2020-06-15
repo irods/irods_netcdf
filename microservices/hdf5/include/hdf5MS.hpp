@@ -16,8 +16,8 @@
 #ifndef HDF5_MS_HPP
 #define HDF5_MS_HPP
 
-#include "rodsClient.hpp"
-#include "apiHeaderAll.hpp"
+#include "rodsClient.h"
+#include "apiHeaderAll.h"
 #include "objMetaOpr.hpp"
 #include "dataObjOpr.hpp"
 #include "miscServerFunct.hpp"
