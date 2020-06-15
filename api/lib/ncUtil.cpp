@@ -3,11 +3,12 @@
 #ifndef windows_platform
 #include <sys/time.h>
 #endif
-#include "rodsPath.hpp"
-#include "rodsErrorTable.hpp"
-#include "rodsLog.hpp"
-#include "miscUtil.hpp"
-#include "rcPortalOpr.hpp"
+#include "netcdf_core_defs.hpp"
+#include "rodsPath.h"
+#include "rodsErrorTable.h"
+#include "rodsLog.h"
+#include "miscUtil.h"
+//#include "rcPortalOpr.h"
 #include "ncUtil.hpp"
 #include "ncGetVarsByType.hpp"
 

@@ -5,9 +5,9 @@
 #ifndef NCUTIL_HPP
 #define NCUTIL_HPP
 
-#include "rodsClient.hpp"
-#include "parseCommandLine.hpp"
-#include "rodsPath.hpp"
+#include "rodsClient.h"
+#include "parseCommandLine.h"
+#include "rodsPath.h"
 #include "ncInq.hpp"
 #include "ncGetVarsByType.hpp"
 #include "ncClose.hpp"

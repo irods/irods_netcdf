@@ -3,16 +3,17 @@
 /* This is script-generated code (for the most part).  */
 /* See dataObjGet.h for a description of this API call.*/
 
+#include "netcdf_port.hpp"
 #include "ncOpenGroup.hpp"
-#include "rodsLog.hpp"
-#include "dataObjOpen.hpp"
+#include "rodsLog.h"
+#include "dataObjOpen.h"
 #include "rsGlobalExtern.hpp"
-#include "rcGlobalExtern.hpp"
+#include "rcGlobalExtern.h"
 #include "rsApiHandler.hpp"
 #include "objMetaOpr.hpp"
 #include "physPath.hpp"
 #include "specColl.hpp"
-#include "getRemoteZoneResc.hpp"
+#include "getRemoteZoneResc.h"
 #include "irods_get_l1desc.hpp"
 #include "ncApiIndex.hpp"
 #include "ncUtil.hpp"
@@ -145,17 +146,21 @@ extern "C" {
                                 REMOTE_USER_AUTH,
                                 "NcOpenInp_PI", 0,
                                 "INT_PI", 0,
-                                0, 0 // null fcn ptr, handled in delay_load
+#ifdef RODS_SERVER
+                                CPP_14_FUNCTION( rsNcOpenGroup ),
+#else
+                                CPP_14_NOOPFUNC( rsComm_t*, ncOpenInp_t*, int**),
+#endif // RODS_SERVER
+                                "api_nc_open_group",
+                                [](void*){},    
+                                (funcPtr) RODS_SERVER_ENABLE(( irods::netcdf::api_call_wrapper< ncOpenInp_t* , int** > ))
+
                               };
+
+
         // =-=-=-=-=-=-=-
         // create an api object
         irods::api_entry* api = new irods::api_entry( def );
-
-        // =-=-=-=-=-=-=-
-        // assign the fcn which will handle the api call
-#ifdef RODS_SERVER
-        api->fcn_name_ = "rsNcOpenGroup";
-#endif // RODS_SERVER
 
         // =-=-=-=-=-=-=-
         // assign the pack struct key and value

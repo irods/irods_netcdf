@@ -3,22 +3,23 @@
 /* This is script-generated code (for the most part).  */
 /* See ncGetAggInfo.h for a description of this API call.*/
 
+#include "netcdf_port.hpp"
 #include "ncGetAggInfo.hpp"
 #include "ncInq.hpp"
-#include "rodsLog.hpp"
-#include "dataObjOpen.hpp"
+#include "rodsLog.h"
+#include "dataObjOpen.h"
 #include "rsGlobalExtern.hpp"
-#include "rcGlobalExtern.hpp"
+#include "rcGlobalExtern.h"
 #include "rsApiHandler.hpp"
 #include "objMetaOpr.hpp"
 #include "physPath.hpp"
 #include "specColl.hpp"
-#include "openCollection.hpp"
-#include "readCollection.hpp"
-#include "closeCollection.hpp"
-#include "closeCollection.hpp"
-#include "dataObjPut.hpp"
-#include "dataObjGet.hpp"
+#include "openCollection.h"
+#include "readCollection.h"
+#include "closeCollection.h"
+#include "closeCollection.h"
+#include "dataObjPut.h"
+#include "dataObjGet.h"
 #include "irods_server_api_call.hpp"
 #include "ncApiIndex.hpp"
 
@@ -145,18 +146,20 @@ extern "C" {
                                 REMOTE_USER_AUTH,
                                 "NcOpenInp_PI", 0,
                                 "NcAggInfo_PI", 0,
-                                0, 0 // null fcn ptr, handled in delay_load
+#ifdef RODS_SERVER
+                                CPP_14_FUNCTION( rsNcGetAggInfo ),
+#else
+                                CPP_14_NOOPFUNC( rsComm_t*, ncOpenInp_t *, ncAggInfo_t **),
+
+#endif // RODS_SERVER
+                                "api_nc_open",
+                                [](void*){},
+                                (funcPtr) RODS_SERVER_ENABLE(( irods::netcdf::api_call_wrapper< ncOpenInp_t *, ncAggInfo_t** > ))
                               }; 
         // =-=-=-=-=-=-=-
         // create an api object
         irods::api_entry* api = new irods::api_entry( def );
 
-        // =-=-=-=-=-=-=-
-        // assign the fcn which will handle the api call
-#ifdef RODS_SERVER
-        api->fcn_name_ = "rsNcGetAggInfo";
-#endif // RODS_SERVER
-         
         // =-=-=-=-=-=-=-
         // assign the pack struct key and value
         api->in_pack_key   = "NcOpenInp_PI";

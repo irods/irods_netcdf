@@ -2,15 +2,17 @@
  *** For more information please refer to files in the COPYRIGHT directory ***/
 /* This is script-generated code (for the most part).  */
 /* See ncInq.hpp for a description of this API call.*/
+
+#include "netcdf_port.hpp"
 #include "ncInq.hpp"
-#include "rodsLog.hpp"
+#include "rodsLog.h"
 #include "rsGlobalExtern.hpp"
-#include "rcGlobalExtern.hpp"
+#include "rcGlobalExtern.h"
 #include "rsApiHandler.hpp"
 #include "objMetaOpr.hpp"
 #include "physPath.hpp"
 #include "specColl.hpp"
-#include "getRemoteZoneResc.hpp"
+#include "getRemoteZoneResc.h"
 #include "irods_get_l1desc.hpp"
 #include "ncApiIndex.hpp"
 #include "ncGetAggInfo.hpp"
@@ -58,23 +60,26 @@ extern "C" {
         const std::string& _context ) {
         // =-=-=-=-=-=-=-
         // create a api def object
+
         irods::apidef_t def = { NC_INQ_AN,
                                 RODS_API_VERSION,
                                 REMOTE_USER_AUTH,
                                 REMOTE_USER_AUTH,
                                 "NcInqInp_PI", 0,
                                 "NcInqOut_PI", 0,
-                                0, 0 // null fcn ptr, handled in delay_load
+#ifdef RODS_SERVER
+                                CPP_14_FUNCTION( rsNcInq ),
+#else
+                                CPP_14_NOOPFUNC( rsComm_t*, ncInqInp_t *, ncInqOut_t ** ),
+#endif // RODS_SERVER
+                                "api_nc_inq",
+                                [](void*){},
+                                (funcPtr) RODS_SERVER_ENABLE(( irods::netcdf::api_call_wrapper< ncInqInp_t *, ncInqOut_t ** > ))
                               };
+
         // =-=-=-=-=-=-=-
         // create an api object
         irods::api_entry* api = new irods::api_entry( def );
-
-        // =-=-=-=-=-=-=-
-        // assign the fcn which will handle the api call
-#ifdef RODS_SERVER
-        api->fcn_name_ = "rsNcInq";
-#endif // RODS_SERVER
 
         // =-=-=-=-=-=-=-
         // assign the pack struct key and value

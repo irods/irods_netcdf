@@ -5,9 +5,9 @@
 #ifndef NCATTRUTIL_HPP
 #define NCATTRUTIL_HPP
 
-#include "rodsClient.hpp"
-#include "parseCommandLine.hpp"
-#include "rodsPath.hpp"
+#include "rodsClient.h"
+#include "parseCommandLine.h"
+#include "rodsPath.h"
 #include "ncRegGlobalAttr.hpp"
 
 extern "C" {

@@ -1,6 +1,6 @@
 #ifndef NETCDF_PARSE_UTIL_HPP__
 #define NETCDF_PARSE_UTIL_HPP__
-#include "msParam.hpp"
+#include "msParam.h"
 #include "ncInq.hpp"
 
 extern "C" {

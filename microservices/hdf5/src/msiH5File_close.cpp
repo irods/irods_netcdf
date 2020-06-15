@@ -1,10 +1,11 @@
 // =-=-=-=-=-=-=-
-#include "msParam.hpp"
-#include "reGlobalsExtern.hpp"
+#include "netcdf_port.hpp"
+#include "msParam.h"
+//#include "reGlobalsExtern.hpp"
 #include "irods_ms_plugin.hpp"
 #include "h5File.hpp"
 #include "hdf5MS.hpp"
-#include "dataObjClose.hpp"
+#include "dataObjClose.h"
 #include "irods_server_api_call.hpp"
 #include "ncApiIndex.hpp"
 
@@ -58,7 +59,7 @@ extern "C" {
     {
         rsComm_t *rsComm;
         H5File *inf = 0;
-        H5File *outf;
+        H5File *outf = 0;
         openedDataObjInp_t dataObjCloseInp;
         dataObjInfo_t *dataObjInfo;
         int remoteFlag;
@@ -139,20 +140,8 @@ extern "C" {
     // 3.  Create the plugin factory function which will return a microservice
     //     table entry
     irods::ms_table_entry*  plugin_factory( ) {
-        // =-=-=-=-=-=-=-
-        // 4.  allocate a microservice plugin which takes the number of function
-        //     params as a parameter to the constructor
-        irods::ms_table_entry* msvc = new irods::ms_table_entry( 2 );
 
-        // =-=-=-=-=-=-=-
-        // 5. add the microservice function as an operation to the plugin
-        //    the first param is the name / key of the operation, the second
-        //    is the name of the function which will be the microservice
-        msvc->add_operation( "msiH5File_close", "msiH5File_close" );
-
-        // =-=-=-=-=-=-=-
-        // 6. return the newly created microservice plugin
-        return msvc;
+        ADD_IRODS_MS_TABLE_ENTRY( 2 , msiH5File_close );
     }
 
 }; // extern "C"

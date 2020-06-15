@@ -1,6 +1,7 @@
 // =-=-=-=-=-=-=-
-#include "msParam.hpp"
-#include "reGlobalsExtern.hpp"
+#include "netcdf_port.hpp"
+#include "msParam.h"
+//#include "reGlobalsExtern.hpp"
 #include "irods_ms_plugin.hpp"
 #include "netcdfMS.hpp"
 #include "netcdfParseUtilities.hpp"
@@ -115,24 +116,9 @@ extern "C" {
     }
 
 
-    // =-=-=-=-=-=-=-
-    // 3.  Create the plugin factory function which will return a microservice
-    //     table entry
+
     irods::ms_table_entry*  plugin_factory( ) {
-        // =-=-=-=-=-=-=-
-        // 4.  allocate a microservice plugin which takes the number of function
-        //     params as a parameter to the constructor
-        irods::ms_table_entry* msvc = new irods::ms_table_entry( 4 );
-
-        // =-=-=-=-=-=-=-
-        // 5. add the microservice function as an operation to the plugin
-        //    the first param is the name / key of the operation, the second
-        //    is the name of the function which will be the microservice
-        msvc->add_operation( "msiNcInqWithId", "msiNcInqWithId" );
-
-        // =-=-=-=-=-=-=-
-        // 6. return the newly created microservice plugin
-        return msvc;
+      ADD_IRODS_MS_TABLE_ENTRY(4,msiNcInqWithId );
     }
 
 }; // extern "C"

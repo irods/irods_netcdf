@@ -8,12 +8,12 @@
 
 /* This is a NETCDF API call */
 
-#include "rods.hpp"
-#include "rcMisc.hpp"
-#include "procApiRequest.hpp"
+#include "rods.h"
+#include "rcMisc.h"
+#include "procApiRequest.h"
 //#include "apiNumber.hpp"
 //#include "initServer.hpp"
-#include "dataObjInpOut.hpp"
+#include "dataObjInpOut.h"
 #include "netcdf.h"
 
 typedef struct {

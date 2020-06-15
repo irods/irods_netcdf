@@ -2,9 +2,10 @@
  *** For more information please refer to files in the COPYRIGHT directory ***/
 /* packtest.c - test the basic packing routines */
 
-#include "rodsClient.hpp"
+#include "rodsClient.h"
 #include <curl/curl.h>
-#include <jansson.h>
+//#include <jansson.h>
+#include "myjansson.h"
 
 #define NEW_ACC_PAYLOAD "payload={\"serviceRequest\": { \"serviceName\": \"bank\", \"serviceOp\": \"new_account\", \"params\": { \"name\": \"kurt\" }}}"
 
@@ -53,7 +54,7 @@ newAccountOut( void *buffer, size_t size, size_t nmemb, void *userp );
 size_t
 listAccountsOut( void *buffer, size_t size, size_t nmemb, void *userp );
 int
-printKeyValJsonObj( json_t *keyValObj );
+printKeyValJsonObj( Json_t *keyValObj );
 
 int
 main( int argc, char **argv ) {
@@ -111,7 +112,7 @@ int
 doNewAccount( CURL *easyhandle, char *account_type, char *name,
               char **accountIDOut ) {
     /* account_type can be Checking or Savings */
-    json_t *obj, *paramObj;
+    Json_t *obj_p;
     CURLcode res;
     char myUrl[MAX_NAME_LEN];
     char postStr[MAX_NAME_LEN];
@@ -119,35 +120,39 @@ doNewAccount( CURL *easyhandle, char *account_type, char *name,
     bankOprOut_t bankOprOut;
     int status;
 
-    paramObj = json_object();
-    status = json_object_set_new( paramObj, ACCOUNT_TYPE_KW,
-                                  json_string( account_type ) );
+    PTR(Json_t) paramObj { Json_object() };
+
+    status = Json_object_set_new( GET(paramObj), ACCOUNT_TYPE_KW,
+                                  PTR(Json_t){ Json_string(account_type) } );
+
+     if ( status != 0 ) {
+        rodsLog( LOG_ERROR, "doNewAccount: son_object_set paramObj error" );
+        Json_decref( paramObj );
+        return -2;
+    }
+    status = Json_object_set_new( GET(paramObj), NAME_KW,
+                                  PTR(Json_t){ Json_string(name) } );
 
     if ( status != 0 ) {
         rodsLog( LOG_ERROR, "doNewAccount: son_object_set paramObj error" );
-        json_decref( paramObj );
-        return -2;
-    }
-    status = json_object_set_new( paramObj, NAME_KW, json_string( name ) );
-
-    if ( status != 0 ) {
-        rodsLog( LOG_ERROR, "doNewAccount: son_object_set paramObj error" );
-        json_decref( paramObj );
+        Json_decref( paramObj );
         return -2;
     }
 
-    obj = json_pack( "{s:{s:s,s:s,s:o}}",
-                     "serviceRequest",
-                     "serviceName", BANK_SERVICE_NAME,
-                     "serviceOp", NEW_ACCOUNT_OP,
-                     "params", paramObj );
+    obj_p = Json_pack( "{s:{s:s,s:s,s:o}}",
+                       "serviceRequest",
+                       "serviceName", BANK_SERVICE_NAME,
+                       "serviceOp", NEW_ACCOUNT_OP,
+                       "params", Json_deep_copy(GET(paramObj)) );
 
-    if ( obj == NULL ) {
+    if ( obj_p == NULL ) {
         rodsLog( LOG_ERROR, "doNewAccount: json_pack error" );
         return -2;
     }
 
-    objStr = json_dumps( obj, 0 );
+    PTR(Json_t) obj { obj_p };
+
+    objStr = Json_dumps( GET(obj), 0 );
 
     if ( objStr == NULL ) {
         rodsLog( LOG_ERROR, "doNewAccount: json_dumps error" );
@@ -170,7 +175,7 @@ doNewAccount( CURL *easyhandle, char *account_type, char *name,
     curl_easy_setopt( easyhandle, CURLOPT_WRITEDATA, &bankOprOut );
 
     res = curl_easy_perform( easyhandle );
-    json_decref( obj );
+    Json_decref( obj );
     free( objStr );
     if ( res != CURLE_OK ) {
         rodsLog( LOG_ERROR, "doNewAccount: curl_easy_perform error: %d", res );
@@ -185,7 +190,7 @@ doNewAccount( CURL *easyhandle, char *account_type, char *name,
 
 int
 doDeposit( CURL *easyhandle, char *account_id, float ammount ) {
-    json_t *obj;
+    Json_t *obj;
     CURLcode res;
     char myUrl[MAX_NAME_LEN];
     char postStr[MAX_NAME_LEN];
@@ -194,7 +199,7 @@ doDeposit( CURL *easyhandle, char *account_id, float ammount ) {
 
     printf( "Depositing $ %10.2f\n", ammount );
 
-    obj = json_pack( "{s:{s:s,s:s,s:{s:s,s:f}}}",
+    obj = Json_pack( "{s:{s:s,s:s,s:{s:s,s:f}}}",
                      "serviceRequest",
                      "serviceName", BANK_SERVICE_NAME,
                      "serviceOp", DEPOSIT_OP,
@@ -206,10 +211,10 @@ doDeposit( CURL *easyhandle, char *account_id, float ammount ) {
         return -2;
     }
 
-    objStr = json_dumps( obj, 0 );
+    objStr = Json_dumps( obj, 0 );
 
     if ( objStr == NULL ) {
-        rodsLog( LOG_ERROR, "doDeposit: json_dumps error" );
+        rodsLog( LOG_ERROR, "doDeposit: Json_dumps error" );
         return -2;
     }
 
@@ -240,7 +245,7 @@ doDeposit( CURL *easyhandle, char *account_id, float ammount ) {
 
 int
 doBuyBond( CURL *easyhandle, char *account_id, float cash_amount ) {
-    json_t *obj;
+    Json_t *obj;
     CURLcode res;
     char myUrl[MAX_NAME_LEN];
     char postStr[MAX_NAME_LEN];
@@ -249,7 +254,7 @@ doBuyBond( CURL *easyhandle, char *account_id, float cash_amount ) {
 
     printf( "Buying $ %10.2f bonds\n", cash_amount );
 
-    obj = json_pack( "{s:{s:s,s:s,s:{s:s,s:f}}}",
+    obj = Json_pack( "{s:{s:s,s:s,s:{s:s,s:f}}}",
                      "serviceRequest",
                      "serviceName", BANK_SERVICE_NAME,
                      "serviceOp", BUY_BOND_OP,
@@ -260,7 +265,7 @@ doBuyBond( CURL *easyhandle, char *account_id, float cash_amount ) {
         rodsLog( LOG_ERROR, "doBuyBond: json_pack error" );
         return -2;
     }
-    objStr = json_dumps( obj, 0 );
+    objStr = Json_dumps( obj, 0 );
 
     if ( objStr == NULL ) {
         rodsLog( LOG_ERROR, "doBuyBond: json_dumps error" );
@@ -294,70 +299,78 @@ doBuyBond( CURL *easyhandle, char *account_id, float cash_amount ) {
 
 size_t
 decodeDepositOut( void *buffer, size_t size, size_t nmemb, void *userp ) {
-    json_t *root, *dataObj, *responseObj;
-    json_error_t jerror;
+    __Json_string_value_support__;
+    Json_t *root_p, *dataObj, *responseObj;
+    Json_error_t jerror;
     const char *responseStr;
     bankOprOut_t *bankOprOut;
 
-    root = json_loads( ( const char* ) buffer, 0, &jerror );
-    if ( !root ) {
+    root_p = Json_loads( ( const char* ) buffer, 0, &jerror );
+
+    if ( !root_p ) {
         rodsLog( LOG_ERROR,
                  "decodeDepositOut: json_loads error. %s", jerror.text );
         return 0;
     }
-    dataObj = json_object_get( root, "data" );
+
+    PTR(Json_t) root {root_p};
+
+    dataObj = Json_object_get( GET(root), "data" );
     if ( !dataObj ) {
         rodsLog( LOG_ERROR,
                  "decodeDepositOut: json_object_get data failed." );
-        json_decref( root );
+        Json_decref( root );
         return 0;
     }
-    responseObj = json_object_get( dataObj, "GatewayResponse" );
+    responseObj = Json_object_get( dataObj, "GatewayResponse" );
     if ( !responseObj ) {
         rodsLog( LOG_ERROR,
                  "decodeDepositOut: json_object_get GatewayResponse failed." );
-        json_decref( root );
+        Json_decref( root );
         return 0;
     }
-    responseStr = json_string_value( responseObj );
+    responseStr = Json_string_value( responseObj );
     bankOprOut = ( bankOprOut_t * ) userp;
     strncpy( bankOprOut->reponseStr, responseStr, MAX_NAME_LEN );
-    json_decref( root );
+    Json_decref( root );
 
     return nmemb * size;
 }
 
 size_t
 newAccountOut( void *buffer, size_t size, size_t nmemb, void *userp ) {
-    json_t *root, *dataObj, *responseObj;
-    json_error_t jerror;
+    __Json_string_value_support__;
+    Json_t *root_p, *dataObj, *responseObj;
+    Json_error_t jerror;
     const char *responseStr;
     bankOprOut_t *bankOprOut;
 
-    root = json_loads( ( const char* ) buffer, 0, &jerror );
-    if ( !root ) {
+    root_p = Json_loads( ( const char* ) buffer, 0, &jerror );
+    if ( !root_p ) {
         rodsLog( LOG_ERROR,
                  "decodeDepositOut: json_loads error. %s", jerror.text );
         return 0;
     }
-    dataObj = json_object_get( root, "data" );
+    PTR(Json_t) root { root_p };
+
+    dataObj = Json_object_get( GET(root), "data" );
     if ( !dataObj ) {
         rodsLog( LOG_ERROR,
                  "decodeDepositOut: json_object_get data failed." );
-        json_decref( root );
+        Json_decref( root );
         return 0;
     }
-    responseObj = json_object_get( dataObj, "GatewayResponse" );
+    responseObj = Json_object_get( dataObj, "GatewayResponse" );
     if ( !responseObj ) {
         rodsLog( LOG_ERROR,
                  "decodeDepositOut: json_object_get GatewayResponse failed." );
-        json_decref( root );
+        Json_decref( root );
         return 0;
     }
-    responseStr = json_string_value( responseObj );
+    responseStr = Json_string_value( responseObj );
     bankOprOut = ( bankOprOut_t * ) userp;
     strncpy( bankOprOut->account_id, responseStr, NAME_LEN );
-    json_decref( root );
+    Json_decref( root );
 
     return nmemb * size;
 }
@@ -388,44 +401,47 @@ doListAccounts( CURL *easyhandle ) {
 }
 size_t
 listAccountsOut( void *buffer, size_t size, size_t nmemb, void *userp ) {
-    json_t *root, *dataObj, *responseObj, *keyValObj;
-    json_error_t jerror;
+    Json_t *root_p, *dataObj, *responseObj, *keyValObj;
+    Json_error_t jerror;
     int i;
 
-    root = json_loads( ( const char* ) buffer, 0, &jerror );
-    if ( !root ) {
+    root_p = Json_loads( ( const char* ) buffer, 0, &jerror );
+    if ( !root_p ) {
         rodsLog( LOG_ERROR,
                  "listAccountsOut: json_loads error. %s", jerror.text );
         return 0;
     }
-    dataObj = json_object_get( root, "data" );
+
+    PTR(Json_t) root { root_p };
+
+    dataObj = Json_object_get( GET(root), "data" );
     if ( !dataObj ) {
         rodsLog( LOG_ERROR,
                  "listAccountsOut: json_object_get data failed." );
-        json_decref( root );
+        Json_decref( root );
         return 0;
     }
-    responseObj = json_object_get( dataObj, "GatewayResponse" );
+    responseObj = Json_object_get( dataObj, "GatewayResponse" );
     if ( !responseObj ) {
         rodsLog( LOG_ERROR,
                  "listAccountsOut: json_object_get GatewayResponse failed." );
-        json_decref( root );
+        Json_decref( root );
         return 0;
     }
 
-    if ( !json_is_array( responseObj ) ) {
+    if ( !Json_is_array( responseObj ) ) {
         rodsLog( LOG_ERROR,
                  "listAccountsOut: responseObj is not an array." );
-        json_decref( root );
+        Json_decref( root );
         return 0;
     }
 
-    for ( i = 0; i < ( int ) json_array_size( responseObj ); i++ ) {
-        keyValObj = json_array_get( responseObj, i );
-        if ( !json_is_object( keyValObj ) ) {
+    for ( i = 0; i < ( int ) Json_array_size( responseObj ); i++ ) {
+        keyValObj = Json_array_get( responseObj, i );
+        if ( !Json_is_object( keyValObj ) ) {
             rodsLog( LOG_ERROR,
                      "listAccountsOut: responseObj is not an array." );
-            json_decref( root );
+            Json_decref( root );
             return 0;
         }
         printKeyValJsonObj( keyValObj );
@@ -434,44 +450,44 @@ listAccountsOut( void *buffer, size_t size, size_t nmemb, void *userp ) {
 }
 
 int
-printKeyValJsonObj( json_t *keyValObj ) {
-    void *iter;
+printKeyValJsonObj( Json_t *keyValObj ) {
+    __Json_string_value_support__;
     const char *key;
-    json_t *value;
+    Json_t *value;
 
     printf( "keys: Value Object\n  {\n" );
-    iter = json_object_iter( keyValObj );
+    auto iter { Json_object_iter( keyValObj ) };
 
-    while ( iter ) {
-        json_type myType;
+    while (GOOD( keyValObj, iter )) {
+        Json_type_t myType;
         char valueStr[NAME_LEN];
 
-        key = json_object_iter_key( iter );
-        value = json_object_iter_value( iter );
-        myType = json_typeof( value );
+        key = Json_object_iter_key( iter );
+        value = Json_object_iter_value( iter );
+        myType = Json_typeof( value );
         switch ( myType ) {
-        case JSON_STRING:
-            snprintf( valueStr, NAME_LEN, "%s", json_string_value( value ) );
+        case JSON__STRING:
+            snprintf( valueStr, NAME_LEN, "%s", Json_string_value( value ) );
             break;
-        case JSON_INTEGER:
+        case JSON__INTEGER:
             snprintf( valueStr, NAME_LEN, "%d",
-                      ( int ) json_integer_value( value ) );
+                      ( int ) Json_integer_value( value ) );
             break;
-        case JSON_REAL:
+        case JSON__REAL:
             snprintf( valueStr, NAME_LEN, "%f",
-                      ( float ) json_real_value( value ) );
+                      ( float ) Json_real_value( value ) );
             break;
-        case JSON_TRUE:
+        case JSON__TRUE:
             snprintf( valueStr, NAME_LEN, "TRUE" );
             break;
-        case JSON_FALSE:
+        case JSON__FALSE:
             snprintf( valueStr, NAME_LEN, "FALSE" );
             break;
         default:
             snprintf( valueStr, NAME_LEN, "Unknown json_type: %d", myType );
         }
         printf( "    %s: %s\n", key, valueStr );
-        iter = json_object_iter_next( keyValObj, iter );
+        iter = Json_object_iter_next( keyValObj, iter );
     }
     printf( "  }\n" );
 

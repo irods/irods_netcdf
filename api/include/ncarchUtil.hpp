@@ -5,9 +5,9 @@
 #ifndef NCARCHUTIL_HPP
 #define NCARCHUTIL_HPP
 
-#include "rodsClient.hpp"
-#include "parseCommandLine.hpp"
-#include "rodsPath.hpp"
+#include "rodsClient.h"
+#include "parseCommandLine.h"
+#include "rodsPath.h"
 #include "ncArchTimeSeries.hpp"
 
 extern "C" {

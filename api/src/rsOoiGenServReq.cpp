@@ -2,16 +2,26 @@
  *** For more information please refer to files in the COPYRIGHT directory ***/
 /* This is script-generated code (for the most part).  */
 /* See ooiGenServReq.h for a description of this API call.*/
+
+#include <string>
+
+#include "myjansson.h"
+#include "netcdf_port.hpp"
 #include "ooiGenServReq.hpp"
-#include "rodsLog.hpp"
+#include "rodsLog.h"
 #include "rsGlobalExtern.hpp"
-#include "rcGlobalExtern.hpp"
+#include "rcGlobalExtern.h"
 #include "rsApiHandler.hpp"
 #include "specColl.hpp"
 #include "resource.hpp"
 #include "miscServerFunct.hpp"
 #include "irods_resource_backport.hpp"
 #include "ncApiIndex.hpp"
+#include "boost/format.hpp"
+#ifdef RODS_SERVER
+#include "irods_query.hpp"
+#endif
+
 extern "C" {
     double get_plugin_interface_version() { return 1.0; }
 #ifdef RODS_SERVER
@@ -59,14 +69,22 @@ extern "C" {
         const std::string& _context ) {
         // =-=-=-=-=-=-=-
         // create a api def object
+
         irods::apidef_t def = { OOI_GEN_SERV_REQ_AN,
                                 RODS_API_VERSION,
                                 REMOTE_USER_AUTH,
                                 REMOTE_USER_AUTH,
                                 "OoiGenServReqInp_PI", 0,
                                 "OoiGenServReqOut_PI", 0,
-                                0, 0
-                              }; // null fcn ptr, handled in delay_load
+#ifdef RODS_SERVER
+                                CPP_14_FUNCTION( rsOoiGenServReq ),
+#else
+                                CPP_14_NOOPFUNC( rsComm_t*,   ooiGenServReqInp_t*, ooiGenServReqOut_t** ),
+#endif // RODS_SERVER
+                                "api_ooi_gen_serv_req",
+                                [](void*){},
+                                (funcPtr) RODS_SERVER_ENABLE(( irods::netcdf::api_call_wrapper< ooiGenServReqInp_t*, ooiGenServReqOut_t** > ))
+                              };
         // =-=-=-=-=-=-=-
         // create an api object
         irods::api_entry* api = new irods::api_entry( def );
@@ -74,7 +92,7 @@ extern "C" {
         // =-=-=-=-=-=-=-
         // assign the fcn which will handle the api call
 #ifdef RODS_SERVER
-        api->fcn_name_ = "rsOoiGenServReq";
+//        api->fcn_name_ = "";
 #endif // RODS_SERVER
 
         // =-=-=-=-=-=-=-
@@ -146,10 +164,24 @@ int _rsOoiGenServReq(
 
     /* the vault path must be a url e.g., http://localhost:5000 */
     std::string resc_vault_path;
-    irods::error ret = irods::get_resource_property< std::string >(
-                           ooiGenServReqInp->irodsRescName,
-                           irods::RESOURCE_PATH,
-                           resc_vault_path );
+
+    std::string query_str {
+        boost::str(boost::format("select RESC_ID where RESC_NAME = '%s'") % ooiGenServReqInp->irodsRescName)
+    };
+
+    rodsLong_t resc_id = -1;
+
+    for (auto&& row : irods::query<rsComm_t> {rsComm, query_str}) {
+        resc_id =  std::stol(row[0]);
+    }
+
+    if (resc_id < 0)
+    {
+        return USER_INVALID_RESC_INPUT; 
+    }
+
+    irods::error ret = irods::get_resource_property< std::string >( resc_id, irods::RESOURCE_PATH, resc_vault_path );
+
     snprintf(
         myUrl,
         MAX_NAME_LEN,
@@ -201,32 +233,36 @@ ooiGenServReqFunc( void *buffer, size_t size, size_t nmemb, void *userp ) {
     char *type_PI = "";
     int status;
     void *ptr = NULL;
-    json_t *root, *dataObj, *responseObj;
-    json_error_t jerror;
+    Json_t  *dataObj, *responseObj;
+    Json_error_t jerror;
 
     ooiGenServReqStruct_t *ooiGenServReqStruct =
         ( ooiGenServReqStruct_t * ) userp;
 
-    root = json_loads( ( const char* ) buffer, 0, &jerror );
-    if ( !root ) {
+    Json_t* root_p { Json_loads( ( const char* ) buffer, 0, &jerror ) };
+
+    if ( !root_p ) {
         rodsLog( LOG_ERROR,
-                 "jsonUnpackOoiRespStr: json_loads error. %s", jerror.text );
+                 "jsonUnpackOoiRespStr: Json_loads error. %s", jerror.text );
         return OOI_JSON_LOAD_ERR;
     }
-    dataObj = json_object_get( root, OOI_DATA_TAG );
+
+    PTR(Json_t) root { root_p };
+
+    dataObj = Json_object_get( GET(root), OOI_DATA_TAG );
     if ( !dataObj ) {
         rodsLog( LOG_ERROR,
-                 "jsonUnpackOoiRespStr: json_object_get data failed." );
-        json_decref( root );
+                 "jsonUnpackOoiRespStr: Json_object_get data failed." );
+        Json_decref( root );
         return OOI_JSON_GET_ERR;
     }
-    responseObj = json_object_get( dataObj, OOI_GATEWAY_RESPONSE_TAG );
+    responseObj = Json_object_get( dataObj, OOI_GATEWAY_RESPONSE_TAG );
     if ( !responseObj ) {
-        responseObj = json_object_get( dataObj, OOI_GATEWAY_ERROR_TAG );
+        responseObj = Json_object_get( dataObj, OOI_GATEWAY_ERROR_TAG );
         if ( !responseObj ) {
-            json_decref( root );
+            Json_decref( root );
             rodsLog( LOG_ERROR,
-                     "jsonUnpackOoiRespStr: json_object_get GatewayResponse failed." );
+                     "jsonUnpackOoiRespStr: Json_object_get GatewayResponse failed." );
             return OOI_JSON_GET_ERR;
         }
         else {
@@ -274,7 +310,7 @@ ooiGenServReqFunc( void *buffer, size_t size, size_t nmemb, void *userp ) {
                  ooiGenServReqStruct->outType );
         status = OOI_JSON_TYPE_ERR;
     }
-    json_decref( root );
+    Json_decref( root );
     if ( status < 0 ) {
         return 0;
     }

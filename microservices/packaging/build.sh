@@ -171,6 +171,7 @@ if [ $DETECTEDCPUCOUNT -lt 2 ] ; then
     DETECTEDCPUCOUNT=1
 fi
 CPUCOUNT=$(( $DETECTEDCPUCOUNT + 3 ))
+CPUCOUNT=1
 MAKEJCMD="make -j $CPUCOUNT"
 echo "Detected CPUs                       [$DETECTEDCPUCOUNT]"
 echo "Compile Command                     [$MAKEJCMD]"

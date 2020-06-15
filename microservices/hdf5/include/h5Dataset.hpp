@@ -22,7 +22,7 @@
 #include "h5Datatype.hpp"
 #include "h5Dataspace.hpp"
 #include "h5Attribute.hpp"
-#include "rodsClient.hpp"
+#include "rodsClient.h"
 
 #define  H5D_IMAGE_FLAG 0x0001
 #define  H5D_IMAGE_TRUECOLOR_FLAG 0x0002
