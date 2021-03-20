@@ -1,7 +1,7 @@
 
 cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 
-find_package(IRODS REQUIRED)
+find_package(IRODS 4.2.8 EXACT REQUIRED)
 
 set(IRODS_PLUGIN_REVISION "0")
 set(IRODS_PLUGIN_VERSION "${IRODS_VERSION}.${IRODS_PLUGIN_REVISION}")
@@ -66,7 +66,8 @@ target_compile_definitions(server_netcdf_lib PRIVATE RODS_SERVER)
 
 #----------- initialize lists of install targets
 
-set(API_LIBRARY_TARGETS)
+set(API_LIBRARY_TARGETS_server)
+set(API_LIBRARY_TARGETS_client)
 set(MSVC_LIBRARY_TARGETS)
 set(RUNTIME_TARGETS)
 
@@ -92,8 +93,8 @@ foreach (src ${api_modules_src})
     strip_cpp("${stub_cpp}" stub)
     foreach(target client server)
         set(module_name "${stub}_${target}")
+        list(APPEND API_LIBRARY_TARGETS_${target} "${module_name}")
         add_library("${module_name}" MODULE ${src})
-        list(APPEND API_LIBRARY_TARGETS "${module_name}")
         target_link_libraries("${module_name}" PRIVATE 
                 irods_client
                 # irods_server # - note server binary provides this dependency
@@ -191,28 +192,54 @@ foreach (src ${icommands_src})
     )
 endforeach()
 
+if (NOT CPACK_PACKAGING_INSTALL_PREFIX)
+  set(CPACK_PACKAGING_INSTALL_PREFIX "/" CACHE STRING "Package root path. \"/\" is correct for normal package builds.." FORCE)
+  message(STATUS "Setting unspecified CPACK_PACKAGING_INSTALL_PREFIX to '${CPACK_PACKAGING_INSTALL_PREFIX}'. This is the correct setting for normal builds.")
+endif()
+
+list(APPEND CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION "${CPACK_PACKAGING_INSTALL_PREFIX}var")
+list(APPEND CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION "${CPACK_PACKAGING_INSTALL_PREFIX}var/lib")
+list(APPEND CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION "${CPACK_PACKAGING_INSTALL_PREFIX}var/lib/irods")
+list(APPEND CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION "${CPACK_PACKAGING_INSTALL_PREFIX}usr")
+list(APPEND CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION "${CPACK_PACKAGING_INSTALL_PREFIX}usr/lib")
+list(APPEND CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION "${CPACK_PACKAGING_INSTALL_PREFIX}usr/lib/irods")
+list(APPEND CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION "${CPACK_PACKAGING_INSTALL_PREFIX}usr/lib/irods/plugins")
+list(APPEND CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION "${CPACK_PACKAGING_INSTALL_PREFIX}usr/lib/irods/plugins/api")
+list(APPEND CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION "${CPACK_PACKAGING_INSTALL_PREFIX}usr/lib/irods/plugins/microservices")
+
 # --- CMake install targets
 
 install(
       TARGETS ${RUNTIME_TARGETS}
       RUNTIME
+      COMPONENT icommands
       DESTINATION /usr/bin
 )
 
 install(
-      TARGETS ${API_LIBRARY_TARGETS}
+      TARGETS ${API_LIBRARY_TARGETS_server}
       LIBRARY
+      COMPONENT server_modules
+      DESTINATION /usr/lib/irods/plugins/api
+)
+
+install(
+      TARGETS ${API_LIBRARY_TARGETS_client}
+      LIBRARY
+      COMPONENT client_modules
       DESTINATION /usr/lib/irods/plugins/api
 )
 
 install(
       TARGETS ${MSVC_LIBRARY_TARGETS}
       LIBRARY
+      COMPONENT server_modules
       DESTINATION /usr/lib/irods/plugins/microservices
 )
 
 install(
       DIRECTORY ${CMAKE_SOURCE_DIR}/microservices/rules/
+      COMPONENT server_modules
       DESTINATION /var/lib/irods/netcdf-plugin-tests
 )
 # --- CPack configuration ---
@@ -253,13 +280,15 @@ endif()
 set(CPACK_PACKAGE_FILE_NAME "irods-netcdf${IRODS_PLUGIN_PACKAGE_FILE_NAME_SUFFIX}")
 set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY OFF)
 set(CPACK_COMPONENT_INCLUDE_TOPLEVEL_DIRECTORY OFF)
-set(CPACK_COMPONENTS_GROUPING IGNORE)
+
+
 set(CPACK_PACKAGE_VERSION ${IRODS_PLUGIN_VERSION})
 set(CPACK_PACKAGE_CONTACT "Renaissance Computing Institute <info@irods.org>")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "The integrated Rule-Oriented Data System")
 set(CPACK_PACKAGE_VENDOR "Renaissance Computing Institute <info@irods.org>")
 
-set(CPACK_DEB_COMPONENT_INSTALL OFF)
+
+set(CPACK_DEB_COMPONENT_INSTALL ON)
 set(CPACK_DEBIAN_PACKAGE_SECTION "contrib/science")
 set(CPACK_DEBIAN_COMPRESSION_TYPE "gzip")
 set(CPACK_DEBIAN_PACKAGE_PRIORITY "extra")
@@ -269,7 +298,7 @@ set(CPACK_DEBIAN_PACKAGE_CONTROL_STRICT_PERMISSION ON)
 set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_SOURCE_DIR}/packaging/postinst;")
 
 
-set(CPACK_RPM_COMPONENT_INSTALL OFF)
+set(CPACK_RPM_COMPONENT_INSTALL ON ) # -- dwm
 set(CPACK_RPM_PACKAGE_RELEASE "1")
 set(CPACK_RPM_PACKAGE_LICENSE "BSD-3-Clause")
 set(CPACK_RPM_PACKAGE_VENDOR "iRODS Consortium")
@@ -278,11 +307,13 @@ set(CPACK_RPM_PACKAGE_AUTOREQ 0)
 set(CPACK_RPM_PACKAGE_AUTOPROV 0)
 set(CPACK_RPM_POST_INSTALL_SCRIPT_FILE "${CMAKE_SOURCE_DIR}/packaging/postinst")
 
+
 set(CPACK_ARCHIVE_COMPONENT_INSTALL OFF)
 
 
-
 set(CPACK_DEBIAN_PACKAGE_NAME "irods-netcdf")
+
+
 set(CPACK_DEBIAN_PACKAGE_DEPENDS "${IRODS_PACKAGE_DEPENDENCIES_STRING},
     irods-runtime (= ${IRODS_CPACK_DEBIAN_PACKAGE_VERSION}), libc6")
 
@@ -302,4 +333,41 @@ elseif (IRODS_LINUX_DISTRIBUTION_NAME STREQUAL "opensuse")
 endif()
 
 
+set (CPACK_RPM_SERVER_MODULES_PACKAGE_REQUIRES "irods-netcdf-client_modules")
+set (CPACK_RPM_ICOMMANDS_PACKAGE_REQUIRES "irods-netcdf-client_modules")
+
+set (CPACK_DEBIAN_SERVER_MODULES_PACKAGE_DEPENDS "irods-netcdf-client_modules")
+set (CPACK_DEBIAN_ICOMMANDS_PACKAGE_DEPENDS  "irods-netcdf-client_modules")
+
+
+foreach (component_name icommands server_modules client_modules)
+
+    set(PACKAGE_AND_COMPONENT "${CPACK_RPM_PACKAGE_NAME}-${component_name}")
+    set(VERSION_ETC "${IRODS_PLUGIN_VERSION}-${IRODS_LINUX_DISTRIBUTION_NAME}-${IRODS_LINUX_DISTRIBUTION_VERSION_MAJOR}-${CMAKE_SYSTEM_PROCESSOR}")
+
+    string(TOUPPER "${component_name}" CPACK_RPM_PACKAGE_NAME_UPPERCASE)
+    set(CPACK_RPM_${CPACK_RPM_PACKAGE_NAME_UPPERCASE}_FILE_NAME "${PACKAGE_AND_COMPONENT}-${VERSION_ETC}.rpm")
+    set(CPACK_DEBIAN_${CPACK_RPM_PACKAGE_NAME_UPPERCASE}_FILE_NAME "${PACKAGE_AND_COMPONENT}-${VERSION_ETC}.deb")
+
+    unset(PACKAGE_AND_COMPONENT)
+    unset(VERSION_ETC)
+    unset(CPACK_RPM_PACKAGE_NAME_UPPERCASE)
+
+endforeach()
+
+
 include(CPack)
+
+
+cpack_add_component(
+	icommands
+)
+
+cpack_add_component(
+	server_modules
+)
+
+cpack_add_component(
+	client_modules
+)
+
