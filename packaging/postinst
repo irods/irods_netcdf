@@ -5,4 +5,6 @@ else
   IRODS_SERVICE_GROUP_NAME=`stat --format "%G" /var/lib/irods`
 fi
 
-chown -R $IRODS_SERVICE_ACCOUNT_NAME:$IRODS_SERVICE_GROUP_NAME /var/lib/irods/netcdf-plugin-tests
+if [ -d /var/lib/irods/netcdf-plugin-tests ]; then
+    chown -R $IRODS_SERVICE_ACCOUNT_NAME:$IRODS_SERVICE_GROUP_NAME /var/lib/irods/netcdf-plugin-tests
+fi
