@@ -18,9 +18,14 @@
 #include "irods_resource_backport.hpp"
 #include "ncApiIndex.hpp"
 #include "boost/format.hpp"
+
+
 #ifdef RODS_SERVER
-#include "irods_query.hpp"
+#define IRODS_QUERY_ENABLE_SERVER_SIDE_API
 #endif
+#include "irods_query.hpp"
+#undef  IRODS_QUERY_ENABLE_SERVER_SIDE_API
+
 
 extern "C" {
     double get_plugin_interface_version() { return 1.0; }
@@ -165,11 +170,12 @@ int _rsOoiGenServReq(
     /* the vault path must be a url e.g., http://localhost:5000 */
     std::string resc_vault_path;
 
+    rodsLong_t resc_id = -1;
+
     std::string query_str {
         boost::str(boost::format("select RESC_ID where RESC_NAME = '%s'") % ooiGenServReqInp->irodsRescName)
     };
 
-    rodsLong_t resc_id = -1;
 
     for (auto&& row : irods::query<rsComm_t> {rsComm, query_str}) {
         resc_id =  std::stol(row[0]);
