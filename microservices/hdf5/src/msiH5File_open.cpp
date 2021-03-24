@@ -9,9 +9,54 @@
 #include "ncApiIndex.hpp"
 #include "rsDataObjOpen.hpp"
 
+
+
 // =-=-=-=-=-=-=-
 // STL Includes
 #include <iostream>
+
+namespace {
+
+// removed from 4.2.9, so copying here from the 4.2.8 release
+
+int
+requeDataObjInfoByReplNum( dataObjInfo_t **dataObjInfoHead, int replNum ) {
+    dataObjInfo_t *tmpDataObjInfo, *prevDataObjInfo;
+    int status = -1;
+
+    if ( dataObjInfoHead == NULL || *dataObjInfoHead == NULL ) {
+        return -1;
+    }
+
+    tmpDataObjInfo = *dataObjInfoHead;
+    if ( tmpDataObjInfo->next == NULL ) {
+        /* just one */
+        if ( replNum == tmpDataObjInfo->replNum ) {
+            return 0;
+        }
+        else {
+            return -1;
+        }
+    }
+    prevDataObjInfo = NULL;
+    while ( tmpDataObjInfo != NULL ) {
+        if ( replNum == tmpDataObjInfo->replNum ) {
+            if ( prevDataObjInfo != NULL ) {
+                prevDataObjInfo->next = tmpDataObjInfo->next;
+                queDataObjInfo( dataObjInfoHead, tmpDataObjInfo, 1, 1 );
+            }
+            status = 0;
+            break;
+        }
+        prevDataObjInfo = tmpDataObjInfo;
+        tmpDataObjInfo = tmpDataObjInfo->next;
+    }
+
+    return status;
+}
+
+
+}
 
 extern "C" {
 
@@ -131,7 +176,7 @@ extern "C" {
                 remoteFlag = resolveHostByDataObjInfo (tmpDataObjInfo,
                   &rodsServerHost);
                 if (remoteFlag == LOCAL_HOST) {
-                    requeDataObjInfoByReplNum (&dataObjInfo, 
+                    requeDataObjInfoByReplNum (&dataObjInfo,
                       tmpDataObjInfo->replNum);
                     /* have to update L1desc */
                     L1desc[l1descInx].dataObjInfo = dataObjInfo;
