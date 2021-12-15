@@ -7,7 +7,7 @@
 #  include <vector> 
 #  include <cstdlib>
 #  ifndef LEGACY_JANSSON
-#    include "json.hpp"
+#    include <nlohmann/json.hpp>
 #  endif  // LEGACY_JANSSON
 #endif // __cplusplus
 
