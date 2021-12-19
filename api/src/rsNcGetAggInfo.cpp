@@ -97,8 +97,8 @@ extern "C" {
         if ( status >= 0 && ( ncOpenInp->mode & NC_WRITE ) != 0 ) {
             dataObjInp_t dataObjInp;
             portalOprOut_t *portalOprOut = NULL;
-            status = packStruct( ( void * ) * ncAggInfo, &packedBBuf, "NcAggInfo_PI",
-                                 RodsPackTable, 0, XML_PROT );
+            status = pack_struct( ( void * ) * ncAggInfo, &packedBBuf, "NcAggInfo_PI",
+                                  RodsPackTable, 0, XML_PROT, nullptr );
             if ( status < 0 ) {
                 rodsLogError( LOG_ERROR, status,
                               "rsNcGetAggInfo: packStruct error for %s",

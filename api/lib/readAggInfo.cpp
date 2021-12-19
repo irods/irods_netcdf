@@ -42,8 +42,8 @@ readAggInfo( rsComm_t*     rsComm,
                       "readAggInfo: rsDataObjGet error for %s", dataObjInp.objPath );
         return status;
     }
-    status = unpackStruct( packedBBuf.buf, ( void ** ) ncAggInfo,
-                           "NcAggInfo_PI", RodsPackTable, XML_PROT );
+    status = unpack_struct( packedBBuf.buf, ( void ** ) ncAggInfo,
+                            "NcAggInfo_PI", RodsPackTable, XML_PROT, nullptr );
 
     if ( status < 0 ) {
         rodsLogError( LOG_ERROR, status,
