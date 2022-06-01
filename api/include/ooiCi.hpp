@@ -7,7 +7,7 @@
 #ifndef OOI_CI_HPP
 #define OOI_CI_HPP
 
-#include "rods.h"
+#include <irods/rods.h>
 #include "myjansson.h"
 #include <curl/curl.h>
 

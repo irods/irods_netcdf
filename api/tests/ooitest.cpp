@@ -2,7 +2,7 @@
  *** For more information please refer to files in the COPYRIGHT directory ***/
 /* packtest.c - test the basic packing routines */
 
-#include "rodsClient.h"
+#include <irods/rodsClient.h>
 #include <curl/curl.h>
 //#include <jansson.h>
 #include "myjansson.h"

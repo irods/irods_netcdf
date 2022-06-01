@@ -2,7 +2,7 @@
  *** For more information please refer to files in the COPYRIGHT directory ***/
 /* nctest.c - test the iRODS NETCDF api */
 
-#include "rodsClient.h"
+#include <irods/rodsClient.h>
 
 /* a copy of sfc_pres_temp.nc can be found in ../netcdf/sfc_pres_temp.nc */
 #define TEST_PATH1 "/oneZone/home/rods/hdf5/group.h5"

@@ -1,6 +1,6 @@
 #include "ncInq.hpp"
 #include "ncUtil.hpp"
-#include "irods_get_l1desc.hpp"
+#include <irods/irods_get_l1desc.hpp>
 #include "ncGetAggInfo.hpp"
 #include "ncApiIndex.hpp"
 

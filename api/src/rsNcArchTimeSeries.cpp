@@ -5,27 +5,27 @@
 
 #include "netcdf_port.hpp"
 #include "ncArchTimeSeries.hpp"
-#include "rodsLog.h"
-#include "dataObjOpen.h"
-#include "rsGlobalExtern.hpp"
-#include "rcGlobalExtern.h"
-#include "rsApiHandler.hpp"
-#include "objMetaOpr.hpp"
-#include "physPath.hpp"
-#include "specColl.hpp"
-#include "getRemoteZoneResc.h"
-#include "miscServerFunct.hpp"
-#include "dataObjCreate.h"
+#include <irods/rodsLog.h>
+#include <irods/dataObjOpen.h>
+#include <irods/rsGlobalExtern.hpp>
+#include <irods/rcGlobalExtern.h>
+#include <irods/rsApiHandler.hpp>
+#include <irods/objMetaOpr.hpp>
+#include <irods/physPath.hpp>
+#include <irods/specColl.hpp>
+#include <irods/getRemoteZoneResc.h>
+#include <irods/miscServerFunct.hpp>
+#include <irods/dataObjCreate.h>
 #include "ncGetAggInfo.hpp"
 #include "ncClose.hpp"
 #include "ncInq.hpp"
-#include "regDataObj.h"
+#include <irods/regDataObj.h>
 #include "ncUtil.hpp"
-#include "irods_get_l1desc.hpp"
-#include "irods_resource_backport.hpp"
+#include <irods/irods_get_l1desc.hpp>
+#include <irods/irods_resource_backport.hpp>
 #include "ncApiIndex.hpp"
-#include "irods_server_api_call.hpp"
-#include "irods_resource_redirect.hpp"
+#include <irods/irods_server_api_call.hpp>
+#include <irods/irods_resource_redirect.hpp>
 
 #ifdef RODS_SERVER
 

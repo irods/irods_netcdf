@@ -7,9 +7,9 @@
 #include "ncRegGlobalAttr.hpp"
 #include "ncInq.hpp"
 #include "ncClose.hpp"
-#include "modAVUMetadata.h"
-#include "icatHighLevelRoutines.hpp"
-#include "irods_server_api_call.hpp"
+#include <irods/modAVUMetadata.h>
+#include <irods/icatHighLevelRoutines.hpp>
+#include <irods/irods_server_api_call.hpp>
 #include "ncApiIndex.hpp"
 
 #ifdef RODS_SERVER 
@@ -138,7 +138,7 @@ extern "C" {
         int status;
         rodsServerHost_t *rodsServerHost = NULL;
 
-        status = getAndConnRcatHost( rsComm, MASTER_RCAT,
+        status = getAndConnRcatHost( rsComm, PRIMARY_RCAT,
                                      ncRegGlobalAttrInp->objPath, &rodsServerHost );
         if ( status < 0 ) {
             return( status );
