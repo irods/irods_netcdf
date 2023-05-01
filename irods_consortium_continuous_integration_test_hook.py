@@ -77,7 +77,9 @@ def main():
     built_packages_root_directory = options.built_packages_root_directory
     package_suffix = irods_python_ci_utilities.get_package_suffix()
     os_specific_directory = irods_python_ci_utilities.append_os_specific_directory(built_packages_root_directory)
-    irods_python_ci_utilities.install_os_packages_from_files(glob.glob(os.path.join(os_specific_directory, 'irods-netcdf*.{0}'.format(package_suffix))))
+    package_list = glob.glob(os.path.join(os_specific_directory, 'irods-netcdf*.{0}'.format(package_suffix)))
+    package_list = sorted(package_list, key=lambda s:-os.path.basename(s).find('client'))  # client module must be installed first
+    irods_python_ci_utilities.install_os_packages_from_files(package_list)
 
     irods_python_ci_utilities.install_irods_core_dev_repository()
 
