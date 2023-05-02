@@ -7,16 +7,16 @@
 #include "netcdf_port.hpp"
 
 #include "ncGetVarsByType.hpp"
-#include "rodsLog.h"
-#include "rsGlobalExtern.hpp"
-#include "rcGlobalExtern.h"
-#include "rsApiHandler.hpp"
-#include "objMetaOpr.hpp"
-#include "physPath.hpp"
-#include "specColl.hpp"
-#include "getRemoteZoneResc.h"
-#include "irods_get_l1desc.hpp"
-#include "irods_server_api_call.hpp"
+#include <irods/rodsLog.h>
+#include <irods/rsGlobalExtern.hpp>
+#include <irods/rcGlobalExtern.h>
+#include <irods/rsApiHandler.hpp>
+#include <irods/objMetaOpr.hpp>
+#include <irods/physPath.hpp>
+#include <irods/specColl.hpp>
+#include <irods/getRemoteZoneResc.h>
+#include <irods/irods_get_l1desc.hpp>
+#include <irods/irods_server_api_call.hpp>
 #include "ncApiIndex.hpp"
 #include "ncGetAggInfo.hpp"
 #include "ncUtil.hpp"

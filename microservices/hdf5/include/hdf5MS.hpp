@@ -16,12 +16,12 @@
 #ifndef HDF5_MS_HPP
 #define HDF5_MS_HPP
 
-#include "rodsClient.h"
-#include "apiHeaderAll.h"
-#include "objMetaOpr.hpp"
-#include "dataObjOpr.hpp"
-#include "miscServerFunct.hpp"
-#include "rsGlobalExtern.hpp"
+#include <irods/rodsClient.h>
+#include <irods/apiHeaderAll.h>
+#include <irods/objMetaOpr.hpp>
+#include <irods/dataObjOpr.hpp>
+#include <irods/miscServerFunct.hpp>
+#include <irods/rsGlobalExtern.hpp>
 #include <assert.h>
 
 extern "C" {

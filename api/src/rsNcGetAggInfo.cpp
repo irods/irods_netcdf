@@ -6,21 +6,21 @@
 #include "netcdf_port.hpp"
 #include "ncGetAggInfo.hpp"
 #include "ncInq.hpp"
-#include "rodsLog.h"
-#include "dataObjOpen.h"
-#include "rsGlobalExtern.hpp"
-#include "rcGlobalExtern.h"
-#include "rsApiHandler.hpp"
-#include "objMetaOpr.hpp"
-#include "physPath.hpp"
-#include "specColl.hpp"
-#include "openCollection.h"
-#include "readCollection.h"
-#include "closeCollection.h"
-#include "closeCollection.h"
-#include "dataObjPut.h"
-#include "dataObjGet.h"
-#include "irods_server_api_call.hpp"
+#include <irods/rodsLog.h>
+#include <irods/dataObjOpen.h>
+#include <irods/rsGlobalExtern.hpp>
+#include <irods/rcGlobalExtern.h>
+#include <irods/rsApiHandler.hpp>
+#include <irods/objMetaOpr.hpp>
+#include <irods/physPath.hpp>
+#include <irods/specColl.hpp>
+#include <irods/openCollection.h>
+#include <irods/readCollection.h>
+#include <irods/closeCollection.h>
+#include <irods/closeCollection.h>
+#include <irods/dataObjPut.h>
+#include <irods/dataObjGet.h>
+#include <irods/irods_server_api_call.hpp>
 #include "ncApiIndex.hpp"
 
 extern "C" {

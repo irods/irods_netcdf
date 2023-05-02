@@ -8,22 +8,22 @@
 #include "myjansson.h"
 #include "netcdf_port.hpp"
 #include "ooiGenServReq.hpp"
-#include "rodsLog.h"
-#include "rsGlobalExtern.hpp"
-#include "rcGlobalExtern.h"
-#include "rsApiHandler.hpp"
-#include "specColl.hpp"
-#include "resource.hpp"
-#include "miscServerFunct.hpp"
-#include "irods_resource_backport.hpp"
+#include <irods/rodsLog.h>
+#include <irods/rsGlobalExtern.hpp>
+#include <irods/rcGlobalExtern.h>
+#include <irods/rsApiHandler.hpp>
+#include <irods/specColl.hpp>
+#include <irods/resource.hpp>
+#include <irods/miscServerFunct.hpp>
+#include <irods/irods_resource_backport.hpp>
 #include "ncApiIndex.hpp"
-#include "boost/format.hpp"
+#include <boost/format.hpp>
 
 
 #ifdef RODS_SERVER
 #define IRODS_QUERY_ENABLE_SERVER_SIDE_API
 #endif
-#include "irods_query.hpp"
+#include <irods/irods_query.hpp>
 #undef  IRODS_QUERY_ENABLE_SERVER_SIDE_API
 
 

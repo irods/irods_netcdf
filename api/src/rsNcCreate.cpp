@@ -5,20 +5,20 @@
 
 #include "netcdf_port.hpp"
 #include "ncCreate.hpp"
-#include "rodsLog.h"
-#include "dataObjCreate.h"
-#include "rsGlobalExtern.hpp"
-#include "rcGlobalExtern.h"
-#include "rsApiHandler.hpp"
-#include "objMetaOpr.hpp"
-#include "dataObjUnlink.h"
+#include <irods/rodsLog.h>
+#include <irods/dataObjCreate.h>
+#include <irods/rsGlobalExtern.hpp>
+#include <irods/rcGlobalExtern.h>
+#include <irods/rsApiHandler.hpp>
+#include <irods/objMetaOpr.hpp>
+#include <irods/dataObjUnlink.h>
 #include "ncClose.hpp"
-#include "physPath.hpp"
-#include "specColl.hpp"
-#include "regDataObj.h"
-#include "getRemoteZoneResc.h"
-#include "irods_get_l1desc.hpp"
-#include "irods_server_api_call.hpp"
+#include <irods/physPath.hpp>
+#include <irods/specColl.hpp>
+#include <irods/regDataObj.h>
+#include <irods/getRemoteZoneResc.h>
+#include <irods/irods_get_l1desc.hpp>
+#include <irods/irods_server_api_call.hpp>
 #include "ncApiIndex.hpp"
 #include "ncUtil.hpp"
 

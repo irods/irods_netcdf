@@ -16,11 +16,14 @@ def get_build_prerequisites_all():
 
 def get_build_prerequisites_apt():
     addl_prereqs_by_ubuntu_version_major = {
-        '16': ['libnetcdf11' , 'libhdf5-10'],
-        '18': ['libnetcdf13' , 'libhdf5-100']
+         ('Ubuntu','16'): ['libnetcdf11' , 'libhdf5-10'],
+         ('Ubuntu','18'): ['libnetcdf13' , 'libhdf5-100'],
+         ('Ubuntu','20'): ['libnetcdf15' , 'libhdf5-103'],
+         ('Debian gnu_linux','11'): ['libnetcdf18' , 'libhdf5-103']
     }
     try:
         return addl_prereqs_by_ubuntu_version_major[
+                   irods_python_ci_utilities.get_distribution(),
                    irods_python_ci_utilities.get_distribution_version_major()
                ] + get_build_prerequisites_all()
     except KeyError:
@@ -35,6 +38,8 @@ def get_build_prerequisites():
         'Centos': get_build_prerequisites_yum,
         'Centos linux': get_build_prerequisites_yum,
         'Opensuse ': get_build_prerequisites_yum,
+        'Almalinux': get_build_prerequisites_yum,
+        'Debian gnu_linux': get_build_prerequisites_apt,
     }
     try:
         return dispatch_map[irods_python_ci_utilities.get_distribution()]()
@@ -54,6 +59,8 @@ def install_build_prerequisites():
         'Centos': install_build_prerequisites_yum,
         'Centos linux': install_build_prerequisites_yum,
         'Opensuse ': install_build_prerequisites_yum,
+        'Debian gnu_linux': install_build_prerequisites_apt,
+        'Almalinux': install_build_prerequisites_yum,
     }
     try:
         return dispatch_map[irods_python_ci_utilities.get_distribution()]()
@@ -77,7 +84,9 @@ def main():
     built_packages_root_directory = options.built_packages_root_directory
     package_suffix = irods_python_ci_utilities.get_package_suffix()
     os_specific_directory = irods_python_ci_utilities.append_os_specific_directory(built_packages_root_directory)
-    irods_python_ci_utilities.install_os_packages_from_files(glob.glob(os.path.join(os_specific_directory, 'irods-netcdf*.{0}'.format(package_suffix))))
+    pkgs = [ glob.glob(os.path.join(os_specific_directory, 'irods-netcdf*{specific}*.{0}'.format(package_suffix,specific = x)))[0]
+             for x in ( "client_modules", "server_modules", "icommands") ]
+    irods_python_ci_utilities.install_os_packages_from_files(pkgs)
 
     irods_python_ci_utilities.install_irods_core_dev_repository()
 
