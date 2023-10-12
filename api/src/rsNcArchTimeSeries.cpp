@@ -491,6 +491,7 @@ extern "C" {
 #endif // RODS_SERVER
                                 "api_nc_arch_time_series",
                                 [](void*){},
+                                irods::clearOutStruct_noop,
                                 (funcPtr) RODS_SERVER_ENABLE( (irods::netcdf::api_call_wrapper< ncArchTimeSeriesInp_t* >) )
                               };
         // =-=-=-=-=-=-=-

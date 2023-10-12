@@ -9,18 +9,20 @@ import tempfile
 import irods_python_ci_utilities
 
 def add_cmake_to_front_of_path():
-    cmake_path = '/opt/irods-externals/cmake3.11.4-0/bin'
+    cmake_path = '/opt/irods-externals/cmake3.21.4-0/bin'
     os.environ['PATH'] = os.pathsep.join([cmake_path, os.environ['PATH']])
 
 def install_building_dependencies(externals_directory):
-    externals_list = ['irods-externals-cmake3.11.4-0',
-                      'irods-externals-clang6.0-0',
-                      'irods-externals-libarchive3.3.2-1',
-                      'irods-externals-avro1.9.0-0',
-                      'irods-externals-clang-runtime6.0-0',
-                      'irods-externals-fmt6.1.2-1',
-                      'irods-externals-boost1.67.0-0',
-                      'irods-externals-json3.7.3-0']
+    externals_list = [
+          'irods-externals-avro1.11.0-2',
+          'irods-externals-boost1.81.0-0',
+          'irods-externals-clang13.0.0-0',
+          'irods-externals-clang-runtime13.0.0-0',
+          'irods-externals-cmake3.21.4-0',
+          'irods-externals-fmt8.1.1-0',
+          'irods-externals-json3.10.4-0',
+          'irods-externals-libarchive3.5.2-0'
+    ]
 
     if externals_directory == 'None' or externals_directory is None:
         irods_python_ci_utilities.install_irods_core_dev_repository()
@@ -39,13 +41,16 @@ def install_os_specific_dependencies_apt():
     irods_python_ci_utilities.install_os_packages(['make', 'gcc', 'libnetcdf-dev', 'libssl-dev'])
 
 def install_os_specific_dependencies_yum():
-    irods_python_ci_utilities.install_os_packages(['curl-devel', 'openssl-devel', 'netcdf-devel', 'openssl-devel'])
+    irods_python_ci_utilities.install_os_packages(['make', 'curl-devel', 'openssl-devel', 'netcdf-devel', 'openssl-devel'])
 
 def install_os_specific_dependencies():
     dispatch_map = {
         'Ubuntu': install_os_specific_dependencies_apt,
+        'Debian gnu_linux': install_os_specific_dependencies_apt,
         'Centos': install_os_specific_dependencies_yum,
         'Centos linux': install_os_specific_dependencies_yum,
+        'Rocky linux': install_os_specific_dependencies_yum,
+        'Almalinux': install_os_specific_dependencies_yum,
         'Opensuse ': install_os_specific_dependencies_yum,
     }
     try:
@@ -55,10 +60,10 @@ def install_os_specific_dependencies():
 
 def install_irods_dev_and_runtime_packages(irods_packages_root_directory):
     irods_packages_directory = irods_python_ci_utilities.append_os_specific_directory(irods_packages_root_directory)
-    runtime_package_basename = filter(lambda x:'irods-runtime' in x, os.listdir(irods_packages_directory))[0]
+    runtime_package_basename = list(filter(lambda x:'irods-runtime' in x, os.listdir(irods_packages_directory)))[0]
     runtime_package = os.path.join(irods_packages_directory, runtime_package_basename)
     irods_python_ci_utilities.install_os_packages_from_files([runtime_package])
-    dev_package_basename = filter(lambda x:'irods-dev' in x, os.listdir(irods_packages_directory))[0]
+    dev_package_basename = list(filter(lambda x:'irods-dev' in x, os.listdir(irods_packages_directory)))[0]
     dev_package = os.path.join(irods_packages_directory, dev_package_basename)
     irods_python_ci_utilities.install_os_packages_from_files([dev_package])
 
@@ -68,11 +73,11 @@ def copy_output_packages(build_directory, output_root_directory):
         irods_python_ci_utilities.append_os_specific_directory(output_root_directory),
         lambda s:s.endswith(irods_python_ci_utilities.get_package_suffix()))
 
-def main(output_root_directory, irods_packages_root_directory, externals_directory):
+def main(build_directory,output_root_directory, irods_packages_root_directory, externals_directory):
     install_building_dependencies(externals_directory)
     if irods_packages_root_directory:
         install_irods_dev_and_runtime_packages(irods_packages_root_directory)
-    build_directory = tempfile.mkdtemp(prefix='irods_logical_quotas_plugin_build_directory')
+    build_directory = os.path.abspath(build_directory or tempfile.mkdtemp(prefix='irods_netcdf_build_directory'))
     irods_python_ci_utilities.subprocess_get_output(['cmake', os.path.dirname(os.path.realpath(__file__))], check_rc=True, cwd=build_directory)
     irods_python_ci_utilities.subprocess_get_output(['make', '-j', str(multiprocessing.cpu_count()), 'package'], check_rc=True, cwd=build_directory)
     if output_root_directory:
@@ -80,9 +85,10 @@ def main(output_root_directory, irods_packages_root_directory, externals_directo
 
 if __name__ == '__main__':
     parser = optparse.OptionParser()
+    parser.add_option('--build_directory')
     parser.add_option('--output_root_directory')
     parser.add_option('--irods_packages_root_directory')
     parser.add_option('--externals_packages_directory')
     options, _ = parser.parse_args()
 
-    main(options.output_root_directory, options.irods_packages_root_directory, options.externals_packages_directory)
+    main(options.build_directory,options.output_root_directory, options.irods_packages_root_directory, options.externals_packages_directory)

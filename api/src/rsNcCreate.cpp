@@ -180,6 +180,7 @@ int l3Unlink( rsComm_t *rsComm, dataObjInfo_t *dataObjInfo );
 #endif // RODS_SERVER
                                 "api_nc_create",
                                 [](void*){},
+                                irods::clearOutStruct_noop,
                                 (funcPtr) RODS_SERVER_ENABLE(( irods::netcdf::api_call_wrapper< ncOpenInp_t *, int ** > ))
                               };
 

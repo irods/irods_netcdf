@@ -138,7 +138,7 @@ extern "C" {
         int status;
         rodsServerHost_t *rodsServerHost = NULL;
 
-        status = getAndConnRcatHost( rsComm, MASTER_RCAT,
+        status = getAndConnRcatHost( rsComm, PRIMARY_RCAT,
                                      ncRegGlobalAttrInp->objPath, &rodsServerHost );
         if ( status < 0 ) {
             return( status );
@@ -179,6 +179,7 @@ extern "C" {
 #endif // RODS_SERVER
                                 "api_nc_get_global_attr",
                                 CPP_14_FUNCTION( clearRegGlobalAttrInp ),
+                                irods::clearOutStruct_noop,
                                 (funcPtr) RODS_SERVER_ENABLE(( irods::netcdf::api_call_wrapper< ncRegGlobalAttrInp_t* > ))
                               }; 
         // =-=-=-=-=-=-=-

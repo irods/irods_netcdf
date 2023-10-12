@@ -195,6 +195,7 @@ extern "C" {
 #endif // RODS_SERVER
                                 "api_nc_inq_id",
                                 [](void*){},
+                                irods::clearOutStruct_noop,
                                 (funcPtr) RODS_SERVER_ENABLE(( irods::netcdf::api_call_wrapper< ncInqIdInp_t *, int ** > ))
                               };
         // =-=-=-=-=-=-=-
