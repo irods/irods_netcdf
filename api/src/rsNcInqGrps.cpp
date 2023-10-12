@@ -180,6 +180,7 @@ extern "C" {
 #endif // RODS_SERVER
                                 "api_nc_inq_grps",
                                 [](void*){},
+                                irods::clearOutStruct_noop,
                                 (funcPtr) RODS_SERVER_ENABLE(( irods::netcdf::api_call_wrapper< ncInqGrpsInp_t *, ncInqGrpsOut_t ** > ))
                               };
         // =-=-=-=-=-=-=-

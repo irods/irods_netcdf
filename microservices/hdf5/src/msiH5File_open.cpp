@@ -43,7 +43,7 @@ requeDataObjInfoByReplNum( dataObjInfo_t **dataObjInfoHead, int replNum ) {
         if ( replNum == tmpDataObjInfo->replNum ) {
             if ( prevDataObjInfo != NULL ) {
                 prevDataObjInfo->next = tmpDataObjInfo->next;
-                queDataObjInfo( dataObjInfoHead, tmpDataObjInfo, 1, 1 );
+                queueDataObjInfo( dataObjInfoHead, tmpDataObjInfo, 1, 1 );
             }
             status = 0;
             break;

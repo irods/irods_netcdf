@@ -1,24 +1,26 @@
 
 cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 
-find_package(IRODS 4.2.11 EXACT REQUIRED)
+find_package(IRODS 4.3.1 EXACT REQUIRED)
 
 set(IRODS_PLUGIN_REVISION "0")
 set(IRODS_PLUGIN_VERSION "${IRODS_VERSION}.${IRODS_PLUGIN_REVISION}")
+
+include(IrodsCXXCompiler)
 
 set(CMAKE_C_COMPILER ${IRODS_EXTERNALS_FULLPATH_CLANG}/bin/clang)
 set(CMAKE_CXX_COMPILER ${IRODS_EXTERNALS_FULLPATH_CLANG}/bin/clang++)
 set(CMAKE_EXE_LINKER_FLAGS_INIT "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++")
 
-project(irods_netcdf_plugin 
-VERSION "${IRODS_PLUGIN_VERSION}"
-LANGUAGES C CXX)
+project(irods_netcdf_plugin VERSION "${IRODS_PLUGIN_VERSION}" LANGUAGES C CXX)
 
-set(CMAKE_CXX_FLAGS "-std=c++17 -stdlib=libc++ -Wno-write-strings ${CMAKE_CXX_FLAGS}")
+include_directories("/usr/include/irods")
+
+set(CMAKE_CXX_FLAGS "-std=c++20 -stdlib=libc++ -Wno-write-strings ${CMAKE_CXX_FLAGS}")
 
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
-set(CMAKE_INSTALL_RPATH "/opt/irods-externals/clang-runtime6.0-0/lib:/opt/irods-externals/boost1.67.0-0/lib")
+set(CMAKE_INSTALL_RPATH "/opt/irods-externals/clang-runtime13.0-0/lib:/opt/irods-externals/boost1.81.0-0/lib")
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
@@ -319,10 +321,24 @@ set(CPACK_DEBIAN_PACKAGE_DEPENDS "${IRODS_PACKAGE_DEPENDENCIES_STRING},
     irods-runtime (= ${IRODS_CPACK_DEBIAN_PACKAGE_VERSION}), libc6")
 
 if (IRODS_LINUX_DISTRIBUTION_NAME STREQUAL "ubuntu")
-    if (IRODS_LINUX_DISTRIBUTION_VERSION_MAJOR GREATER_EQUAL "18")
-         set(CPACK_DEBIAN_PACKAGE_DEPENDS "${CPACK_DEBIAN_PACKAGE_DEPENDS}, libnetcdf13, libhdf5-100")
+    if (IRODS_LINUX_DISTRIBUTION_VERSION_MAJOR STREQUAL "22")
+        set(CPACK_DEBIAN_PACKAGE_DEPENDS "${CPACK_DEBIAN_PACKAGE_DEPENDS}, libnetcdf19, libhdf5-103")
+    elseif (IRODS_LINUX_DISTRIBUTION_VERSION_MAJOR STREQUAL "20")
+        set(CPACK_DEBIAN_PACKAGE_DEPENDS "${CPACK_DEBIAN_PACKAGE_DEPENDS}, libnetcdf15, libhdf5-103")
+    elseif (IRODS_LINUX_DISTRIBUTION_VERSION_MAJOR STREQUAL "18")
+        set(CPACK_DEBIAN_PACKAGE_DEPENDS "${CPACK_DEBIAN_PACKAGE_DEPENDS}, libnetcdf13, libhdf5-100")
     else()
-         set(CPACK_DEBIAN_PACKAGE_DEPENDS "${CPACK_DEBIAN_PACKAGE_DEPENDS}, libnetcdf11, libhdf5-10")
+        message(FATAL_ERROR "Building on Ubuntu is supported for these versions only: 18, 20, 22.")
+    endif()
+endif()
+
+if (IRODS_LINUX_DISTRIBUTION_NAME STREQUAL "debian")
+    if (IRODS_LINUX_DISTRIBUTION_VERSION_MAJOR STREQUAL "12")
+        set(CPACK_DEBIAN_PACKAGE_DEPENDS "${CPACK_DEBIAN_PACKAGE_DEPENDS}, libnetcdf19, libhdf5-103")
+    elseif (IRODS_LINUX_DISTRIBUTION_VERSION_MAJOR STREQUAL "11")
+        set(CPACK_DEBIAN_PACKAGE_DEPENDS "${CPACK_DEBIAN_PACKAGE_DEPENDS}, libnetcdf18, libhdf5-103")
+    else()
+        message(FATAL_ERROR "Building on Debian is supported for these versions only: 11, 12.")
     endif()
 endif()
 

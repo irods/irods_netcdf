@@ -342,6 +342,7 @@ extern "C" {
 #endif // RODS_SERVER
                                 "api_nc_get_vars_by_type",
                                 CPP_14_FUNCTION( clearNcGetVarInp ),
+                                irods::clearOutStruct_noop,
                                 (funcPtr) RODS_SERVER_ENABLE( (irods::netcdf::api_call_wrapper< ncGetVarInp_t *, ncGetVarOut_t ** >) )
                               };
 

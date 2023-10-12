@@ -183,6 +183,7 @@ extern "C" {
 #endif // RODS_SERVER
                                 "api_nc_get_agg_element",
                                 [](void*){},
+                                irods::clearOutStruct_noop,
                                 (funcPtr) RODS_SERVER_ENABLE(( irods::netcdf::api_call_wrapper<  ncOpenInp_t *, ncAggElement_t** > ))
                               }; 
         // =-=-=-=-=-=-=-

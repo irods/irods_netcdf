@@ -8,21 +8,28 @@ import time
 import irods_python_ci_utilities
 
 def install_cmake_and_add_to_front_of_path():
-    irods_python_ci_utilities.install_os_packages(['irods-externals-cmake3.11.4-0'])
-    os.environ['PATH'] = '/opt/irods-externals/cmake3.11.4-0/bin' + os.pathsep + os.environ['PATH']
+    irods_python_ci_utilities.install_os_packages(['irods-externals-cmake3.21.4-0'])
+    os.environ['PATH'] = '/opt/irods-externals/cmake3.21.4-0/bin' + os.pathsep + os.environ['PATH']
 
 def get_build_prerequisites_all():
     return ['bats']
 
 def get_build_prerequisites_apt():
-    addl_prereqs_by_ubuntu_version_major = {
-        '16': ['libnetcdf11' , 'libhdf5-10'],
-        '18': ['libnetcdf13' , 'libhdf5-100']
+    addl_prereqs_by_os_and_version_major = {
+        'Ubuntu': {
+            '18': ['libnetcdf13' , 'libhdf5-100'],
+            '20': ['libnetcdf15' , 'libhdf5-103'],
+            '22': ['libnetcdf19' , 'libhdf5-103']
+         },
+        'Debian gnu_linux': {
+            '11': ['libnetcdf18' , 'libhdf5-103'],
+            '12': ['libnetcdf19' , 'libhdf5-103']
+         }
     }
+    distro = irods_python_ci_utilities.get_distribution()
+    major = irods_python_ci_utilities.get_distribution_version_major()
     try:
-        return addl_prereqs_by_ubuntu_version_major[
-                   irods_python_ci_utilities.get_distribution_version_major()
-               ] + get_build_prerequisites_all()
+        return addl_prereqs_by_os_and_version_major[distro][major] + get_build_prerequisites_all()
     except KeyError:
         raise RuntimeError('Unsupported OS platform.')
 
@@ -32,8 +39,11 @@ def get_build_prerequisites_yum():
 def get_build_prerequisites():
     dispatch_map = {
         'Ubuntu': get_build_prerequisites_apt,
+        'Debian gnu_linux': get_build_prerequisites_apt,
         'Centos': get_build_prerequisites_yum,
         'Centos linux': get_build_prerequisites_yum,
+        'Almalinux': get_build_prerequisites_yum,
+        'Rocky linux': get_build_prerequisites_yum,
         'Opensuse ': get_build_prerequisites_yum,
     }
     try:
@@ -51,8 +61,11 @@ def install_build_prerequisites_yum():
 def install_build_prerequisites():
     dispatch_map = {
         'Ubuntu': install_build_prerequisites_apt,
+        'Debian gnu_linux': install_build_prerequisites_apt,
         'Centos': install_build_prerequisites_yum,
         'Centos linux': install_build_prerequisites_yum,
+        'Almalinux': install_build_prerequisites_yum,
+        'Rocky linux': install_build_prerequisites_yum,
         'Opensuse ': install_build_prerequisites_yum,
     }
     try:

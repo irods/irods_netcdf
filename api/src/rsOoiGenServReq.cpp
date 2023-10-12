@@ -88,6 +88,7 @@ extern "C" {
 #endif // RODS_SERVER
                                 "api_ooi_gen_serv_req",
                                 [](void*){},
+                                irods::clearOutStruct_noop,
                                 (funcPtr) RODS_SERVER_ENABLE(( irods::netcdf::api_call_wrapper< ooiGenServReqInp_t*, ooiGenServReqOut_t** > ))
                               };
         // =-=-=-=-=-=-=-
