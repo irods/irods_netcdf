@@ -13,7 +13,7 @@
  * access to either file, you may request a copy from hdfhelp@ncsa.uiuc.edu. *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#include "H5Epublic.h"
+#include <H5Epublic.h>
 
 #ifndef _H5OBJECT_H
 #define _H5OBJECT_H

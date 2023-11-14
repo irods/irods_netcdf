@@ -15,7 +15,7 @@
 
 /* Define functions to retrive error information from error stack */
 
-#include "hdf5.hpp"
+#include <hdf5.h>
 #include "h5Object.hpp"
 
 

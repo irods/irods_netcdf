@@ -9,7 +9,7 @@
 #include "ncGetVarsByType.hpp"
 #include "ncApiIndex.hpp"
 #include "ncUtil.hpp"
-#include "irods_log.hpp"
+#include <irods/irods_log.hpp>
 
 /**
  * \fn rcNcGetVarsByType (rcComm_t *conn,  ncGetVarInp_t *ncGetVarInp,

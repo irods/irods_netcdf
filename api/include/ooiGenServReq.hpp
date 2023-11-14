@@ -8,11 +8,11 @@
 
 /* This is a General OOI service request  API call */
 
-#include "rods.h"
+#include <irods/rods.h>
+#include <irods/procApiRequest.h>
+#include <irods/apiNumber.h>
+#include <irods/initServer.hpp>
 #include "ooiCi.hpp"
-#include "procApiRequest.h"
-#include "apiNumber.h"
-#include "initServer.hpp"
 
 #define DEF_OOI_GATEWAY_URL "http://localhost"
 #define DEF_OOI_GATEWAY_PORT "5000"

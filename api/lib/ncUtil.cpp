@@ -4,11 +4,11 @@
 #include <sys/time.h>
 #endif
 #include "netcdf_core_defs.hpp"
-#include "rodsPath.h"
-#include "rodsErrorTable.h"
-#include "rodsLog.h"
-#include "miscUtil.h"
-//#include "rcPortalOpr.h"
+#include <irods/rodsPath.h>
+#include <irods/rodsErrorTable.h>
+#include <irods/rodsLog.h>
+#include <irods/miscUtil.h>
+//#include <irods/rcPortalOpr.h>
 #include "ncUtil.hpp"
 #include "ncGetVarsByType.hpp"
 

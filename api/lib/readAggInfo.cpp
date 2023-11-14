@@ -5,11 +5,10 @@
 
 
 #include "ncUtil.hpp"
-#include "dataObjGet.h"
-#include "irods_server_api_call.hpp"
+#include <irods/dataObjGet.h>
+#include <irods/irods_server_api_call.hpp>
 #include "ncApiIndex.hpp"
-#include "ncApiIndex.hpp"
-#include "rodsPackTable.h"
+#include <irods/rodsPackTable.h>
 
 int
 readAggInfo( rsComm_t*     rsComm, 

@@ -14,7 +14,7 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "h5File.hpp"
-#include "hdf5.hpp"
+#include <hdf5.h>
 #include "h5Dataset.hpp"
 #include <assert.h>
 

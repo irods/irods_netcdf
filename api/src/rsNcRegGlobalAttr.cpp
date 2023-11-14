@@ -3,14 +3,14 @@
 /* rsNcRegGlobalAttr.c
  */
 
-#include "netcdf_port.hpp"
+#include <netcdf_port.hpp>
 #include "ncRegGlobalAttr.hpp"
 #include "ncInq.hpp"
 #include "ncClose.hpp"
-#include "modAVUMetadata.h"
-#include "icatHighLevelRoutines.hpp"
-#include "irods_server_api_call.hpp"
 #include "ncApiIndex.hpp"
+#include <irods/modAVUMetadata.h>
+#include <irods/icatHighLevelRoutines.hpp>
+#include <irods/irods_server_api_call.hpp>
 
 #ifdef RODS_SERVER 
 int

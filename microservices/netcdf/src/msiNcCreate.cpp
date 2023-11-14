@@ -1,11 +1,11 @@
 // =-=-=-=-=-=-=-
-#include "netcdf_port.hpp"
-#include "msParam.h"
-//#include "reGlobalsExtern.hpp"
-#include "irods_ms_plugin.hpp"
+#include <netcdf_port.hpp>
+#include <irods/msParam.h>
+//#include <irods/reGlobalsExtern.hpp>
+#include <irods/irods_ms_plugin.hpp>
 #include "netcdfMS.hpp"
 #include "ncCreate.hpp"
-#include "irods_server_api_call.hpp"
+#include <irods/irods_server_api_call.hpp>
 #include "ncApiIndex.hpp"
 
 // =-=-=-=-=-=-=-

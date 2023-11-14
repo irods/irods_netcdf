@@ -12,7 +12,7 @@
  * access to either file, you may request a copy from hdfhelp@ncsa.uiuc.edu. *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#include "H5Ipublic.hpp"
+#include <H5Ipublic.h>
 #include "h5Attribute.hpp"
 #include "h5Dataset.hpp"
 #include "h5File.hpp"

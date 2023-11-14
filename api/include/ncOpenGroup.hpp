@@ -8,14 +8,14 @@
 
 /* This is a NETCDF API call */
 
-#include "rods.h"
-#include "rcMisc.h"
-#include "procApiRequest.h"
-#include "apiNumber.h"
-#include "initServer.hpp"
-#include "dataObjInpOut.h"
+#include <irods/rods.h>
+#include <irods/rcMisc.h>
+#include <irods/procApiRequest.h>
+#include <irods/apiNumber.h>
+#include <irods/initServer.hpp>
+#include <irods/dataObjInpOut.h>
 #include "ncOpen.hpp"
-#include "netcdf.h"
+#include <netcdf.h>
 
 #define NC_OPEN_GROUP 1003 // open netcdf group
 #define NcOpenGroupInp_PI "str objPath[MAX_NAME_LEN]; int mode; int rootNcid; double intialsz; double bufrsizehint; struct KeyValPair_PI;"
