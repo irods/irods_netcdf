@@ -16,7 +16,7 @@
 #include "h5Attribute.hpp"
 #include "h5Dataset.hpp"
 #include "h5String.hpp"
-#include "hdf5.hpp"
+#include <hdf5.h>
 #include <assert.h>
 
 int H5Attribute_value_to_string(H5Attribute *a, hid_t tid, hid_t sid);

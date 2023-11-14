@@ -15,7 +15,7 @@
 
 #include "h5File.hpp"
 #include "h5Group.hpp"
-#include "hdf5.hpp"
+#include <hdf5.h>
 #include <assert.h>
 
 

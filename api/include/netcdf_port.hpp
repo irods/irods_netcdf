@@ -2,7 +2,7 @@
 #define NETCDF_PORT_HPP_
 
 #include <functional>
-#include "apiHandler.hpp"
+#include <irods/apiHandler.hpp>
 
 // _-_-_-_-_-_- Helpers for apidef_t definitions in 4.2.x
 

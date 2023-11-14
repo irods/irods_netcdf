@@ -1,9 +1,9 @@
 #ifndef NETCDF_CORE_DEFS_H__
 #define NETCDF_CORE_DEFS_H__
 
-#include "rods.h"
-#include "objInfo.h"
-#include "dataObjInpOut.h"
+#include <irods/rods.h>
+#include <irods/objInfo.h>
+#include <irods/dataObjInpOut.h>
 
 extern "C" int catDataObj( rcComm_t *conn, char *objPath );
 

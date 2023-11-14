@@ -17,7 +17,7 @@
 #include "h5Dataset.hpp"
 #include "h5Object.hpp"
 #include "h5String.hpp"
-#include "hdf5.hpp"
+#include <hdf5.h>
 #include <assert.h>
 #include <stdio.h>
 #include <time.h>

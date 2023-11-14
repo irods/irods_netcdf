@@ -6,7 +6,7 @@
 
 #include "myjansson.h"
 #include "ooiCi.hpp"
-#include "msParam.h"
+#include <irods/msParam.h>
 
 
 /* dictSetAttr - set a key/value pair. For non array, arrLen = 0 */

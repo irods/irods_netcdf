@@ -10,9 +10,9 @@
 #define NETCDF_MS_H
 
 #include "ncInq.hpp"
-//#include "apiHeaderAll.h"
-//#include "reGlobalsExtern.h"
-//#include "rsGlobalExtern.h"
+//#include <irods/apiHeaderAll.h>
+//#include <irods/reGlobalsExtern.h>
+//#include <irods/rsGlobalExtern.h>
 extern "C" {
 
     int

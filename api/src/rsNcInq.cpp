@@ -3,20 +3,21 @@
 /* This is script-generated code (for the most part).  */
 /* See ncInq.hpp for a description of this API call.*/
 
-#include "netcdf_port.hpp"
+#include <netcdf_port.hpp>
 #include "ncInq.hpp"
-#include "rodsLog.h"
-#include "rsGlobalExtern.hpp"
-#include "rcGlobalExtern.h"
-#include "rsApiHandler.hpp"
-#include "objMetaOpr.hpp"
-#include "physPath.hpp"
-#include "specColl.hpp"
-#include "getRemoteZoneResc.h"
-#include "irods_get_l1desc.hpp"
 #include "ncApiIndex.hpp"
 #include "ncGetAggInfo.hpp"
 #include "ncUtil.hpp"
+
+#include <irods/rodsLog.h>
+#include <irods/rsGlobalExtern.hpp>
+#include <irods/rcGlobalExtern.h>
+#include <irods/rsApiHandler.hpp>
+#include <irods/objMetaOpr.hpp>
+#include <irods/physPath.hpp>
+#include <irods/specColl.hpp>
+#include <irods/getRemoteZoneResc.h>
+#include <irods/irods_get_l1desc.hpp>
 
 extern "C" {
     double get_plugin_interface_version() { return 1.0; }

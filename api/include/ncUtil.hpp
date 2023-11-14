@@ -5,15 +5,15 @@
 #ifndef NCUTIL_HPP
 #define NCUTIL_HPP
 
-#include "rodsClient.h"
-#include "parseCommandLine.h"
-#include "rodsPath.h"
+#include <irods/rodsClient.h>
+#include <irods/parseCommandLine.h>
+#include <irods/rodsPath.h>
 #include "ncInq.hpp"
 #include "ncGetVarsByType.hpp"
 #include "ncClose.hpp"
 #include "ncOpen.hpp"
 #include "ncGetAggInfo.hpp"
-#include "netcdf.h"
+#include <netcdf.h>
 
 extern "C" {
 

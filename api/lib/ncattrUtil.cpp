@@ -3,10 +3,10 @@
 #ifndef windows_platform
 #include <sys/time.h>
 #endif
-#include "rodsPath.h"
-#include "rodsErrorTable.h"
-#include "rodsLog.h"
-#include "miscUtil.h"
+#include <irods/rodsPath.h>
+#include <irods/rodsErrorTable.h>
+#include <irods/rodsLog.h>
+#include <irods/miscUtil.h>
 #include "ncattrUtil.hpp"
 #include "ncInq.hpp"
 

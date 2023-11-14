@@ -1,8 +1,8 @@
 // =-=-=-=-=-=-=-
-#include "netcdf_port.hpp"
-#include "msParam.h"
-//#include "reGlobalsExtern.hpp"
-#include "irods_ms_plugin.hpp"
+#include <netcdf_port.hpp>
+#include <irods/msParam.h>
+//#include <irods/reGlobalsExtern.hpp>
+#include <irods/irods_ms_plugin.hpp>
 #include "h5Group.hpp"
 #include "hdf5MS.hpp"
 

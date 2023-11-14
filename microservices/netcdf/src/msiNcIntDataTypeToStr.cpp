@@ -1,9 +1,9 @@
 // =-=-=-=-=-=-=-
-#include "netcdf_port.hpp"
-#include "msParam.h"
+#include <netcdf_port.hpp>
+#include <irods/msParam.h>
 #include "ncInq.hpp"
-//#include "reGlobalsExtern.hpp"
-#include "irods_ms_plugin.hpp"
+//#include <irods/reGlobalsExtern.hpp>
+#include <irods/irods_ms_plugin.hpp>
 #include "netcdfMS.hpp"
 
 // =-=-=-=-=-=-=-
