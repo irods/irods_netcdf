@@ -94,11 +94,13 @@ endforeach()
 target_compile_definitions(irods_netcdf_obj_server PRIVATE RODS_SERVER)
 
 # --> HDF5
-# See issue #45
 
 add_library(
   irods_hdf5_obj
   OBJECT
+  "${CMAKE_CURRENT_SOURCE_DIR}/microservices/hdf5/lib/clH5Dataset.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/microservices/hdf5/lib/clH5File.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/microservices/hdf5/lib/clH5Group.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/microservices/hdf5/lib/h5Attribute.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/microservices/hdf5/lib/h5Ctor.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/microservices/hdf5/lib/h5Dataset.cpp"
@@ -106,6 +108,7 @@ add_library(
   "${CMAKE_CURRENT_SOURCE_DIR}/microservices/hdf5/lib/h5File.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/microservices/hdf5/lib/h5Group.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/microservices/hdf5/lib/h5Object.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/microservices/hdf5/lib/h5String.cpp"
 )
 target_link_libraries(
   irods_hdf5_obj
@@ -237,7 +240,7 @@ foreach (module ${IRODS_NETCDF_MSI_MODULES})
 endforeach()
 
 # --> HDF5
-# See issue #45
+# See issue #48
 
 set(
   IRODS_HDF5_MSI_MODULES
