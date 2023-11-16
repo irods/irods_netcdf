@@ -138,7 +138,7 @@ set(
   # see issue #39
   #rsNcArchTimeSeries
   rsNcClose
-  # see issues #40 and #43
+  # see issue #40
   #rsNcCreate
   rsNcGetAggElement
   rsNcGetAggInfo
