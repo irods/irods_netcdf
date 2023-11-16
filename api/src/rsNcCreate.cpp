@@ -22,6 +22,11 @@
 #include <irods/irods_get_l1desc.hpp>
 #include <irods/irods_server_api_call.hpp>
 
+#ifdef RODS_SERVER
+#include <irods/rsDataObjUnlink.hpp>
+#include <irods/rsRegDataObj.hpp>
+#endif
+
 extern "C" {
     double get_plugin_interface_version() { return 1.0; }
 #ifdef RODS_SERVER
@@ -110,14 +115,12 @@ extern "C" {
             my_desc.l3descInx = myncid;
             /* need to reg here since NO_OPEN_FLAG_KW does not do it */
             if ( my_desc.dataObjInfo->specColl == NULL ) {
-int svrRegDataObj(rsComm_t*, DataObjInfo*);
                 status = svrRegDataObj( rsComm, my_desc.dataObjInfo );
                 if ( status < 0 ) {
                     ncCloseInp_t myNcCloseInp;
                     bzero( &myNcCloseInp, sizeof( myNcCloseInp ) );
                     myNcCloseInp.ncid = l1descInx;
                     irods::server_api_call ( NC_CLOSE_AN, rsComm, &myNcCloseInp );
-int l3Unlink( rsComm_t *rsComm, dataObjInfo_t *dataObjInfo );
                     l3Unlink( rsComm, my_desc.dataObjInfo );
                     rodsLog( LOG_ERROR,
                              "rsNcCreate: svrRegDataObj for %s failed, status = %d",
