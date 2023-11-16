@@ -142,8 +142,7 @@ set(
   #rsNcCreate
   rsNcGetAggElement
   rsNcGetAggInfo
-  # see issue #41
-  #rsNcGetVarsByType
+  rsNcGetVarsByType
   rsNcInq
   rsNcInqGrps
   rsNcInqId
