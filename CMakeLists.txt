@@ -22,7 +22,6 @@ project(irods_netcdf_plugin
 include("${IRODS_TARGETS_PATH}")
 
 include(GNUInstallDirs)
-include(UseLibCXX)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
