@@ -84,7 +84,6 @@ foreach (variant IN ITEMS client server)
     # but since we distribute no dev packages, it's easier to put them in PUBLIC
     # and wrap them in BUILD_INTERFACE
     "$<BUILD_INTERFACE:${IRODS_EXTERNALS_FULLPATH_BOOST}/include>"
-    "$<BUILD_INTERFACE:${IRODS_EXTERNALS_FULLPATH_FMT}/include>"
   )
 
   set_target_properties(irods_netcdf_obj_${variant} PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
