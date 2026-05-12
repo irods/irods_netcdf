@@ -1,3 +1,9 @@
+Note: This repository has been deprecated and archived.
+
+Consider using existing third-party libraries to work with NetCDF files in iRODS.
+
+----
+
 # irods_netcdf
 
 API plugins, microservices, and commands for accessing NetCDF data/metadata contained in iRODS data objects.
